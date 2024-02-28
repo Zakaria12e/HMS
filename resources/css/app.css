@@ -1,0 +1,64 @@
+@import 'node_modules/admin-lte/dist/css/adminlte.min.css';
+@import'node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css';
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback');
+
+
+
+
+.sidebar-dark-primary .nav-sidebar .nav-link.active , .nav-icon.active  {
+
+    background-color: rgb(238, 238, 238)  !important;
+    color: black !important;
+}
+.sidebar-dark-primary .nav-sidebar :hover{
+
+    color: black !important;
+    background-color:  rgb(238, 238, 238)  !important;
+}
+
+p, .sidebar-title , .d-block{
+    color: black !important;
+
+}
+
+.main-sidebar {
+    background-color: white !important;
+    color: black !important;
+}
+
+.nav-icon {
+    color: black !important;
+}
+
+.btn-purple {
+    background-color:#9528b8;
+    color: white;
+}
+.btn-purple:hover {
+    background-color:#c16cdd;
+
+
+}
+.badge-purple {
+    background-color: #9528b8;
+    color: white;
+  }
+  .centered-cell {
+    text-align: center;
+  }
+
+  .appointment-count {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  section.breadcrumb_part {
+    text-align: center;
+    padding: 100px 0; /* Adjust the padding as needed */
+    background: linear-gradient(to right, #2a8aca, #e4e2e2); /* Mix of blue and white */
+     /* Set the text color to white */
+}
+
+section.breadcrumb_part h2 {
+    font-size: 4em;
+
+}
