@@ -34,4 +34,13 @@ class PatientController extends Controller
     }
 
 
+
+    public function GetName($id)
+    {
+        $user = User::find($id);
+        if (!$user) {return response()->json(['error' => 'User not found'], 404);}
+
+        return response()->json($user);
+    }
+
 }

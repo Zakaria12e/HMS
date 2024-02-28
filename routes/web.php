@@ -50,12 +50,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/admin/{view?}', [ApplicationController::class, 'admin'])->where('view', '.*')->name('admin.pages');
 Route::get('/api/doctors', [DoctorController::class, 'index']);
 Route::post('/api/doctors', [DoctorController::class, 'store']);
+Route::get('/api/doctors/getDoctorsForDepartments', [DoctorController::class, 'index']);
+
 Route::get('/api/doctors/search', [DoctorController::class, 'search']);
 Route::put('/api/doctors/{id}', [DoctorController::class, 'update']);
 Route::delete('/api/doctors/{id}', [DoctorController::class, 'destroy']);
 
 Route::post('/api/users/batch', [PatientController::class, 'batchFetch']);
 Route::get('/api/users', [PatientController::class, 'index']);
+Route::get('/api/users/{id}', [PatientController::class,'GetName']);
+
 
 Route::get('/api/appointments', [AppointmentsController::class, 'index']);
 Route::put('/api/appointments/{id}', [AppointmentsController::class, 'update']);
@@ -74,6 +78,7 @@ Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'tot
 
 Route::get('/api/departments', [DepartmentsController::class, 'index']);
 Route::post('/api/departments', [DepartmentsController::class, 'store']);
+Route::post('/api/departments', [DepartmentsController::class, 'createDepartment']);
 
  });
 

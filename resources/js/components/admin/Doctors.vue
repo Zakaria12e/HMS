@@ -85,7 +85,6 @@ const updateDoctor = (doctor) => {
     form.contactNumber = formValues.value.contactNumber;
     form.salary = formValues.value.salary;
 
-console.log(formValues.value);
     $('#createDoctorModal').modal('show');
 
     $('#createDoctorModal').on('hidden.bs.modal', function () {

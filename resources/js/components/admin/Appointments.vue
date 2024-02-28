@@ -26,6 +26,11 @@ const form = reactive({
 
 });
 
+
+
+
+
+
 const createInvoice = (appointment) => {
 
 form.description = appointment.description;
@@ -33,6 +38,11 @@ form.date = appointment.appointment_date;
 form.appointmentId = appointment.id;
 $('#createInvoiceModal').modal('show');
 };
+
+
+
+
+
 
 const saveInvoice = async () => {
   try {
@@ -59,6 +69,10 @@ const saveInvoice = async () => {
   $('#createInvoiceModal').modal('hide');
 };
 
+
+
+
+
 const clearForm = () => {
   form.date = '';
   form.dueDate = '';
@@ -66,6 +80,9 @@ const clearForm = () => {
   form.totalAmount = '';
   form.appointmentId = '';
 };
+
+
+
 
 const getCountByStatus = (status) => {
   if (!status) {
@@ -75,10 +92,16 @@ const getCountByStatus = (status) => {
 };
 
 
+
+
+
 const filterAppointments = (status) => {
   selectedStatus.value = status;
   getAppointments();
 };
+
+
+
 
 
 
@@ -91,6 +114,11 @@ const getUsers = async (userIds) => {
     return [];
   }
 };
+
+
+
+
+
 
 
 
@@ -108,6 +136,13 @@ const fetchUserNames = async (userIds) => {
     console.error('Error fetching user names:', error);
   }
 };
+
+
+
+
+
+
+
 
 
 
@@ -145,6 +180,11 @@ const getAppointments = debounce(async (page = 1) => {
 
 
 
+
+
+
+
+
 const deleteAppointment = async (appointment) => {
     try {
         const response = await axios.delete(`/api/appointments/${appointment.id}`);
@@ -166,6 +206,10 @@ const deleteAppointment = async (appointment) => {
 
 
 
+
+
+
+
 const getDoctors = async () => {
   try {
     const response = await axios.get('/api/doctors');
@@ -175,6 +219,12 @@ const getDoctors = async () => {
   }
 };
 
+
+
+
+
+
+
 const assignToDoctor = async (appointmentId) => {
     selectedAppointmentId.value = appointmentId;
     await getDoctors();
@@ -183,33 +233,39 @@ $('#assignDoctorModal').modal('show');
 };
 
 
+
+
+
+
+
 const assignSelectedDoctor = async () => {
-  try {
-    const appointmentToUpdate = appointments.value.find(appointment => appointment.id === selectedAppointmentId.value);
+    try {
+        const appointmentToUpdate = appointments.value.find(appointment => appointment.id === selectedAppointmentId.value);
 
-    if (!appointmentToUpdate) {
-      console.error('Appointment not found');
-      return;
+        if (!appointmentToUpdate) {
+            console.error('Appointment not found');
+            return;
+        }
+
+        const doctorId = Number(selectedDoctorId.value);
+
+        // Update the appointment's doctor_id
+        appointmentToUpdate.doctor_id = doctorId;
+
+        const response = await axios.put('/api/appointments/' + appointmentToUpdate.id, { doctor_id: selectedDoctorId.value });
+        selectedDoctorId.value = null;
+        getAppointments();
+        $('#assignDoctorModal').modal('hide');
+
+        toastr.success('Doctor assigned successfully');
+    } catch (error) {
+        console.error('Error assigning doctor:', error);
     }
-    const doctorId = Number(selectedDoctorId.value);
-
-    const selectedDoctor = doctors.value.data.find(doctor => doctor.doctor_id === doctorId);
-    if (!selectedDoctor) {
-      toastr.error('Doctor not found. Please select a valid doctor.');
-      return;
-    }
-    appointmentToUpdate.doctor_id = doctorId;
-
-    const response = await axios.put('/api/appointments/'+ appointmentToUpdate.id , { doctor_id: selectedDoctorId.value });
-    selectedDoctorId.value = null;
-    getAppointments();
-    $('#assignDoctorModal').modal('hide');
-
-    toastr.success('Doctor assigned successfully');
-  } catch (error) {
-    console.error('Error assigning doctor:', error);
-  }
 };
+
+
+
+
 
 
 watchEffect(() => {
@@ -306,31 +362,17 @@ onMounted(() => {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <table class="table">
-                                <thead>
-                                  <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Specialization</th>
-                                  </tr>
-                                </thead>
-                                <tbody v-if="doctors.data.length > 0">
-                                  <tr v-for="(doctor, index) in doctors.data" :key="index">
-                                    <td>{{ doctor.doctor_id }}</td>
-                                    <td>{{ doctor.name }}</td>
-                                    <td>{{ doctor.specialization }}</td>
-                                  </tr>
-                                </tbody>
-                                <tbody v-else>
-                                  <tr>
-                                    <td colspan="3" class="text-center">No doctors available</td>
-                                  </tr>
-                                </tbody>
-                              </table>
 
-                              <div class="mt-3 ml-2">
-                                <label for="doctorIdInput">Doctor ID:</label>
-                                <input type="number" class="form-control" v-model="selectedDoctorId" id="doctorIdInput" style="width: 200px;"/>
+
+                              <div class="mt-3 ml-3 mr-3">
+                                <div class="mb-3">
+                                    <label for="doctorSelect">Select Doctor:</label>
+                                    <select v-model="selectedDoctorId" class="form-control" id="doctorSelect" required>
+
+                                        <option v-for="doctor in doctors.data" :key="doctor.doctor_id" :value="doctor.doctor_id">{{ doctor.name }}</option>
+                                    </select>
+                                </div>
+
                               </div><br>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

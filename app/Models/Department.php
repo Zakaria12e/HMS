@@ -11,9 +11,19 @@ class Department extends Model
 
     protected $fillable = ['name', 'description', 'chef_id'];
 
-    public function chefDepartment()
+
+
+    public function chef()
     {
-        return $this->belongsTo(Doctor::class, 'chef_id');
+
+        return $this->belongsTo(User::class, 'chef_id');
     }
+
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class, 'department_id');
+    }
+
 
 }

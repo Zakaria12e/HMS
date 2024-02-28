@@ -32,4 +32,24 @@ class DepartmentsController extends Controller
         return response()->json($department, 201);
     }
 
+
+
+    public function createDepartment(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'chef_id' => 'required|exists:users,id',
+        ]);
+
+        $newDepartment = Department::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'chef_id' => $request->input('chef_id'),
+        ]);
+
+        return response()->json($newDepartment);
+    }
+
 }
