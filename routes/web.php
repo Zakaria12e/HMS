@@ -7,6 +7,7 @@ use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\admin\DepartmentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,6 +71,9 @@ Route::get('/api/dashboard/invoices-count', [DashboardController::class, 'getInv
 Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'totalPaidAmount']);
 
 
+
+Route::get('/api/departments', [DepartmentsController::class, 'index']);
+Route::post('/api/departments', [DepartmentsController::class, 'store']);
 
  });
 
