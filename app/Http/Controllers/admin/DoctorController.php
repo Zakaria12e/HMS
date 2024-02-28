@@ -136,13 +136,13 @@ public function update(Request $request, $id)
 
             $doctors = DB::table('doctors')
                 ->join('users', 'doctors.doctor_id', '=', 'users.id')
-                ->select('doctors.doctor_id', 'users.name', 'users.email', 'doctors.specialization', 'doctors.contact_number', 'doctors.salary')
+                ->select('doctors.doctor_id', 'users.name', 'users.email','users.contact_number', 'doctors.specialization', 'doctors.salary')
                 ->where('users.type', 'doctor')
                 ->where(function ($queryBuilder) use ($query) {
                     $queryBuilder->where('users.name', 'LIKE', '%' . $query . '%')
                         ->orWhere('users.email', 'LIKE', '%' . $query . '%')
                         ->orWhere('doctors.specialization', 'LIKE', '%' . $query . '%')
-                        ->orWhere('doctors.contact_number', 'LIKE', '%' . $query . '%')
+                        ->orWhere('users.contact_number', 'LIKE', '%' . $query . '%')
                         ->orWhere('doctors.salary', 'LIKE', '%' . $query . '%');
                 })
                 ->paginate(5);

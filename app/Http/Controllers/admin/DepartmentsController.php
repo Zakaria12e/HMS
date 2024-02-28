@@ -52,4 +52,43 @@ class DepartmentsController extends Controller
         return response()->json($newDepartment);
     }
 
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string|max:255',
+        'chef_id' => 'required|exists:doctors,doctor_id',
+    ]);
+
+    try {
+        $department = Department::findOrFail($id);
+
+
+        $department->name = $request->input('name');
+        $department->description = $request->input('description');
+        $department->chef_id = $request->input('chef_id');
+
+        $department->save();
+
+        return response()->json($department, 200);
+    } catch (\Exception $e) {
+
+        return response()->json(['error' => 'Failed to update department.'], 500);
+    }
+}
+
+public function destroy($id)
+{
+    try {
+        $department = Department::findOrFail($id);
+
+        $department->delete();
+
+        return response()->json(['message' => 'Department deleted successfully'], 200);
+    } catch (\Exception $e) {
+
+        return response()->json(['error' => 'Failed to delete department.'], 500);
+    }
+}
+
 }

@@ -25,6 +25,7 @@ const form = reactive({
   wednesday: false,
   thursday: false,
   friday: false,
+  department_id: null,
 });
 
 const getDoctors = (page = 1) => {
@@ -35,7 +36,15 @@ const getDoctors = (page = 1) => {
 };
 
 
-
+const departments = ref([]);
+const getDepartments = async () => {
+  try {
+    const response = await axios.get('/api/departments');
+    departments.value = response.data;
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+  }
+};
 
 
 const deleteDoctor = async (doctor) => {
@@ -129,6 +138,7 @@ const saveDoctor = async () => {
             wednesday: form.wednesday,
             thursday: form.thursday,
             friday: form.friday,
+            department_id: form.department_id,
 
         };
 
@@ -218,7 +228,7 @@ watch(searchQuery, debounce(() => {
 
 onMounted(() => {
     getDoctors();
-
+    getDepartments();
 });
 </script>
 
@@ -344,6 +354,15 @@ onMounted(() => {
                                     <label v-else class="form-check-label" for="friday">Friday</label>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="department_id">Department</label>
+                                <select v-model="form.department_id" class="form-control" id="department_id" required>
+                
+                                  <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
+                                </select>
+                              </div>
+
                         </div>
 
                           </form>

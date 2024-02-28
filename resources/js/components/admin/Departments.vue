@@ -130,6 +130,7 @@ const saveDepartment = async () => {
 
     if (updating.value) {
       await axios.put('/api/departments/' + formValues.value.id, requestData);
+      getDepartments();
       toastr.success('Department updated successfully');
     }else {
       const response = await axios.post('/api/departments', requestData);
@@ -198,7 +199,7 @@ onMounted(() => {
 
           </div>
 
-          <!-- Department Modal -->
+
           <div class="modal fade" id="createDepartmentModal" data-backdrop="static" tabindex="-1" role="dialog"
                aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -213,7 +214,7 @@ onMounted(() => {
                   </button>
                 </div>
 
-                <!-- Department Form -->
+
                 <form :initial-values="formValues">
                   <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <div class="form-group" style="flex: 1;">

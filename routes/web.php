@@ -79,6 +79,10 @@ Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'tot
 Route::get('/api/departments', [DepartmentsController::class, 'index']);
 Route::post('/api/departments', [DepartmentsController::class, 'store']);
 Route::post('/api/departments', [DepartmentsController::class, 'createDepartment']);
+Route::put('/api/departments/{id}', [DepartmentsController::class, 'update']);
+Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']);
+
+
 
  });
 
