@@ -70,6 +70,12 @@
             <p>Doctors</p>
         </router-link>
     </li>
+    <li class="nav-item">
+        <router-link to="/admin/departments" active-class="active" class="nav-link">
+            <i class="nav-icon fas fa-building"></i>
+            <p>Departments</p>
+        </router-link>
+    </li>
         <li class="nav-item">
             <router-link to="/admin/invoices" active-class="active" class="nav-link">
                 <i class="nav-icon fas fa-file-invoice-dollar"></i>

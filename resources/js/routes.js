@@ -14,6 +14,7 @@ import Home from './components/patient/Home.vue';
 import About from './components/patient/About.vue';
 import Contact from './components/patient/Contact.vue';
 import MyAppointments from './components/patient/MyAppointments.vue';
+import Departments from './components/admin/Departments.vue';
 
 export default [
 
@@ -53,6 +54,14 @@ export default [
         name: 'admin.doctors',
         component: Doctors,
     },
+    {
+
+        path: '/admin/departments',
+        name: 'admin.departments',
+        component: Departments,
+     },
+
+
 
     {
         path: '/doctor/patients',
