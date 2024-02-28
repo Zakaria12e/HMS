@@ -431,7 +431,7 @@ onMounted(() => {
                                             <span v-else-if="appointment.status === 'Planifié'" class="badge badge-purple">{{ appointment.status }}</span>
                                             <span v-else class="badge badge-secondary">{{ appointment.status }}</span>
                                           </td>
-                                          <td>{{ appointment.doctor.name }}</td>
+                                          <td> {{ appointment.doctor ? appointment.doctor.name : 'Not Assigned' }}</td>
                                           <td>
 
                                             <button @click.prevent="assignToDoctor(appointment.id)" class="btn btn-purple ml-4">Assign to Doctor</button>

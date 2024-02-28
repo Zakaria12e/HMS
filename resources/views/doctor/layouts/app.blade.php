@@ -58,14 +58,14 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 <a href="admin/dashboard" class="brand-link">
-<span class="brand-text font-weight-light">DOCTOR PANEL</span>
+<span class="brand-text font-weight-light" style="font-weight: 600;">DOCTOR PANEL</span>
 </a>
 
 <div class="sidebar">
 
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 <div class="info">
-<a href="/admin/profile" class="d-block">WELCOM  {{ Auth::user()->name }}</a>
+<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
 </div>
 </div>
 

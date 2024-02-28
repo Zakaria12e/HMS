@@ -34,10 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-
-
-
  Route::middleware(['auth', 'userType:doctor'])->group(function () {
 //doctor  routes
     Route::get('/doctor/{view?}', [ApplicationController::class, 'doctor'])->where('view', '.*')->name('doctor.pages');

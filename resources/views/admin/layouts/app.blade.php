@@ -28,15 +28,15 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-<a href="index3.html" class="brand-link">
-<span class="sidebar-title">ADMIN PANEL</span>
+<a href="#" class="brand-link">
+<span class="sidebar-title" style="font-weight: 600;">ADMIN PANEL</span>
 </a>
 
 <div class="sidebar">
 
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 <div class="info">
-<a href="/admin/profile" class="d-block">WELCOM  {{ Auth::user()->name }}</a>
+<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
 </div>
 </div>
 

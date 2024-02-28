@@ -25,16 +25,23 @@ const form = reactive({
   wednesday: false,
   thursday: false,
   friday: false,
-  department_id: null,
+  department_id: '',
 });
 
 const getDoctors = (page = 1) => {
     axios.get(`/api/doctors?page=${page}`)
         .then((response) => {
-            doctors.value = response.data;
+            const doctorsWithDepartments = response.data.data.map(doctor => {
+                const department = departments.value.find(dep => dep.id === doctor.department_id);
+                return {
+                    ...doctor,
+                    department_name: department ? department.name : 'Unknown Department',
+                };
+            });
+
+            doctors.value = { ...response.data, data: doctorsWithDepartments };
         });
 };
-
 
 const departments = ref([]);
 const getDepartments = async () => {
@@ -93,6 +100,7 @@ const updateDoctor = (doctor) => {
     form.specialization = formValues.value.specialization;
     form.contactNumber = formValues.value.contactNumber;
     form.salary = formValues.value.salary;
+    form.department_id = doctor.department_id;
 
     $('#createDoctorModal').modal('show');
 
@@ -227,8 +235,10 @@ watch(searchQuery, debounce(() => {
 }, 300));
 
 onMounted(() => {
-    getDoctors();
+
     getDepartments();
+    getDoctors();
+
 });
 </script>
 
@@ -358,7 +368,7 @@ onMounted(() => {
                             <div class="form-group">
                                 <label for="department_id">Department</label>
                                 <select v-model="form.department_id" class="form-control" id="department_id" required>
-                
+
                                   <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
                                 </select>
                               </div>
@@ -387,6 +397,7 @@ onMounted(() => {
                                 <th>specialization</th>
                                 <th>contact_number</th>
                                 <th>Salary</th>
+                                <th>Department</th>
                                 <th>Appointments</th>
                                 <th>Options</th>
                             </tr>
@@ -399,6 +410,7 @@ onMounted(() => {
                                 <td>{{ doctor.specialization }}</td>
                                 <td>{{ doctor.contact_number }}</td>
                                 <td>{{ doctor.salary }}</td>
+                                <td>{{  doctor.department_name }}</td>
                                 <td class="centered-cell">
                                  <span class="appointment-count">{{ doctor.appointment_count }}</span>
                                 </td>
