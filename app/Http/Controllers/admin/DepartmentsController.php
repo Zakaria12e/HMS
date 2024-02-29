@@ -40,7 +40,7 @@ class DepartmentsController extends Controller
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
-            'chef_id' => 'required|exists:users,id',
+            'chef_id' => 'nullable|exists:users,id',
         ]);
 
         $newDepartment = Department::create([
@@ -57,7 +57,7 @@ class DepartmentsController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required|string|max:255',
-        'chef_id' => 'required|exists:doctors,doctor_id',
+        'chef_id' => 'nullable|exists:doctors,doctor_id',
     ]);
 
     try {

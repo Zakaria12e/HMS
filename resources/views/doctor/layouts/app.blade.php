@@ -76,7 +76,7 @@
 
 
 <li class="nav-item">
-<router-link to="/doctor/dashboard" active-class="active" class="nav-link">
+<router-link to="/doctor" active-class="active" class="nav-link">
 <i class="nav-icon fas fa-th"></i>
 <p>Dashboard</p>
 </router-link>

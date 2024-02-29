@@ -44,6 +44,12 @@ public function store(Request $request)
 
     ]);
 
+    $existingDoctor = User::where('email', $request->email)->first();
+
+    if ($existingDoctor) {
+        return response()->json(['error' => 'Email already exists']);
+    }
+
     $user = User::create([
         'name' => $validatedData['name'],
         'email' => $validatedData['email'],
@@ -96,6 +102,14 @@ public function update(Request $request, $id)
         'saturday' => 'nullable|boolean',
 
     ]);
+
+    $existingDoctor = User::where('email', $validatedData['email'])
+        ->where('id', '!=', $id)
+        ->first();
+
+    if ($existingDoctor) {
+        return response()->json(['error' => 'Email already exists'], 422);
+    }
 
 
     $user = User::findOrFail($id);

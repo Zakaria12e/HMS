@@ -12,7 +12,7 @@ class CreateDepartmentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('chef_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('chef_id')->nullable()->constrained('users', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }

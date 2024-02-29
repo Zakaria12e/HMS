@@ -139,6 +139,11 @@ const search = () => {
 const saveDoctor = async () => {
     try {
 
+        if (!form.name.trim() || !form.email.trim() || !form.specialization.trim() || !form.contactNumber.trim() || !form.salary.trim()) {
+            toastr.error('Please fill in all required fields');
+            return;
+        }
+
         const requestData = {
             name: form.name,
             email: form.email,
@@ -165,32 +170,50 @@ const saveDoctor = async () => {
             axios.put('/api/doctors/' + formValues.value.id, requestData)
              .then((response) => {
             const index = doctors.value.data.findIndex(doctor => doctor.id === response.data.id);
+
             doctors.value.data[index] = response.data;
 
             $('#createDoctorModal').modal('hide');
 
-
+            toastr.success('Doctor updated successfully');
+        getDoctors();
 
         }).catch((error) => {
-            setErrors(error.response.data.errors);
-            console.log(error);
+
+            if (error.response.status === 422 && error.response.data.error === 'Email already exists') {
+            toastr.error('Email already exists');
+            return;
+
+        } else {
+
+                    setErrors(error.response.data.errors);
+                    console.log(error);
+                }
+
         });
-        toastr.success('Doctor updated successfully');
-        getDoctors();
+
 
         } else {
 
             const response = await axios.post('/api/doctors', requestData);
+
+            if (response.data.error && response.data.error === 'Email already exists') {
+
+                toastr.error('Email already exists');
+                return;
+            } else {
 
             const newDoctor = response.data;
             doctors.value.data.push(newDoctor);
 
             getDoctors();
             toastr.success('Doctor added successfully');
+            clearForm();
+            $('#createDoctorModal').modal('hide');
         }
+    }
 
-        clearForm();
-        $('#createDoctorModal').modal('hide');
+
     } catch (error) {
         console.error('Error creating/updating doctor:', error);
     }

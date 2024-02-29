@@ -25,8 +25,12 @@ const getDepartments = () => {
     .then(async (response) => {
       const departmentsData = response.data;
       const departmentsWithUsers = await Promise.all(departmentsData.map(async (department) => {
-        const userResponse = await axios.get(`/api/users/${department.chef_id}`);
-        department.chef_name = userResponse.data.name;
+        if (department.chef_id !== null) {
+          const userResponse = await axios.get(`/api/users/${department.chef_id}`);
+          department.chef_name = userResponse.data.name;
+        } else {
+          department.chef_name = null;
+        }
         return department;
       }));
 
@@ -36,6 +40,7 @@ const getDepartments = () => {
       console.error('Error fetching departments:', error);
     });
 };
+
 
 
 
@@ -227,7 +232,7 @@ onMounted(() => {
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label for="description">Head of Department</label>
-                        <select v-model="form.chef_id" class="form-control" required>
+                        <select v-model="form.chef_id" class="form-control">
                         <option v-for="doctor in form.doctors.data" :key="doctor.id" :value="doctor.doctor_id"> {{ doctor.name }}</option>
                       </select>
 
@@ -263,7 +268,7 @@ onMounted(() => {
                     <td>{{ department.id }}</td>
                     <td>{{ department.name }}</td>
                     <td>{{ department.description }}</td>
-                    <td>{{ department.chef_name }}</td>
+                    <td>{{ department.chef_id ? department.chef_name : 'No Head of Department' }}</td>
                     <td>
                         <a href="#" @click="updateDepartment(department)"> <i class="fa fa-edit" style="color: #9528b8;"></i> </a>
                         <a href="#" @click="deleteDepartment(department)"> <i class="fa fa-trash text-danger ml-3"></i> </a>
