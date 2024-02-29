@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
+use App\Models\Department;
 use App\Models\WorkingHour;
 
 class DoctorController extends Controller
@@ -152,10 +153,31 @@ public function update(Request $request, $id)
 
     public function destroy($id)
     {
-        User::destroy($id);
-        Doctor::where('doctor_id', $id)->delete();
+
+        try{
+
+
+            $user = User::findOrFail($id);
+
+
+            $departmentChef = Department::where('chef_id', $user->id)->first();
+
+            if ($departmentChef) {
+
+                $departmentChef->chef_id = null;
+                $departmentChef->save();
+            }
+
+         User::destroy($id);
+         Doctor::where('doctor_id', $id)->delete();
 
         return response()->json(['message' => 'Doctor deleted successfully']);
+
+      } catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to delete doctor.'], 500);
+     }
+
+
     }
 
 
@@ -166,7 +188,10 @@ public function update(Request $request, $id)
 
             $doctors = DB::table('doctors')
                 ->join('users', 'doctors.doctor_id', '=', 'users.id')
-                ->select('doctors.doctor_id', 'users.name', 'users.email','users.contact_number', 'doctors.specialization', 'doctors.salary')
+                ->select('doctors.doctor_id', 'doctors.department_id', 'users.name', 'users.email','users.contact_number', 'doctors.specialization', 'doctors.salary',DB::raw('COUNT(appointments.doctor_id) as appointment_count'),
+                'departments.name as department_name')
+                ->leftJoin('appointments', 'doctors.doctor_id', '=', 'appointments.doctor_id')
+                ->leftJoin('departments', 'doctors.department_id', '=', 'departments.id')
                 ->where('users.type', 'doctor')
                 ->where(function ($queryBuilder) use ($query) {
                     $queryBuilder->where('users.name', 'LIKE', '%' . $query . '%')
@@ -175,6 +200,17 @@ public function update(Request $request, $id)
                         ->orWhere('users.contact_number', 'LIKE', '%' . $query . '%')
                         ->orWhere('doctors.salary', 'LIKE', '%' . $query . '%');
                 })
+                ->groupBy(
+                    'doctors.doctor_id',
+                    'doctors.department_id',
+                    'users.name',
+                    'users.email',
+                    'users.password',
+                    'doctors.specialization',
+                    'users.contact_number',
+                    'doctors.salary',
+                    'departments.name'
+                )
                 ->paginate(5);
 
 

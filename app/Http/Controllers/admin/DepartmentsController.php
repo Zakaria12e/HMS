@@ -81,6 +81,8 @@ public function destroy($id)
 {
     try {
         $department = Department::findOrFail($id);
+        
+        $department->doctors()->update(['department_id' => null]);
 
         $department->delete();
 
