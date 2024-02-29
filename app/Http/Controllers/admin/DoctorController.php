@@ -15,9 +15,9 @@ class DoctorController extends Controller
         ->join('users', 'doctors.doctor_id', '=', 'users.id')
         ->join('working_hours', 'doctors.doctor_id', '=', 'working_hours.doctor_id')
         ->leftJoin('appointments', 'doctors.doctor_id', '=', 'appointments.doctor_id')
-        ->select('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary' ,'working_hours.monday','working_hours.tuesday','working_hours.wednesday','working_hours.thursday','working_hours.friday', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
+        ->select('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary' ,'working_hours.monday','working_hours.tuesday','working_hours.wednesday','working_hours.thursday','working_hours.friday','working_hours.sunday','working_hours.saturday', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
         ->where('users.type', 'doctor')
-        ->groupBy('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', 'working_hours.monday', 'working_hours.tuesday', 'working_hours.wednesday', 'working_hours.thursday', 'working_hours.friday')
+        ->groupBy('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', 'working_hours.monday', 'working_hours.tuesday', 'working_hours.wednesday', 'working_hours.thursday', 'working_hours.friday','working_hours.sunday','working_hours.saturday')
         ->paginate(5);
 
     return response()->json($doctors);
@@ -33,12 +33,15 @@ public function store(Request $request)
         'specialization' => 'required|string',
         'contact_number' => 'required|string',
         'salary' => 'required|numeric',
-        'department_id' => 'required|numeric',
+        'department_id' => 'nullable|exists:departments,id',
         'monday' => 'nullable|boolean',
         'tuesday' => 'nullable|boolean',
         'wednesday' => 'nullable|boolean',
         'thursday' => 'nullable|boolean',
         'friday' => 'nullable|boolean',
+        'sunday' => 'nullable|boolean',
+        'saturday' => 'nullable|boolean',
+
     ]);
 
     $user = User::create([
@@ -64,6 +67,9 @@ public function store(Request $request)
             'wednesday' => $validatedData['wednesday'] ?? false,
             'thursday' => $validatedData['thursday'] ?? false,
             'friday' => $validatedData['friday'] ?? false,
+            'sunday' => $validatedData['sunday'] ?? false,
+            'saturday' => $validatedData['saturday'] ?? false,
+
         ]);
 
 
@@ -80,12 +86,15 @@ public function update(Request $request, $id)
         'specialization' => 'required|string',
         'contact_number' => 'required|string',
         'salary' => 'required|numeric',
-        'department_id' => 'required|numeric',
+        'department_id' => 'nullable|exists:departments,id',
         'monday' => 'nullable|boolean',
         'tuesday' => 'nullable|boolean',
         'wednesday' => 'nullable|boolean',
         'thursday' => 'nullable|boolean',
         'friday' => 'nullable|boolean',
+        'sunday' => 'nullable|boolean',
+        'saturday' => 'nullable|boolean',
+
     ]);
 
 
@@ -116,6 +125,8 @@ public function update(Request $request, $id)
         'wednesday' => $validatedData['wednesday'] ?? false,
         'thursday' => $validatedData['thursday'] ?? false,
         'friday' => $validatedData['friday'] ?? false,
+        'sunday' => $validatedData['sunday'] ?? false,
+        'saturday' => $validatedData['saturday'] ?? false,
     ]);
 
 

@@ -25,6 +25,8 @@ const form = reactive({
   wednesday: false,
   thursday: false,
   friday: false,
+  saturday: false,
+  sunday: false,
   department_id: '',
 });
 
@@ -89,9 +91,11 @@ const updateDoctor = (doctor) => {
         wednesday: doctor.wednesday,
         thursday: doctor.thursday,
         friday: doctor.friday,
+        saturday: doctor.saturday,
+        sunday: doctor.sunday,
     };
 
-    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].forEach(day => {
+    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday' , 'saturday' , 'sunday'].forEach(day => {
         form[day] = formValues.value[day];
     });
 
@@ -146,6 +150,8 @@ const saveDoctor = async () => {
             wednesday: form.wednesday,
             thursday: form.thursday,
             friday: form.friday,
+            saturday: form.saturday,
+            sunday: form.sunday,
             department_id: form.department_id,
 
         };
@@ -204,6 +210,8 @@ const clearForm = () => {
     form.wednesday = false;
     form.thursday = false;
     form.friday = false;
+    form.saturday = false;
+    form.sunday = false;
 };
 
 
@@ -363,11 +371,21 @@ onMounted(() => {
                                     <label v-if="form.friday == 1" class="form-check-label" :style="{ color: 'green' }" for="friday">Friday</label>
                                     <label v-else class="form-check-label" for="friday">Friday</label>
                                 </div>
+                                <div class="form-check">
+                                    <input v-model="form.saturday" type="checkbox" class="form-check-input" :checked="Boolean(form.saturday)" id="saturday">
+                                    <label v-if="form.saturday == 1" class="form-check-label" :style="{ color: 'green' }" for="saturday">Saturday</label>
+                                    <label v-else class="form-check-label" for="saturday">Saturday</label>
+                                </div>
+                                <div class="form-check">
+                                    <input v-model="form.sunday" type="checkbox"  class="form-check-input" :checked="Boolean(form.sunday)" id="sunday">
+                                    <label v-if="form.sunday == 1" class="form-check-label" :style="{ color: 'green' }" for="sunday">Sunday</label>
+                                    <label v-else class="form-check-label" for="sunday">Sunday</label>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="department_id">Department</label>
-                                <select v-model="form.department_id" class="form-control" id="department_id" required>
+                                <select v-model="form.department_id" class="form-control" id="department_id">
 
                                   <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
                                 </select>

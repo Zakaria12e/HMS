@@ -288,8 +288,6 @@
                                 <option value="4">2PM TO 4PM</option>
                                 <option value="5">4PM TO 6PM</option>
                                 <option value="6">6PM TO 8PM</option>
-                                <option value="7">8PM TO 10PM</option>
-                                <option value="8">10PM TO 12PM</option>
                             </select>
                         </div>
                     </div>

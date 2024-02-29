@@ -16,6 +16,8 @@ class WorkingHour extends Model
         'wednesday',
         'thursday',
         'friday',
+        'saturday',
+        'sunday',
     ];
 
     public function doctor()

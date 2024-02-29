@@ -16,6 +16,8 @@ return new class extends Migration
             $table->integer('wednesday')->default(1);
             $table->integer('thursday')->default(1);
             $table->integer('friday')->default(1);
+            $table->integer('saturday')->default(0);
+            $table->integer('sunday')->default(0);
             $table->timestamps();
         });
     }

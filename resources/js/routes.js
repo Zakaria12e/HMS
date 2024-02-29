@@ -3,6 +3,7 @@ import Appointments from './components/admin/Appointments.vue';
 import Patients from './components/admin/Patients.vue';
 import UpdateProfile from './components/admin/UpdateProfile.vue';
 import Doctors from './components/admin/Doctors.vue';
+import Profile from './components/admin/Profile.vue';
 import Invoices from './components/admin/Invoices.vue';
 
 import Patients_doc from './components/doctor/Patients.vue';
@@ -53,6 +54,12 @@ export default [
         path: '/admin/doctors',
         name: 'admin.doctors',
         component: Doctors,
+    },
+    {
+
+        path: '/admin/profile',
+        name: 'admin.profile',
+        component: Profile,
     },
     {
 
