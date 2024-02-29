@@ -29,5 +29,9 @@ class Doctor extends Model
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+    public function workingHours()
+    {
+        return $this->hasMany(WorkingHours::class);
+    }
 }
 

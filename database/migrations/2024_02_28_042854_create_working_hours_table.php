@@ -11,13 +11,9 @@ return new class extends Migration
         Schema::create('working_hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('doctor_id')->constrained('doctors', 'doctor_id')->onDelete('cascade');
-            $table->integer('monday')->default(1);
-            $table->integer('tuesday')->default(1);
-            $table->integer('wednesday')->default(1);
-            $table->integer('thursday')->default(1);
-            $table->integer('friday')->default(1);
-            $table->integer('saturday')->default(0);
-            $table->integer('sunday')->default(0);
+            $table->string('day');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

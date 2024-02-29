@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Department;
-use App\Models\WorkingHour;
 
 class DoctorController extends Controller
 {
@@ -14,11 +13,10 @@ class DoctorController extends Controller
 {
     $doctors = DB::table('doctors')
         ->join('users', 'doctors.doctor_id', '=', 'users.id')
-        ->join('working_hours', 'doctors.doctor_id', '=', 'working_hours.doctor_id')
         ->leftJoin('appointments', 'doctors.doctor_id', '=', 'appointments.doctor_id')
-        ->select('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary' ,'working_hours.monday','working_hours.tuesday','working_hours.wednesday','working_hours.thursday','working_hours.friday','working_hours.sunday','working_hours.saturday', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
+        ->select('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
         ->where('users.type', 'doctor')
-        ->groupBy('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', 'working_hours.monday', 'working_hours.tuesday', 'working_hours.wednesday', 'working_hours.thursday', 'working_hours.friday','working_hours.sunday','working_hours.saturday')
+        ->groupBy('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary')
         ->paginate(5);
 
     return response()->json($doctors);
@@ -35,14 +33,6 @@ public function store(Request $request)
         'contact_number' => 'required|string',
         'salary' => 'required|numeric',
         'department_id' => 'nullable|exists:departments,id',
-        'monday' => 'nullable|boolean',
-        'tuesday' => 'nullable|boolean',
-        'wednesday' => 'nullable|boolean',
-        'thursday' => 'nullable|boolean',
-        'friday' => 'nullable|boolean',
-        'sunday' => 'nullable|boolean',
-        'saturday' => 'nullable|boolean',
-
     ]);
 
     $existingDoctor = User::where('email', $request->email)->first();
@@ -67,18 +57,6 @@ public function store(Request $request)
         'salary' => $validatedData['salary'],
     ]);
 
-    $workingHours = WorkingHour::create([
-            'doctor_id' => $doctor->doctor_id,
-            'monday' => $validatedData['monday'] ?? false,
-            'tuesday' => $validatedData['tuesday'] ?? false,
-            'wednesday' => $validatedData['wednesday'] ?? false,
-            'thursday' => $validatedData['thursday'] ?? false,
-            'friday' => $validatedData['friday'] ?? false,
-            'sunday' => $validatedData['sunday'] ?? false,
-            'saturday' => $validatedData['saturday'] ?? false,
-
-        ]);
-
 
     return response()->json($doctor, 201);
 }
@@ -94,13 +72,6 @@ public function update(Request $request, $id)
         'contact_number' => 'required|string',
         'salary' => 'required|numeric',
         'department_id' => 'nullable|exists:departments,id',
-        'monday' => 'nullable|boolean',
-        'tuesday' => 'nullable|boolean',
-        'wednesday' => 'nullable|boolean',
-        'thursday' => 'nullable|boolean',
-        'friday' => 'nullable|boolean',
-        'sunday' => 'nullable|boolean',
-        'saturday' => 'nullable|boolean',
 
     ]);
 
@@ -115,7 +86,6 @@ public function update(Request $request, $id)
 
     $user = User::findOrFail($id);
     $doctor = Doctor::where('doctor_id', $id)->firstOrFail();
-    $workingHour = WorkingHour::where('doctor_id', $id)->firstOrFail();
 
 
     $user->update([
@@ -134,15 +104,6 @@ public function update(Request $request, $id)
         'department_id' => $validatedData['department_id'],
     ]);
 
-    $workingHour->update([
-        'monday' => $validatedData['monday'] ?? false,
-        'tuesday' => $validatedData['tuesday'] ?? false,
-        'wednesday' => $validatedData['wednesday'] ?? false,
-        'thursday' => $validatedData['thursday'] ?? false,
-        'friday' => $validatedData['friday'] ?? false,
-        'sunday' => $validatedData['sunday'] ?? false,
-        'saturday' => $validatedData['saturday'] ?? false,
-    ]);
 
 
 
@@ -201,16 +162,16 @@ public function update(Request $request, $id)
                         ->orWhere('doctors.salary', 'LIKE', '%' . $query . '%');
                 })
                 ->groupBy(
-                    'doctors.doctor_id',
-                    'doctors.department_id',
-                    'users.name',
-                    'users.email',
-                    'users.password',
-                    'doctors.specialization',
-                    'users.contact_number',
-                    'doctors.salary',
-                    'departments.name'
-                )
+            'doctors.doctor_id',
+            'doctors.department_id',
+            'users.name',
+            'users.email',
+            'users.password',
+            'doctors.specialization',
+            'users.contact_number',
+            'doctors.salary',
+            'departments.name'
+        )
                 ->paginate(5);
 
 

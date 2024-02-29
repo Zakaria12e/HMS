@@ -5,20 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WorkingHour extends Model
+class WorkingHours extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'doctor_id',
-        'monday',
-        'tuesday',
-        'wednesday',
-        'thursday',
-        'friday',
-        'saturday',
-        'sunday',
-    ];
+    protected $fillable = ['day', 'start_time', 'end_time', 'doctor_id'];
 
     public function doctor()
     {

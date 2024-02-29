@@ -11,6 +11,74 @@ const toastr = useToastr();
 const doctors = ref({'data':[]});
 const updating = ref(false);
 const formValues = ref();
+const workingHoursModal = ref(null);
+const existingWorkingHours = ref([]);
+const workingHoursForm = reactive({
+    id: null,
+    day: '',
+    start_time: '',
+    end_time: '',
+});
+
+const openWorkingHoursModal = async (doc_id) => {
+
+    workingHoursForm.id = doc_id;
+    workingHoursForm.day = '';
+    workingHoursForm.start_time = '';
+    workingHoursForm.end_time = '';
+
+    try {
+        const response = await axios.get(`/api/working-hours/${doc_id}`);
+        existingWorkingHours.value = response.data;
+    } catch (error) {
+        console.error('Error fetching existing working hours', error);
+    }
+
+    $('#workingHoursModal').modal('show');
+};
+
+
+
+
+const addWorkingHours = async () => {
+    try {
+        if (!workingHoursForm.id) {
+            console.error('Invalid doctor ID');
+            return;
+        }
+
+        const requestData = {
+            day: workingHoursForm.day,
+            start_time: workingHoursForm.start_time,
+            end_time: workingHoursForm.end_time,
+            doctor_id: workingHoursForm.id,
+        };
+
+        const existingWorkingHours = await axios.get(`/api/working-hours/check`, {
+            params: {
+                doctor_id: workingHoursForm.id,
+                day: workingHoursForm.day,
+            },
+        });
+
+        if (existingWorkingHours.data.exists) {
+
+           toastr.error('Working hours already exist for this day');
+            return;
+        }
+
+        const response = await axios.post('/api/working-hours', requestData);
+
+        $('#workingHoursModal').modal('hide');
+        toastr.success('Working hours added successfully');
+    } catch (error) {
+        console.error('Error adding working hours:', error);
+    }
+};
+
+
+
+
 
 
 const form = reactive({
@@ -20,13 +88,6 @@ const form = reactive({
   specialization: '',
   contactNumber: '',
   salary: '',
-  monday: false,
-  tuesday: false,
-  wednesday: false,
-  thursday: false,
-  friday: false,
-  saturday: false,
-  sunday: false,
   department_id: '',
 });
 
@@ -86,18 +147,10 @@ const updateDoctor = (doctor) => {
         specialization: doctor.specialization,
         contactNumber: doctor.contact_number,
         salary: doctor.salary,
-        monday: doctor.monday,
-        tuesday: doctor.tuesday,
-        wednesday: doctor.wednesday,
-        thursday: doctor.thursday,
-        friday: doctor.friday,
-        saturday: doctor.saturday,
-        sunday: doctor.sunday,
+
     };
 
-    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday' , 'saturday' , 'sunday'].forEach(day => {
-        form[day] = formValues.value[day];
-    });
+
 
     form.name = formValues.value.name;
     form.email = formValues.value.email;
@@ -150,13 +203,6 @@ const saveDoctor = async () => {
             specialization: form.specialization,
             contact_number: form.contactNumber,
             salary: form.salary,
-            monday: form.monday,
-            tuesday: form.tuesday,
-            wednesday: form.wednesday,
-            thursday: form.thursday,
-            friday: form.friday,
-            saturday: form.saturday,
-            sunday: form.sunday,
             department_id: form.department_id,
 
         };
@@ -228,13 +274,6 @@ const clearForm = () => {
     form.specialization = '';
     form.contactNumber = '';
     form.salary = '';
-    form.monday = false;
-    form.tuesday = false;
-    form.wednesday = false;
-    form.thursday = false;
-    form.friday = false;
-    form.saturday = false;
-    form.sunday = false;
 };
 
 
@@ -316,7 +355,7 @@ onMounted(() => {
 
 
               <div class="modal fade" id="createDoctorModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                       <div class="modal-header">
 
@@ -333,9 +372,9 @@ onMounted(() => {
 
 
                       <form :initial-values="formValues">
-                      <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                      <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 40px;">
 
-                              <div class="form-group" style="flex: 1;">
+                              <div class="form-group">
                                   <label for="name">Name</label>
                                   <input v-model="form.name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter name" required>
 
@@ -367,46 +406,7 @@ onMounted(() => {
                                   <input v-model="form.salary" type="text" class="form-control" id="salary" aria-describedby="salaryHelp" placeholder="Enter salary" required>
                               </div>
 
-                            <div class="form-group" >
-                                <label>Working Days</label>
-                                <div class="form-check">
-                                    <input v-model="form.monday" type="checkbox" class="form-check-input" :checked="Boolean(form.monday)" id="monday">
-                                    <label v-if="form.monday == 1" class="form-check-label" :style="{ color: 'green' }" for="monday">Monday</label>
-                                    <label v-else class="form-check-label" for="monday">Monday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.tuesday" type="checkbox" class="form-check-input" :checked="Boolean(form.tuesday)" id="tuesday">
-                                    <label v-if="form.tuesday == 1" class="form-check-label" :style="{ color: 'green' }" for="tuesday">Tuesday</label>
-                                    <label v-else class="form-check-label" for="tuesday">Tuesday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.wednesday" type="checkbox" class="form-check-input" :checked="Boolean(form.wednesday)" id="wednesday">
-                                    <label v-if="form.wednesday == 1" class="form-check-label" :style="{ color: 'green' }" for="wednesday">Wednesday</label>
-                                    <label v-else class="form-check-label" for="wednesday">Wednesday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.thursday" type="checkbox" class="form-check-input" :checked="Boolean(form.thursday)" id="thursday">
-                                    <label v-if="form.thursday == 1" class="form-check-label" :style="{ color: 'green' }" for="thursday">Thursday</label>
-                                    <label v-else class="form-check-label" for="thursday">Thursday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.friday" type="checkbox"  class="form-check-input" :checked="Boolean(form.friday)" id="friday">
-                                    <label v-if="form.friday == 1" class="form-check-label" :style="{ color: 'green' }" for="friday">Friday</label>
-                                    <label v-else class="form-check-label" for="friday">Friday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.saturday" type="checkbox" class="form-check-input" :checked="Boolean(form.saturday)" id="saturday">
-                                    <label v-if="form.saturday == 1" class="form-check-label" :style="{ color: 'green' }" for="saturday">Saturday</label>
-                                    <label v-else class="form-check-label" for="saturday">Saturday</label>
-                                </div>
-                                <div class="form-check">
-                                    <input v-model="form.sunday" type="checkbox"  class="form-check-input" :checked="Boolean(form.sunday)" id="sunday">
-                                    <label v-if="form.sunday == 1" class="form-check-label" :style="{ color: 'green' }" for="sunday">Sunday</label>
-                                    <label v-else class="form-check-label" for="sunday">Sunday</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
+                            <div class="form-group" style="flex: 1;">
                                 <label for="department_id">Department</label>
                                 <select v-model="form.department_id" class="form-control" id="department_id">
 
@@ -425,6 +425,64 @@ onMounted(() => {
                   </div>
               </div>
           </div>
+
+
+          <div class="modal fade" id="workingHoursModal" tabindex="-1" role="dialog" aria-labelledby="workingHoursModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="workingHoursModalLabel">Add Working Hours</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add your form elements for working hours here -->
+                    <div class="form-group">
+                        <label for="day">Day</label>
+                        <select v-model="workingHoursForm.day" class="form-control" id="day" required>
+                            <option value="" disabled>Select a day</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start_time">Start Time</label>
+                        <input v-model="workingHoursForm.start_time" type="time" class="form-control" id="start_time"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_time">End Time</label>
+                        <input v-model="workingHoursForm.end_time" type="time" class="form-control" id="end_time" required>
+                    </div>
+                </div>
+
+                <div style="padding-left: 10px;" v-if="existingWorkingHours.length > 0">
+                    <p><b>Existing Working Hours:</b></p>
+                    <div class="row">
+                        <div class="col-md-6" v-for="(days, index) in existingWorkingHours" :key="index">
+                  <div class="mb-3">
+                       {{ days.day }}: {{ days.start_time }} - {{ days.end_time }}
+                 <a href="#" class="ml-3"><i class="fa fa-trash text-danger"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button @click="addWorkingHours" type="button" class="btn btn-purple">Add Working Hours</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
             <div class="card">
                 <div class="card-body">
@@ -451,19 +509,20 @@ onMounted(() => {
                                 <td>{{ doctor.specialization }}</td>
                                 <td>{{ doctor.contact_number }}</td>
                                 <td>{{ doctor.salary }}</td>
-                                <td>{{  doctor.department_name }}</td>
+                                <td>{{ doctor.department_name }}</td>
                                 <td class="centered-cell">
                                  <span class="appointment-count">{{ doctor.appointment_count }}</span>
                                 </td>
                                 <td>
                                     <a href="#" @click.prevent="updateDoctor(doctor)">  <i class="fa fa-edit" style="color: #9528b8;"></i> </a>
                                     <a href="#" @click.prevent="deleteDoctor(doctor)">  <i class="fa fa-trash text-danger ml-3"></i> </a>
+                                    <a href="#" @click.prevent="openWorkingHoursModal(doctor.doctor_id)"> <i class="fa fa-calendar-alt  ml-3" style="color: black;"></i></a>
 
                                 </td>
                             </tr>
                         </tbody>
                         <tbody v-else>
-                            <td colspan="8" class="text-center">No result found</td>
+                            <td colspan="9" class="text-center">No result found</td>
                         </tbody>
 
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\DepartmentsController;
+use App\Http\Controllers\admin\WorkingHoursController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,10 @@ Route::get('/admin/{view?}', [ApplicationController::class, 'admin'])->where('vi
 Route::get('/api/doctors', [DoctorController::class, 'index']);
 Route::post('/api/doctors', [DoctorController::class, 'store']);
 Route::get('/api/doctors/getDoctorsForDepartments', [DoctorController::class, 'index']);
+
+Route::post('/api/working-hours', [WorkingHoursController::class, 'store']);
+Route::get('/api/working-hours/check', [WorkingHoursController::class, 'check']);
+Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'read']);
 
 Route::get('/api/doctors/search', [DoctorController::class, 'search']);
 Route::put('/api/doctors/{id}', [DoctorController::class, 'update']);
