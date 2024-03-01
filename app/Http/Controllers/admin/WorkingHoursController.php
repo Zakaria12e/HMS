@@ -53,4 +53,18 @@ class WorkingHoursController extends Controller
         return response()->json(['error' => 'Internal Server Error'], 500);
     }
 }
+
+
+public function destroy($id)
+{
+    try {
+        $workingHour = WorkingHours::findOrFail($id);
+        $workingHour->delete();
+
+        return response()->json(['message' => 'Working hour deleted successfully']);
+    } catch (\Exception $e) {
+
+        return response()->json(['error' => 'Failed to delete working hour'], 500);
+    }
+}
 }

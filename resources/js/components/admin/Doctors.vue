@@ -20,12 +20,7 @@ const workingHoursForm = reactive({
     end_time: '',
 });
 
-const openWorkingHoursModal = async (doc_id) => {
-
-    workingHoursForm.id = doc_id;
-    workingHoursForm.day = '';
-    workingHoursForm.start_time = '';
-    workingHoursForm.end_time = '';
+const getdays = async(doc_id) => {
 
     try {
         const response = await axios.get(`/api/working-hours/${doc_id}`);
@@ -33,6 +28,17 @@ const openWorkingHoursModal = async (doc_id) => {
     } catch (error) {
         console.error('Error fetching existing working hours', error);
     }
+
+};
+
+const openWorkingHoursModal = async (doc_id) => {
+
+    workingHoursForm.id = doc_id;
+    workingHoursForm.day = '';
+    workingHoursForm.start_time = '';
+    workingHoursForm.end_time = '';
+
+    getdays(doc_id);
 
     $('#workingHoursModal').modal('show');
 };
@@ -73,6 +79,23 @@ const addWorkingHours = async () => {
         toastr.success('Working hours added successfully');
     } catch (error) {
         console.error('Error adding working hours:', error);
+    }
+};
+
+
+
+
+
+const deleteWorkingDay = async (dayId , doc_id) => {
+    try {
+
+        const response = await axios.delete(`/api/working-hours/${dayId}`);
+
+        getdays(doc_id);
+
+        toastr.success('Working day deleted successfully');
+    } catch (error) {
+        console.error('Error deleting working day:', error);
     }
 };
 
@@ -465,12 +488,12 @@ onMounted(() => {
                 </div>
 
                 <div style="padding-left: 10px;" v-if="existingWorkingHours.length > 0">
-                    <p><b>Existing Working Hours:</b></p>
+                    <p><b>Existing Working Days:</b></p>
                     <div class="row">
                         <div class="col-md-6" v-for="(days, index) in existingWorkingHours" :key="index">
                   <div class="mb-3">
                        {{ days.day }}: {{ days.start_time }} - {{ days.end_time }}
-                 <a href="#" class="ml-3"><i class="fa fa-trash text-danger"></i></a>
+                 <a href="#"  @click.prevent="deleteWorkingDay(days.id , days.doctor_id)" class="ml-3"><i class="fa fa-trash text-danger"></i></a>
             </div>
         </div>
     </div>

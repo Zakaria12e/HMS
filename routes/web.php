@@ -52,6 +52,7 @@ Route::get('/api/doctors/getDoctorsForDepartments', [DoctorController::class, 'i
 Route::post('/api/working-hours', [WorkingHoursController::class, 'store']);
 Route::get('/api/working-hours/check', [WorkingHoursController::class, 'check']);
 Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'read']);
+Route::delete('/api/working-hours/{dayId}', [WorkingHoursController::class, 'destroy']);
 
 Route::get('/api/doctors/search', [DoctorController::class, 'search']);
 Route::put('/api/doctors/{id}', [DoctorController::class, 'update']);
