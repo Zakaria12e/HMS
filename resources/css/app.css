@@ -7,40 +7,45 @@
 
 .sidebar-dark-primary .nav-sidebar .nav-link.active , .nav-icon.active  {
 
-    background-color: rgb(238, 238, 238)  !important;
+    background-color: #443c9c  !important;
     color: black !important;
 }
 .sidebar-dark-primary .nav-sidebar :hover{
 
     color: black !important;
-    background-color:  rgb(238, 238, 238)  !important;
+    background-color:  #362e7b  !important;
 }
 
 p, .sidebar-title , .d-block{
-    color: black !important;
+    color: #bcb4cc !important;
 
 }
 
 .main-sidebar {
-    background-color: white !important;
+    background-color: #242c44 !important;
     color: black !important;
 }
 
 .nav-icon {
-    color: black !important;
+    color: #bcb4cc !important;
 }
 
 .btn-purple {
-    background-color:#9528b8;
+    background-color:#362e7b;
     color: white;
 }
 .btn-purple:hover {
-    background-color:#c16cdd;
+    background-color: #4e4883;
 
 
 }
+
+.small-box-footer{
+
+    background-color:#362e7b !important;
+}
 .badge-purple {
-    background-color: #9528b8;
+    background-color: #362e7b;
     color: white;
   }
   .centered-cell {
@@ -53,9 +58,9 @@ p, .sidebar-title , .d-block{
   }
   section.breadcrumb_part {
     text-align: center;
-    padding: 100px 0; /* Adjust the padding as needed */
-    background: linear-gradient(to right, #2a8aca, #e4e2e2); /* Mix of blue and white */
-     /* Set the text color to white */
+    padding: 100px 0;
+    background: linear-gradient(to right, #2a8aca, #e4e2e2);
+
 }
 
 section.breadcrumb_part h2 {

@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
 @import url(https://fonts.googleapis.com/css?family=Arimo:300,400,400italic,700,700italic);
-/* ===================================== Basic CSS ==================================== */
+
 * {
   margin: 0px;
   padding: 0px;
@@ -47,7 +47,7 @@ textarea {
 }
 
 .form-08{
-  background-image:url('');
+  background-image:url('images/bg.jpeg');
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center;

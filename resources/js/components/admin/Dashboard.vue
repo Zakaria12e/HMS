@@ -108,10 +108,8 @@ onMounted(() => {
                             </div>
                             <p>Invoices</p>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <router-link to="/admin/invoices"  class="small-box-footer bg-gray">
+
+                        <router-link to="/admin/invoices"  class="small-box-footer">
                             View Invoices
                         </router-link>
                     </div>
@@ -129,7 +127,7 @@ onMounted(() => {
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <router-link to="/admin/appointments"  class="small-box-footer bg-gray">
+                        <router-link to="/admin/appointments"  class="small-box-footer">
                             View Appointments
                         </router-link>
                     </div>
@@ -154,7 +152,7 @@ onMounted(() => {
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <router-link to="/admin/patients" class="small-box-footer bg-gray">
+                        <router-link to="/admin/patients" class="small-box-footer">
                             View Patients
                         </router-link>
                     </div>
@@ -172,7 +170,7 @@ onMounted(() => {
                         <div class="icon ">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <router-link to="/admin/doctors" class="small-box-footer bg-gray">
+                        <router-link to="/admin/doctors" class="small-box-footer">
                             View Doctors
                         </router-link>
                     </div>

@@ -10,6 +10,7 @@
 @vite(['resources/css/app.css','resources/js/app.js'])
 
 
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -23,20 +24,52 @@
 
 </ul>
 
+
+
+<ul class="navbar-nav ml-auto">
+    <!-- Authentication Links -->
+    @guest
+        @if (Route::has('login'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+        @endif
+
+        @if (Route::has('register'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            </li>
+        @endif
+    @else
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+               <router-link to="/admin/profile" class="dropdown-item">Profile</router-link>
+               <a class="dropdown-item" href="{{ route('logout') }}">logout</a>
+
+
+            </div>
+        </li>
+    @endguest
+</ul>
+
 </nav>
 
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-<a href="#" class="brand-link">
+<div class="brand-link" style="text-align: center;">
 <span class="sidebar-title" style="font-weight: 600;">ADMIN PANEL</span>
-</a>
+</div>
 
 <div class="sidebar">
 
-<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+<div class="mt-3 pb-3 mb-3">
 <div class="info">
-<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
+
 </div>
 </div>
 
@@ -82,19 +115,6 @@
                 <p>Invoices</p>
             </router-link>
         </li>
-
-        <li class="nav-item">
-            <router-link to="/admin/profile" active-class="active" class="nav-link">
-            <i class="nav-icon fas fa-user"></i>
-            <p>Profile</p>
-            </router-link>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('logout')}}" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>Logout</p>
-                </a>
-                </li>
 </ul>
 </nav>
 
@@ -117,15 +137,9 @@
 </div>
 
 
-<aside class="control-sidebar control-sidebar-dark">
 
-<div class="p-3">
-<h5>Title</h5>
-<p>Sidebar content</p>
-</div>
-</aside>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
