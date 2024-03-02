@@ -234,7 +234,8 @@ const saveDoctor = async () => {
             requestData.password = form.password;
         }
 
-        if (updating.value) {
+
+          if (updating.value) {
 
             axios.put('/api/doctors/' + formValues.value.id, requestData)
              .then((response) => {
@@ -428,6 +429,8 @@ onMounted(() => {
                                   <label for="salary">Salary</label>
                                   <input v-model="form.salary" type="text" class="form-control" id="salary" aria-describedby="salaryHelp" placeholder="Enter salary" required>
                               </div>
+
+
 
                             <div class="form-group" style="flex: 1;">
                                 <label for="department_id">Department</label>

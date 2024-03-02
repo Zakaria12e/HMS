@@ -6,7 +6,7 @@ const doctors = ref({'data':[]});
 
 const getDoctors = async () => {
   try {
-    const response = await axios.get('/api/doctors');
+    const response = await axios.get('/api/patient/doctors');
     doctors.value = response.data.data;
 
   } catch (error) {

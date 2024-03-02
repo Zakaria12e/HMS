@@ -1,22 +1,50 @@
 <script setup>
 
+
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+
+const doctor = ref({ 'data': [] });
+const route = useRoute();
+
+const getDoctor = async () => {
+    try {
+        const response = await axios.get(`/patient/doctorinformation/${route.params.id}`);
+        doctor.value = response.data;
+
+    } catch (error) {
+        console.error('Error fetching doctor informations:', error);
+    }
+};
+
+
+onMounted(async () => {
+    getDoctor();
+});
 </script>
 
 <template>
 
-    <section class="breadcrumb_part breadcrumb_bg">
-        <div class="container">
-        <div class="row">
-        <div class="col-lg-12">
-        <div class="breadcrumb_iner">
-        <div class="breadcrumb_iner_item">
 
-        <h1>DOCTOR ID: {{ $route.params.id }}</h1>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
+
+        <section class="doctor-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6" v-if="doctor">
+                        <div class="doctor-info">
+                            <h2>{{ doctor.name }}</h2>
+                            <p>Email: {{ doctor.email }}</p>
+                            <p>Specialization: {{ doctor.specialization }}</p>
+                            <p>Department ID: {{ doctor.department_id }}</p>
+                            <p>Contact Number: {{ doctor.contact_number }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" v-else>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
 

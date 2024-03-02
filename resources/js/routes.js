@@ -106,6 +106,7 @@ export default [
         path: '/home/doctor-info/:id',
         name: 'patient.DoctorInfo',
         component: DoctorInfo,
+       
     },
     {
 

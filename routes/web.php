@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\DepartmentsController;
 use App\Http\Controllers\admin\WorkingHoursController;
+use App\Http\Controllers\Patient\DoctorInformationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,15 +49,16 @@ Route::get('/admin/{view?}', [ApplicationController::class, 'admin'])->where('vi
 Route::get('/api/doctors', [DoctorController::class, 'index']);
 Route::post('/api/doctors', [DoctorController::class, 'store']);
 Route::get('/api/doctors/getDoctorsForDepartments', [DoctorController::class, 'index']);
+Route::get('/api/doctors/search', [DoctorController::class, 'search']);
+Route::put('/api/doctors/{id}', [DoctorController::class, 'update']);
+Route::delete('/api/doctors/{id}', [DoctorController::class, 'destroy']);
+
 
 Route::post('/api/working-hours', [WorkingHoursController::class, 'store']);
 Route::get('/api/working-hours/check', [WorkingHoursController::class, 'check']);
 Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'read']);
 Route::delete('/api/working-hours/{dayId}', [WorkingHoursController::class, 'destroy']);
 
-Route::get('/api/doctors/search', [DoctorController::class, 'search']);
-Route::put('/api/doctors/{id}', [DoctorController::class, 'update']);
-Route::delete('/api/doctors/{id}', [DoctorController::class, 'destroy']);
 
 Route::post('/api/users/batch', [PatientController::class, 'batchFetch']);
 Route::get('/api/users', [PatientController::class, 'index']);
@@ -91,6 +93,9 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
 
     //patient routes
     Route::get('/home', [ApplicationController::class, 'home'])->name('patient.home');
+    Route::get('/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);
+    Route::get('/api/patient/doctors', [DoctorInformationController::class, 'index']);
+
 
 
 
