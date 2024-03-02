@@ -455,10 +455,23 @@ p{
                                 <span v-if="form.password && !passwordValid(form.password)" class="text-danger">Password must be 8 characters long</span>
                             </div>
 
-                              <div class="form-group">
-                                  <label for="specialization">Specialization</label>
-                                  <input v-model="form.specialization" type="text" class="form-control" id="specialization" aria-describedby="specializationHelp" placeholder="Enter specialization" required>
-                              </div>
+                            <div class="form-group">
+                                <label for="specialization">Specialization</label>
+                                <select v-model="form.specialization" class="form-control" id="specialization" required>
+                                    <option value="" disabled>Select specialization</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Endocrinology">Endocrinology</option>
+                                    <option value="Gastroenterology">Gastroenterology</option>
+                                    <option value="Hematology">Hematology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Psychiatry">Psychiatry</option>
+                                    <option value="Urology">Urology</option>
+                                </select>
+                            </div>
+
 
                               <div class="form-group">
                                   <label for="contact_number">Contact Number</label>

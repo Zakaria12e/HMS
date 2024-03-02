@@ -223,8 +223,21 @@ onMounted(() => {
                 <form :initial-values="formValues">
                   <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                      <label for="name">Name</label>
-                      <input v-model="form.name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter name" required>
+                        <label for="department_name">Department</label>
+                        <select v-model="form.name" class="form-control" id="department_name">
+                            <option value="" disabled>Select department</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Gastroenterology">Gastroenterology</option>
+                            <option value="Oncology">Oncology</option>
+                            <option value="Urology">Urology</option>
+                            <option value="Endocrinology">Endocrinology</option>
+
+                        </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
                       <label for="description">Description</label>

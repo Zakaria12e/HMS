@@ -28,10 +28,10 @@ class DoctorInformationController extends Controller
         $doctor = DB::table('doctors')
             ->join('users', 'doctors.doctor_id', '=', 'users.id')
             ->leftJoin('departments', 'doctors.department_id', '=', 'departments.id')
-            ->select('doctors.department_id','departments.name as department_name', 'users.name', 'users.email', 'doctors.specialization', 'users.contact_number')
+            ->select('doctors.department_id','doctors.description','departments.name as department_name', 'users.name', 'users.email', 'doctors.specialization', 'users.contact_number')
             ->where('doctors.doctor_id', $doctorId)
             ->where('users.type', 'doctor')
-            ->groupBy('doctors.department_id','departments.name', 'users.name', 'users.email', 'doctors.specialization', 'users.contact_number')
+            ->groupBy('doctors.department_id','departments.name', 'users.name', 'users.email', 'doctors.specialization', 'users.contact_number','doctors.description')
             ->first();
 
         return response()->json($doctor);
