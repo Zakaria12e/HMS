@@ -1,5 +1,25 @@
 <script setup>
 
+import { ref, onMounted } from 'vue';
+
+const doctors = ref({'data':[]});
+
+const getDoctors = async () => {
+  try {
+    const response = await axios.get('/api/doctors');
+    doctors.value = response.data.data;
+
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+  }
+};
+
+
+onMounted(() => {
+    getDoctors();
+});
+
+
  </script>
 
 
@@ -49,19 +69,20 @@
         maecenas accumsan lacus vel</p>
         <a class="btn_2 " href="#">learn more</a>
         <div class="banner_item">
-        <div class="single_item">
-        <img src="img/icon/banner_1.svg" alt>
-        <h5>Emergency</h5>
-        </div>
-        <div class="single_item">
-        <img src="img/icon/banner_2.svg" alt>
-        <h5>Appointment</h5>
-        </div>
-        <div class="single_item">
-        <img src="img/icon/banner_3.svg" alt>
-        <h5>Qualfied</h5>
-        </div>
-        </div>
+            <div class="single_item">
+              <img src="img/banner_1.svg" alt style="width: 50px; height: 50px;">
+              <h5>Emergency</h5>
+            </div>
+            <div class="single_item">
+              <img src="img/banner_2.svg" alt style="width: 50px; height: 50px;">
+              <h5>Appointment</h5>
+            </div>
+            <div class="single_item">
+              <img src="img/banner_3.svg" alt style="width: 50px; height: 50px;">
+              <h5>Qualified</h5>
+            </div>
+          </div>
+
         </div>
         </div>
         </div>
@@ -177,75 +198,35 @@
 
 
         <section class="doctor_part section_padding">
-        <div class="container">
-        <div class="row justify-content-center">
-        <div class="col-xl-8">
-        <div class="section_tittle text-center">
-        <h2> Experienced Doctors</h2>
-        <p>Face replenish sea good winged bearing years air divide wasHave night male also</p>
-        </div>
-        </div>
-        </div>
-        <div class="row">
-        <div class="col-sm-6 col-lg-3">
-        <div class="single_blog_item">
-        <div class="single_blog_img">
-        <img src="img/doctor_1.png" alt="doctor">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-xl-8">
+                  <div class="section_tittle text-center">
+                    <h2>Experienced Doctors</h2>
+                    <p>Face replenish sea good winged bearing years air divide wasHave night male also</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div v-for="doctor in doctors" :key="doctor.doctor_id" class="col-sm-6 col-lg-3">
+                  <div class="single_blog_item">
+                    <div class="single_blog_img">
+                        <img :src="doctor.img_path ? doctor.img_path : 'img/doctor_1.png'" alt="doctor">
 
-        </div>
-        <div class="single_text">
-        <div class="single_blog_text">
-        <h3>DR Adam Billiard</h3>
-        <p>Heart specialist</p>
-        </div>
-        </div>
-        </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-        <div class="single_blog_item">
-        <div class="single_blog_img">
-        <img src="img/doctor_1.png" alt="doctor">
-
-        </div>
-        <div class="single_text">
-        <div class="single_blog_text">
-        <h3>DR Adam Billiard</h3>
-        <p>Medicine specialist</p>
-        </div>
-        </div>
-        </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-        <div class="single_blog_item">
-        <div class="single_blog_img">
-        <img src="img/doctor_1.png" alt="doctor">
-
-        </div>
-        <div class="single_text">
-        <div class="single_blog_text">
-        <h3>DR Fred Macyard</h3>
-        <p>CHeart specialist</p>
-        </div>
-        </div>
-        </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-        <div class="single_blog_item">
-        <div class="single_blog_img">
-        <img src="img/doctor_1.png" alt="doctor">
-
-        </div>
-        <div class="single_text">
-        <div class="single_blog_text">
-        <h3>DR Justin Stuard</h3>
-        <p>Heart specialist</p>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </section>
+                    </div>
+                    <div class="single_text">
+                      <div class="single_blog_text">
+                        <h3>{{ doctor.name }}</h3>
+                        <p>{{ doctor.doctor_id }}</p>
+                        <p>{{ doctor.specialization }}</p>
+                        <router-link :to="{ name: 'patient.DoctorInfo', params: { id: parseInt(doctor.doctor_id) } }" class="mb-3 btn btn-primary">See Profile</router-link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
 
         <section class="regervation_part section_padding" >

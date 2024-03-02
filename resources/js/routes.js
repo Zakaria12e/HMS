@@ -12,6 +12,7 @@ import UpdateDoctorProfile from './components/doctor/UpdateDoctorProfile.vue';
 import DoctorDashboard from './components/doctor/DoctorDashboard.vue';
 
 import Home from './components/patient/Home.vue';
+import DoctorInfo from './components/patient/DoctorInfo.vue';
 import About from './components/patient/About.vue';
 import Contact from './components/patient/Contact.vue';
 import MyAppointments from './components/patient/MyAppointments.vue';
@@ -99,6 +100,12 @@ export default [
         path: '/home',
         name: 'patient.home',
         component: Home,
+    },
+    {
+
+        path: '/home/doctor-info/:id',
+        name: 'patient.DoctorInfo',
+        component: DoctorInfo,
     },
     {
 

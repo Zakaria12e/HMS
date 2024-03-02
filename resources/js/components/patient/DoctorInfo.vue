@@ -10,7 +10,8 @@
         <div class="col-lg-12">
         <div class="breadcrumb_iner">
         <div class="breadcrumb_iner_item">
-        <h2>Doctor {{ }}</h2>
+
+        <h1>DOCTOR ID: {{ $route.params.id }}</h1>
         </div>
         </div>
         </div>
