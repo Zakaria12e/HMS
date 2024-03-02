@@ -13,6 +13,7 @@ const updating = ref(false);
 const formValues = ref();
 const workingHoursModal = ref(null);
 const existingWorkingHours = ref([]);
+const descriptionContent = ref('');
 const workingHoursForm = reactive({
     id: null,
     day: '',
@@ -112,6 +113,7 @@ const form = reactive({
   contactNumber: '',
   salary: '',
   department_id: '',
+  description: '',
 });
 
 const getDoctors = (page = 1) => {
@@ -138,6 +140,17 @@ const getDepartments = async () => {
     console.error('Error fetching departments:', error);
   }
 };
+
+
+const openDescription = (doctor) => {
+
+         descriptionContent.value = doctor.description;
+
+        $('#descriptionModal').modal('show');
+
+};
+
+
 
 
 const deleteDoctor = async (doctor) => {
@@ -170,6 +183,7 @@ const updateDoctor = (doctor) => {
         specialization: doctor.specialization,
         contactNumber: doctor.contact_number,
         salary: doctor.salary,
+        description: doctor.description,
 
     };
 
@@ -181,6 +195,7 @@ const updateDoctor = (doctor) => {
     form.contactNumber = formValues.value.contactNumber;
     form.salary = formValues.value.salary;
     form.department_id = doctor.department_id;
+    form.description = doctor.description;
 
     $('#createDoctorModal').modal('show');
 
@@ -189,6 +204,7 @@ const updateDoctor = (doctor) => {
     });
 
 };
+
 
 const searchQuery = ref(null);
 
@@ -227,7 +243,7 @@ const saveDoctor = async () => {
             contact_number: form.contactNumber,
             salary: form.salary,
             department_id: form.department_id,
-
+            description: form.description,
         };
 
         if (form.password.trim() !== '') {
@@ -298,6 +314,7 @@ const clearForm = () => {
     form.specialization = '';
     form.contactNumber = '';
     form.salary = '';
+    form.description = '';
 };
 
 
@@ -335,7 +352,13 @@ onMounted(() => {
 
 });
 </script>
+<style>
 
+p{
+    color:black !important;
+    font-size: 20px;
+}
+</style>
 
 
 <template>
@@ -357,6 +380,24 @@ onMounted(() => {
 
     <div class="content">
         <div class="container-fluid">
+
+
+            <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="descriptionModalLabel"><b>Description & Qualifications</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{ descriptionContent }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -431,14 +472,21 @@ onMounted(() => {
                               </div>
 
 
-
                             <div class="form-group" style="flex: 1;">
+                                <label for="description">Description</label>
+                                <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter description"></textarea>
+                            </div>
+
+
+                            <div class="form-group"  style="flex: 1;">
                                 <label for="department_id">Department</label>
                                 <select v-model="form.department_id" class="form-control" id="department_id">
 
                                   <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
                                 </select>
                               </div>
+
+
 
                         </div>
 
@@ -524,7 +572,7 @@ onMounted(() => {
                                 <th>Salary</th>
                                 <th>Department</th>
                                 <th>Appointments</th>
-                                <th>Options</th>
+                                <th colspan="4">Options</th>
                             </tr>
                         </thead>
                         <tbody v-if="doctors.data.length > 0">
@@ -543,7 +591,7 @@ onMounted(() => {
                                     <a href="#" @click.prevent="updateDoctor(doctor)">  <i class="fa fa-edit" style="color: #9528b8;"></i> </a>
                                     <a href="#" @click.prevent="deleteDoctor(doctor)">  <i class="fa fa-trash text-danger ml-3"></i> </a>
                                     <a href="#" @click.prevent="openWorkingHoursModal(doctor.doctor_id)"> <i class="fa fa-calendar-alt  ml-3" style="color: black;"></i></a>
-
+                                    <a href="#" @click.prevent="openDescription(doctor)"> <i class="fa fa-eye ml-3" style="color: #9528b8;"></i> </a>
                                 </td>
                             </tr>
                         </tbody>

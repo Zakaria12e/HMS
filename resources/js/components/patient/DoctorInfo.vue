@@ -33,10 +33,10 @@ onMounted(async () => {
                 <div class="row">
                     <div class="col-lg-6" v-if="doctor">
                         <div class="doctor-info">
-                            <h2>{{ doctor.name }}</h2>
+                            <h2></h2>
                             <p>Email: {{ doctor.email }}</p>
-                            <p>Specialization: {{ doctor.specialization }}</p>
-                            <p>Department ID: {{ doctor.department_id }}</p>
+                            <p>Specialization: </p>
+                            <p>Department: {{ doctor.department_name}}</p>
                             <p>Contact Number: {{ doctor.contact_number }}</p>
                         </div>
                     </div>

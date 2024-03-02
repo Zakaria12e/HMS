@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('doctor_id')->constrained('users', 'id')->onDelete('cascade');
             $table->string('specialization');
+            $table->text('description')->nullable();
             $table->decimal('salary', 10, 2)->nullable();
             $table->foreignId('department_id')->nullable()->constrained('departments', 'id')->onDelete('cascade');
             $table->timestamps();

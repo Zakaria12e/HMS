@@ -14,6 +14,7 @@ class Doctor extends Model
         'specialization',
         'salary',
         'department_id',
+        'description',
     ];
 
     public function user()

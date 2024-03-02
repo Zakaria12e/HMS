@@ -14,9 +14,9 @@ class DoctorController extends Controller
     $doctors = DB::table('doctors')
         ->join('users', 'doctors.doctor_id', '=', 'users.id')
         ->leftJoin('appointments', 'doctors.doctor_id', '=', 'appointments.doctor_id')
-        ->select('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
+        ->select('doctors.doctor_id','doctors.department_id','doctors.description', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
         ->where('users.type', 'doctor')
-        ->groupBy('doctors.doctor_id','doctors.department_id', 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary')
+        ->groupBy('doctors.doctor_id','doctors.department_id','doctors.description' , 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary')
         ->paginate(5);
 
     return response()->json($doctors);
@@ -31,6 +31,7 @@ public function store(Request $request)
         'password' => 'required|string',
         'specialization' => 'required|string',
         'contact_number' => 'required|string',
+        'description' => 'required|string',
         'salary' => 'required|numeric',
         'department_id' => 'nullable|exists:departments,id',
     ]);
@@ -55,6 +56,7 @@ public function store(Request $request)
         'department_id' => $validatedData['department_id'],
         'specialization' => $validatedData['specialization'],
         'salary' => $validatedData['salary'],
+        'description' => $validatedData['description'],
     ]);
 
 
@@ -72,6 +74,7 @@ public function update(Request $request, $id)
         'contact_number' => 'required|string',
         'salary' => 'required|numeric',
         'department_id' => 'nullable|exists:departments,id',
+        'description' => 'required|string',
 
     ]);
 
@@ -102,6 +105,7 @@ public function update(Request $request, $id)
         'specialization' => $validatedData['specialization'],
         'salary' => $validatedData['salary'],
         'department_id' => $validatedData['department_id'],
+        'description' => $validatedData['description'],
     ]);
 
 
