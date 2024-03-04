@@ -24,7 +24,7 @@ const workingHoursForm = reactive({
 const getdays = async(doc_id) => {
 
     try {
-        const response = await axios.get(`/api/working-hours/${doc_id}`);
+        const response = await axios.get(`/api/working-hours-read/${doc_id}`);
         existingWorkingHours.value = response.data;
     } catch (error) {
         console.error('Error fetching existing working hours', error);
@@ -352,7 +352,7 @@ onMounted(() => {
 
 });
 </script>
-<style>
+<style scoped>
 
 p{
     color:black !important;

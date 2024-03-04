@@ -56,7 +56,7 @@ Route::delete('/api/doctors/{id}', [DoctorController::class, 'destroy']);
 
 Route::post('/api/working-hours', [WorkingHoursController::class, 'store']);
 Route::get('/api/working-hours/check', [WorkingHoursController::class, 'check']);
-Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'read']);
+Route::get('/api/working-hours-read/{doctorId}', [WorkingHoursController::class, 'read']);
 Route::delete('/api/working-hours/{dayId}', [WorkingHoursController::class, 'destroy']);
 
 
@@ -80,7 +80,7 @@ Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'tot
 
 
 
-Route::get('/api/departments', [DepartmentsController::class, 'index']);
+
 Route::post('/api/departments', [DepartmentsController::class, 'store']);
 Route::post('/api/departments', [DepartmentsController::class, 'createDepartment']);
 Route::put('/api/departments/{id}', [DepartmentsController::class, 'update']);
@@ -95,6 +95,10 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::get('/home', [ApplicationController::class, 'home'])->name('patient.home');
     Route::get('/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);
     Route::get('/api/patient/doctors', [DoctorInformationController::class, 'index']);
+    Route::get('/api/working-days-hours/{doctorId}', [WorkingHoursController::class, 'read']);
+    Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'getWorkingHours']);
+    Route::post('/api/create-appointment', [AppointmentsController::class, 'store']);
+    Route::get('/api/departments', [DepartmentsController::class, 'index']);
 
 
 

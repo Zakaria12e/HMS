@@ -17,6 +17,30 @@ class AppointmentsController extends Controller
     }
 
 
+        public function store(Request $request)
+        {
+            try {
+
+                $validatedData = $request->validate([
+                    'doctor_id' => 'required',
+                    'patient_id' => 'required',
+                    'start_time' => 'required',
+                    'email' => 'required|email',
+                    'title' => 'required',
+                    'description' => 'nullable',
+                    'appointment_date' => 'required',
+                ]);
+
+                $appointment = Appointment::create($validatedData);
+
+                return response()->json(['message' => 'Appointment created successfully'], 201);
+            } catch (\Exception $e) {
+
+                return response()->json(['error' => 'Internal Server Error'], 500);
+            }
+        }
+
+
 
     public function update(Request $request, $id)
     {

@@ -67,4 +67,29 @@ public function destroy($id)
         return response()->json(['error' => 'Failed to delete working hour'], 500);
     }
 }
+
+
+
+
+
+
+public function getWorkingHours(Request $request, $doctorId)
+{
+    try {
+        $day = $request->query('day', '');
+
+        $workingHours = WorkingHours::where('doctor_id', $doctorId)
+            ->where('day', $day)
+            ->get();
+
+        return response()->json($workingHours);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Error fetching working hours'], 500);
+    }
+}
+
+
+
+
+
 }
