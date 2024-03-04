@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\DepartmentsController;
 use App\Http\Controllers\admin\WorkingHoursController;
 use App\Http\Controllers\Patient\DoctorInformationController;
+use App\Http\Controllers\patient\AppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +100,7 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'getWorkingHours']);
     Route::post('/api/create-appointment', [AppointmentsController::class, 'store']);
     Route::get('/api/departments', [DepartmentsController::class, 'index']);
+    Route::post('/api/store_appointment', [AppointmentController::class, 'store']);
 
 
 

@@ -1,10 +1,11 @@
 <script setup>
 
-import { ref, onMounted , defineProps} from 'vue';
+import { ref, onMounted} from 'vue';
 
 const doctors = ref({'data':[]});
 
-const { 'user-id': userId } = defineProps(['user-id']);
+
+
 
 const getDoctors = async () => {
   try {
@@ -33,11 +34,10 @@ const getDepartments = async () => {
 };
 
 
-
-
 onMounted(() => {
     getDoctors();
     getDepartments();
+
 });
 
 

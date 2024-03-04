@@ -29,7 +29,7 @@
         }
     </style>
 
-    <div id="app">
+    <div id="app" data-user-id="{{ Auth::id() }}">
         <div class="container-fluid">
             <header class="main_menu home_menu custom-bg-gray">
                 <div class="row align-items-center">
@@ -85,7 +85,7 @@
             </header>
         </div>
 
-        <router-view :user-id="{{ auth()->id() }}"></router-view>
+        <router-view></router-view>
 
         <footer class="footer-area mt-5" style="background-color: #f8f9fa; padding-top: 30px; padding-bottom: 30px;">
             <div class="footer section_padding">

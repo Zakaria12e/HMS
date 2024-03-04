@@ -1,14 +1,15 @@
 <script setup>
 
-import { ref, onMounted , watchEffect, defineProps} from 'vue';
+import { ref, onMounted , watchEffect} from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToastr } from '/resources/js/toastr.js';
 
 
-const { 'user-id': userId } = defineProps(['user-id']);
-const doctor = ref({ 'data': [] });
+const toastr = useToastr();
 const route = useRoute();
+const userId = ref(null);
+const doctor = ref({ 'data': [] });
 const existingWorkingHours = ref([]);
 const departments = ref([]);
 const startTime = ref('');
@@ -67,7 +68,7 @@ const getWorkingHours = async (selectedDay) => {
 
         selectedDate.value = currentDate.toISOString().split('T')[0];
 
-         selectedDate.value
+
         const response = await axios.get(`/api/working-hours/${route.params.id}?day=${selectedDay}`);
         const workingHours = response.data;
 
@@ -97,6 +98,44 @@ const getWorkingHours = async (selectedDay) => {
 
 
 
+const appointmentTitle = ref('');
+const selectedDepartment = ref('');
+const selectedTimeSlot = ref('');
+const appointmentNote = ref('');
+
+const submitAppointment = async () => {
+
+    if (!userId.value || !appointmentTitle.value || !selectedDepartment.value || !selectedDate.value || !selectedTimeSlot.value || !appointmentNote.value) {
+        toastr.error('Please fill in all the required fields.');
+        return;
+    }
+
+    try {
+        const response = await axios.post('/api/store_appointment', {
+
+            patient_id: userId.value,
+            doctor_id: route.params.id,
+            title: appointmentTitle.value,
+            service: selectedDepartment.value,
+            date: selectedDate.value,
+            time_slot: selectedTimeSlot.value,
+            description: appointmentNote.value,
+        });
+
+
+
+        toastr.success('Appointment submitted successfully:', response);
+
+
+        appointmentTitle.value = '';
+        selectedDepartment.value = '';
+        selectedTimeSlot.value = '';
+        appointmentNote.value = '';
+    } catch (error) {
+        console.error('Error submitting appointment:', error);
+
+    }
+};
 
 
 
@@ -104,10 +143,17 @@ onMounted(async () => {
     getDoctor();
     getdays();
     getDepartments();
+
+    userId.value = document.getElementById('app').dataset.userId;
+
+
+
 });
 
 watchEffect(() => {
     getWorkingHours(selectedDay.value);
+
+
 });
 
 
@@ -179,11 +225,12 @@ p{
                             <div class="col-md-6">
                                 <label for="inputtitle" class="form-label">Title</label>
                                 <input v-model="appointmentTitle" type="text" class="form-control" id="inputtitle" placeholder="Enter Title">
+
                             </div>
                             <div class="col-md-6">
                                 <label for="Select" class="form-label">Select Service</label>
                                 <select v-model="selectedDepartment" class="form-select" id="Select">
-                                    <option value="" selected>Select service</option>
+                                    <option value="" selected disabled>Select service</option>
                                     <option v-for="(department, index) in departments" :key="index" :value="department.name">{{ department.name }}</option>
                                 </select>
                             </div>
