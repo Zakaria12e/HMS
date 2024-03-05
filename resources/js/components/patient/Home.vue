@@ -38,6 +38,7 @@ onMounted(() => {
     getDoctors();
     getDepartments();
 
+
 });
 
 

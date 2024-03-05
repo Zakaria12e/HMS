@@ -12,12 +12,8 @@ const userId = ref(null);
 const doctor = ref({ 'data': [] });
 const existingWorkingHours = ref([]);
 const departments = ref([]);
-const startTime = ref('');
-const endTime = ref('');
 const timeSlots = ref([]);
-const selectedDay = ref('');
 const selectedDate = ref('');
-const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 
 
@@ -58,18 +54,10 @@ const getDepartments = async () => {
 
 
 
-const getWorkingHours = async (selectedDay) => {
+const getWorkingHours = async (selectedDate) => {
     try {
-
-        const currentDate = new Date();
-
-        const daysToAdd = daysOfWeek.indexOf(selectedDay);
-        currentDate.setDate(currentDate.getDate() + daysToAdd);
-
-        selectedDate.value = currentDate.toISOString().split('T')[0];
-
-
-        const response = await axios.get(`/api/working-hours/${route.params.id}?day=${selectedDay}`);
+        const dayName = new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long' });
+        const response = await axios.get(`/api/working-hours/${route.params.id}?day=${dayName}`);
         const workingHours = response.data;
 
         timeSlots.value = [];
@@ -79,7 +67,6 @@ const getWorkingHours = async (selectedDay) => {
             const end = new Date(`04/04/2003 ${workingHours[0].end_time}`);
 
             const timeSlot = new Date(start);
-
 
             while (timeSlot < end) {
                 const slot = {
@@ -92,9 +79,10 @@ const getWorkingHours = async (selectedDay) => {
             }
         }
     } catch (error) {
-        console.error('Error fetching working hours for the selected day', error);
+        console.error('Error fetching working hours for the selected date', error);
     }
 };
+
 
 
 
@@ -131,6 +119,7 @@ const submitAppointment = async () => {
         selectedDepartment.value = '';
         selectedTimeSlot.value = '';
         appointmentNote.value = '';
+        selectedDate.value = '';
     } catch (error) {
         console.error('Error submitting appointment:', error);
 
@@ -151,8 +140,10 @@ onMounted(async () => {
 });
 
 watchEffect(() => {
-    getWorkingHours(selectedDay.value);
 
+    if (selectedDate.value) {
+        getWorkingHours(selectedDate.value);
+    }
 
 });
 
@@ -239,12 +230,8 @@ p{
 
                             <div class="mb-6 row">
                                 <div class="col-md-6">
-                                    <input type="hidden" v-model="selectedDate">
-                                    <label for="SelectDay" class="form-label">Select Day</label>
-                                    <select v-model="selectedDay" class="form-select" id="SelectDay">
-                                        <option value="" selected disabled>Select day</option>
-                                        <option v-for="day in daysOfWeek" :key="day" :value="day">{{ day }}</option>
-                                    </select>
+                                    <label for="SelectDate" class="form-label">Select Date</label>
+                                    <input v-model="selectedDate" type="date" class="form-control" id="SelectDate">
                                 </div>
                                 <div class="col-md-6">
                                 <label for="Select2" class="form-label">Select Time</label>
