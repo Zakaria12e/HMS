@@ -5,6 +5,7 @@ namespace App\Http\Controllers\patient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use Carbon\Carbon;
 
 class AppointmentController extends Controller
@@ -36,5 +37,19 @@ class AppointmentController extends Controller
         ]);
 
         return response()->json(['message' => 'Appointment submitted successfully', 'data' => $appointment], 201);
+    }
+
+    public function getUserAppointments(Request $request)
+    {
+        $userId = $request->input('userId');
+
+
+        $appointments = Appointment::with('doctor:id,name')->where('patient_id', $userId)->get();
+
+
+
+
+        return response()->json($appointments);
+
     }
 }

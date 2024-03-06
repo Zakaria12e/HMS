@@ -13,7 +13,7 @@
 .sidebar-dark-primary .nav-sidebar :hover{
 
     color: black !important;
-    background-color:  #362e7b  !important;
+    background-color:  #7808b9  !important;
 }
 
 .sidebar-title , .d-block{
@@ -32,11 +32,11 @@
 }
 
 .btn-purple {
-    background-color:#362e7b;
+    background-color:#7109a1;
     color: white;
 }
 .btn-purple:hover {
-    background-color: #4e4883;
+    background-color: #9334be;
 
 
 }
@@ -46,7 +46,7 @@
     background-color:#362e7b !important;
 }
 .badge-purple {
-    background-color: #362e7b;
+    background-color: #640f96;
     color: white;
   }
   .centered-cell {
