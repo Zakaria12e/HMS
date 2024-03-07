@@ -60,7 +60,7 @@ onMounted(() => {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing
         elit sed do eiusmod tempor incididunt ut labore et dolore
         magna aliqua. Quis ipsum suspendisse ultrices gravida.Risus cmodo viverra </p>
-        <a href="#appointment" class="mb-3 btn btn-primary">Make an appointment</a>
+        <a href="#doctors" class="mb-3 btn btn-primary">Make an appointment</a>
         </div>
         </div>
         </div>
@@ -199,7 +199,7 @@ onMounted(() => {
         </section>
 
 
-        <section class="doctor_part section_padding">
+        <section id="doctors" class="doctor_part section_padding">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-xl-8">

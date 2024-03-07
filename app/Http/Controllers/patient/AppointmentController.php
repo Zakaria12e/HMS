@@ -23,7 +23,7 @@ class AppointmentController extends Controller
         ]);
 
         $startTime = Carbon::parse($request->input('time_slot'));
-        $endTime = $startTime->addMinutes(20);
+        $endTime = $startTime->addMinutes(30);
 
         $appointment = Appointment::create([
             'patient_id' => $request->input('patient_id'),
@@ -52,4 +52,22 @@ class AppointmentController extends Controller
         return response()->json($appointments);
 
     }
+    public function checkAvailability($doctorId, Request $request)
+{
+    $request->validate([
+        'date' => 'required|date',
+        'time' => 'required|string',
+    ]);
+
+    $date = $request->input('date');
+    $time = $request->input('time');
+
+    $existingAppointments = Appointment::where('doctor_id', $doctorId)
+        ->where('appointment_date', $date)
+        ->where('start_time', $time)
+        ->exists();
+
+    return response()->json(['available' => !$existingAppointments]);
+}
+
 }

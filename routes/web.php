@@ -102,6 +102,7 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::get('/api/departments', [DepartmentsController::class, 'index']);
     Route::post('/api/store_appointment', [AppointmentController::class, 'store']);
     Route::get('/api/Myappointments', [AppointmentController::class, 'getUserAppointments']);
+    Route::get('/api/check-availability/{doctorId}', [AppointmentController::class, 'checkAvailability']);
 
 
 

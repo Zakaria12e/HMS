@@ -94,92 +94,81 @@ onMounted(() => {
     </div>
 
 
-    <div class="content">
+
+
+
+
+    <section class="content">
         <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-lg-3 col-12">
-                    <div class="small-box">
-                        <div class="inner">
-                            <div class="d-flex justify-content-between">
 
-                                <h3>{{ invoicesCount }}</h3>
-                                <h3>{{ totalPaidAmount }} DH</h3>
-
-                            </div>
-                            <p>Invoices</p>
-                        </div>
-
-                        <router-link to="/admin/invoices"  class="small-box-footer">
-                            View Invoices
-                        </router-link>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-12">
-                    <div class="small-box">
-                        <div class="inner">
-                            <div class="d-flex justify-content-between">
-
-                                <h3>{{ appointmentCount }}</h3>
-
-                            </div>
-                            <p>Appointments</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <router-link to="/admin/appointments"  class="small-box-footer">
-                            View Appointments
-                        </router-link>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-12">
-                    <div class="small-box">
-                        <div class="inner">
-                            <div class="d-flex justify-content-between">
-
-                                <h3>{{ totalUsersCount }}</h3>
-
-                                <select v-model="selectedDateRange" @change="getPatientsCount()" class="form-select px-1 rounded border-0">
-                                    <option value="today">Today</option>
-                                    <option value="30_days">30 days</option>
-                                    <option value="1_year">360 days</option>
-                                    <option value="YTD">All Time</option>
-                                </select>
-                            </div>
-                            <p>Patients</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <router-link to="/admin/patients" class="small-box-footer">
-                            View Patients
-                        </router-link>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-12">
-                    <div class="small-box">
-                        <div class="inner">
-                            <div class="d-flex justify-content-between">
-                                <h3>{{ doctorsCount }}</h3>
-
-                            </div>
-                            <p>Doctors</p>
-                        </div>
-                        <div class="icon ">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <router-link to="/admin/doctors" class="small-box-footer">
-                            View Doctors
-                        </router-link>
-                    </div>
-                </div>
-            </div>
+        <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-file-invoice-dollar"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Invoices</span>
+        <span class="info-box-number">
+        {{ invoicesCount }}
+        {{ totalPaidAmount }} DH
+        </span>
         </div>
 
-    </div>
+        </div>
+
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-calendar-alt"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Appointments</span>
+        <span class="info-box-number">{{ appointmentCount }}</span>
+        </div>
+
+        </div>
+
+        </div>
 
 
+        <div class="clearfix hidden-md-up"></div>
+        <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="nav-icon fas fa-user-md"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Doctors</span>
+        <span class="info-box-number">{{ doctorsCount }}</span>
+        </div>
+
+        </div>
+
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+        <div class="info-box-content">
+            <div class="row align-items-center">
+                <div class="col">
+                    <span class="info-box-text">Patients</span>
+                </div>
+                <div class="col">
+                    <select v-model="selectedDateRange" @change="getPatientsCount()" class="form-select px-1 rounded border-0">
+                        <option value="today">Today</option>
+                        <option value="30_days">30 days</option>
+                        <option value="1_year">360 days</option>
+                        <option value="YTD">All Time</option>
+                    </select>
+                </div>
+            </div>
+            <span class="info-box-number">{{ totalUsersCount }}</span>
+        </div>
+
+
+        </div>
+
+        </div>
+
+        </div>
+</div></section>
 
 </template>
