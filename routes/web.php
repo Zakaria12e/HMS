@@ -81,7 +81,6 @@ Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'tot
 
 
 
-
 Route::post('/api/departments', [DepartmentsController::class, 'store']);
 Route::post('/api/departments', [DepartmentsController::class, 'createDepartment']);
 Route::put('/api/departments/{id}', [DepartmentsController::class, 'update']);
@@ -91,7 +90,7 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
 
  });
 
-
+ 
     //patient routes
     Route::get('/home', [ApplicationController::class, 'home'])->name('patient.home');
     Route::get('/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);

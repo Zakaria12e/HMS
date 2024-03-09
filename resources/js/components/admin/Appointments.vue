@@ -36,6 +36,8 @@ const createInvoice = (appointment) => {
 form.description = appointment.description;
 form.date = appointment.appointment_date;
 form.appointmentId = appointment.id;
+console.log(appointment.patient.contact_number);
+
 $('#createInvoiceModal').modal('show');
 };
 

@@ -46,16 +46,7 @@ textarea {
   outline: none;
 }
 
-.form-08{
-  background-image:url('images/bg.jpeg');
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  z-index:9;
-  overflow:hidden;
-  height: 100vh;
-}
+
 
 ._form-08-main{
   background:#fff;
