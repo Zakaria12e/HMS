@@ -114,15 +114,7 @@ const form = reactive({
   salary: '',
   department_id: '',
   description: '',
-  img_path: '', // To store the image path returned from the server
-  image: null,
-
 });
-
-const handleImageChange = (event) => {
-  const file = event.target.files[0];
-  form.image = file;
-};
 
 const getDoctors = (page = 1) => {
     axios.get(`/api/doctors?page=${page}`)
@@ -236,55 +228,78 @@ const search = () => {
 };
 
 
-// ... (previous code)
-
 const saveDoctor = async () => {
     try {
-        if (!form.name.trim() || !form.email.trim() || !form.specialization.trim() || !form.contactNumber.trim() || !form.salary.trim() || !form.image) {
-            toastr.error('Please fill in all required fields and select an image');
+
+        if (!form.name.trim() || !form.email.trim() || !form.specialization.trim() || !form.contactNumber.trim() || !form.salary.trim()) {
+            toastr.error('Please fill in all required fields');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('name', form.name);
-        formData.append('email', form.email);
-        formData.append('password', form.password);
-        formData.append('specialization', form.specialization);
-        formData.append('contact_number', form.contactNumber);
-        formData.append('salary', form.salary);
-        formData.append('department_id', form.department_id);
-        formData.append('description', form.description);
-        formData.append('image', form.image);
+        const requestData = {
+            name: form.name,
+            email: form.email,
+            specialization: form.specialization,
+            contact_number: form.contactNumber,
+            salary: form.salary,
+            department_id: form.department_id,
+            description: form.description,
+        };
 
-        if (updating.value) {
-            const response = await axios.put('/api/doctors/' + formValues.value.id, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+        if (form.password.trim() !== '') {
+            requestData.password = form.password;
+        }
+
+
+          if (updating.value) {
+
+            axios.put('/api/doctors/' + formValues.value.id, requestData)
+             .then((response) => {
             const index = doctors.value.data.findIndex(doctor => doctor.id === response.data.id);
+
             doctors.value.data[index] = response.data;
+
             $('#createDoctorModal').modal('hide');
+
             toastr.success('Doctor updated successfully');
-            getDoctors();
+        getDoctors();
+
+        }).catch((error) => {
+
+            if (error.response.status === 422 && error.response.data.error === 'Email already exists') {
+            toastr.error('Email already exists');
+            return;
+
         } else {
-            const response = await axios.post('/api/doctors', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data', // Set the content type to handle file uploads
-                },
-            });
+
+                    setErrors(error.response.data.errors);
+                    console.log(error);
+                }
+
+        });
+
+
+        } else {
+
+            const response = await axios.post('/api/doctors', requestData);
+
             if (response.data.error && response.data.error === 'Email already exists') {
+
                 toastr.error('Email already exists');
                 return;
             } else {
-                const newDoctor = response.data;
-                doctors.value.data.push(newDoctor);
-                getDoctors();
-                toastr.success('Doctor added successfully');
-                clearForm();
-                $('#createDoctorModal').modal('hide');
-            }
+
+            const newDoctor = response.data;
+            doctors.value.data.push(newDoctor);
+
+            getDoctors();
+            toastr.success('Doctor added successfully');
+            clearForm();
+            $('#createDoctorModal').modal('hide');
         }
+    }
+
+
     } catch (error) {
         console.error('Error creating/updating doctor:', error);
     }
@@ -299,8 +314,7 @@ const clearForm = () => {
     form.specialization = '';
     form.contactNumber = '';
     form.salary = '';
-    form.image = '';
-
+    form.description = '';
 };
 
 
@@ -477,12 +491,6 @@ p{
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="image">Image</label>
-                                <input type="file" @change="handleImageChange" class="form-control" id="image">
-                            </div>
-
-
                             <div class="form-group"  style="flex: 1;">
                                 <label for="department_id">Department</label>
                                 <select v-model="form.department_id" class="form-control" id="department_id">
@@ -569,7 +577,7 @@ p{
                         <thead>
                             <tr>
 
-                                <th>image</th>
+                                <th style="width: 10px">id</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>specialization</th>
@@ -581,8 +589,8 @@ p{
                             </tr>
                         </thead>
                         <tbody v-if="doctors.data.length > 0">
-                            <tr style="text-align: center; padding: 10px;" v-for="(doctor, index) in doctors.data" :key="index">
-                                <td><img v-if="doctor.img_path" :src="`/storage/images/${doctor.img_path}`" alt="Doctor Image" style="border-radius: 50%; width: 50px; height: 50px; display: block; margin: 0 auto;"></td>
+                            <tr v-for="(doctor, index) in doctors.data" :key="index">
+                                <td>{{ doctor.doctor_id }}</td>
                                 <td>{{ doctor.name }}</td>
                                 <td>{{ doctor.email }}</td>
                                 <td>{{ doctor.specialization }}</td>

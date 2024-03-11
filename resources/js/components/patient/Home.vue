@@ -213,8 +213,8 @@ onMounted(() => {
                 <div v-for="doctor in doctors" :key="doctor.doctor_id" class="col-sm-6 col-lg-3">
                   <div class="single_blog_item" style="padding: 20px;">
                     <div class="single_blog_img">
-                        <img :src="doctor.img_path ? doctor.img_path : 'img/doctor_1.jpg'" alt="doctor" width="300" height="300">
-
+                        <img :src="doctor.img_path ? `/storage/images/${doctor.img_path}` : 'img/doctor_1.jpg'" alt="doctor" width="300" height="300">
+                        
                     </div>
 
                     <div class="single_text">

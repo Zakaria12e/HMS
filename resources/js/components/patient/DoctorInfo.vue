@@ -176,7 +176,8 @@ p {
       <div class="row row-30 person">
         <div class="col-md-6">
           <div class="row row-30 row-lg-50">
-            <div class="col-xs-6 col-md-12"> <img :src="'/img/doctor_1.jpg'" alt="" width="520" height="390" />
+            <div class="col-xs-6 col-md-12"> <img  :src="`/storage/images/${doctor.img_path}`" alt="" width="520" height="390" />
+
             </div>
             <div class="col-xs-6 col-md-12">
 

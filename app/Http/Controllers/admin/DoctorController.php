@@ -14,9 +14,9 @@ class DoctorController extends Controller
     $doctors = DB::table('doctors')
         ->join('users', 'doctors.doctor_id', '=', 'users.id')
         ->leftJoin('appointments', 'doctors.doctor_id', '=', 'appointments.doctor_id')
-        ->select('doctors.doctor_id','doctors.department_id','doctors.description', 'users.name','users.img_path', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
+        ->select('doctors.doctor_id','doctors.department_id','doctors.description', 'users.name', 'users.email','users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary', DB::raw('COUNT(appointments.doctor_id) as appointment_count'))
         ->where('users.type', 'doctor')
-        ->groupBy('doctors.doctor_id','users.img_path','doctors.department_id','doctors.description' , 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary')
+        ->groupBy('doctors.doctor_id','doctors.department_id','doctors.description' , 'users.name', 'users.email', 'users.password', 'doctors.specialization', 'users.contact_number', 'doctors.salary')
         ->paginate(5);
 
     return response()->json($doctors);
@@ -34,7 +34,6 @@ public function store(Request $request)
         'description' => 'required|string',
         'salary' => 'required|numeric',
         'department_id' => 'nullable|exists:departments,id',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     $existingDoctor = User::where('email', $request->email)->first();
@@ -52,13 +51,6 @@ public function store(Request $request)
         'type' => 'doctor',
     ]);
 
-    if ($request->hasFile('image')) {
-        $imageName = time() . $request->file('image')->getClientOriginalName();
-        $imagePath = $request->file('image')->storeAs('images', $imageName ,'public');
-        $user->img_path = $imageName;
-        $user->save();
-    }
-
     $doctor = Doctor::create([
         'doctor_id' => $user->id,
         'department_id' => $validatedData['department_id'],
@@ -66,8 +58,6 @@ public function store(Request $request)
         'salary' => $validatedData['salary'],
         'description' => $validatedData['description'],
     ]);
-
-
 
 
     return response()->json($doctor, 201);

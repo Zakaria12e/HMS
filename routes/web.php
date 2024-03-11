@@ -90,7 +90,7 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
 
  });
 
- 
+
     //patient routes
     Route::get('/home', [ApplicationController::class, 'home'])->name('patient.home');
     Route::get('/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);
