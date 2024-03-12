@@ -6,9 +6,8 @@ import axios from 'axios';
 
 
 const userId = ref(null);
-
-
 const appointmentCount = ref(0);
+const workingHours = ref([]);
 
 
 const fetchAppointmentCount = async () => {
@@ -34,6 +33,15 @@ const fetchPatientCount = async () => {
     }
 };
 
+const fetchWorkingHours = async () => {
+    try {
+        const response = await axios.get(`/api/doctor/working-hours/${userId.value}`);
+        workingHours.value = response.data;
+    } catch (error) {
+        console.error('Error fetching working hours:', error);
+    }
+};
+
 
 
 
@@ -42,6 +50,7 @@ onMounted(() => {
     userId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
     fetchAppointmentCount();
     fetchPatientCount();
+    fetchWorkingHours();
 
 });
 
@@ -94,7 +103,7 @@ onMounted(() => {
                         <div class="col">
                             <span class="info-box-text">Patients</span>
                         </div>
-                       
+
                     </div>
                     <span class="info-box-number">{{ patientCount }}</span>
                 </div>
@@ -109,6 +118,28 @@ onMounted(() => {
 
         </div>
         </div>
+
+        <div class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Working Hours</h3>
+                  <ul class="list-group">
+                    <li class="list-group-item" v-for="(hours, index) in workingHours" :key="index">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="fw-bold">{{ hours.day }}</span>: {{ hours.start_time }} - {{ hours.end_time }}
+                        </div>
+                        <div>
+                          <!-- Add any additional controls or buttons here -->
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
 
