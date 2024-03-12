@@ -11,7 +11,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper" id="app">
+<div class="wrapper" id="app" data-user-id="{{ Auth::id() }}"">
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
@@ -65,7 +65,7 @@
 
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 <div class="info">
-<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
+<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}  -- {{ Auth::id() }}</a>
 </div>
 </div>
 

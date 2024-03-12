@@ -1,5 +1,51 @@
 <script setup>
 
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+
+
+const userId = ref(null);
+
+
+const appointmentCount = ref(0);
+
+
+const fetchAppointmentCount = async () => {
+    try {
+
+        const response = await axios.get(`/api/appointments/count?doctor_id=${userId.value}`);
+
+
+        appointmentCount.value = response.data.count;
+    } catch (error) {
+        console.error('Error fetching appointment count:', error);
+    }
+};
+
+const patientCount = ref(0);
+
+const fetchPatientCount = async () => {
+    try {
+        const response = await axios.get(`/api/appointments/patient-count/${userId.value}`);
+        patientCount.value = response.data.count;
+    } catch (error) {
+        console.error('Error fetching patient count:', error);
+    }
+};
+
+
+
+
+onMounted(() => {
+
+    userId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
+    fetchAppointmentCount();
+    fetchPatientCount();
+
+});
+
+
 </script>
 
 
@@ -22,6 +68,43 @@
 
         <div class="content">
         <div class="container-fluid">
+
+            <div class="row">
+
+
+                <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-calendar-alt"></i></span>
+                <div class="info-box-content">
+                <span class="info-box-text">Appointments</span>
+                <span class="info-box-number">{{ appointmentCount }}</span>
+                </div>
+
+                </div>
+
+                </div>
+
+
+
+                <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                <div class="info-box-content">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <span class="info-box-text">Patients</span>
+                        </div>
+                       
+                    </div>
+                    <span class="info-box-number">{{ patientCount }}</span>
+                </div>
+
+
+                </div>
+
+                </div>
+
+                </div>
 
 
         </div>

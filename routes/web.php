@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\DepartmentsController;
 use App\Http\Controllers\admin\WorkingHoursController;
 use App\Http\Controllers\Patient\DoctorInformationController;
 use App\Http\Controllers\patient\AppointmentController;
+use App\Http\Controllers\doctor\DoctorAppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +41,9 @@ Route::middleware(['auth'])->group(function () {
  Route::middleware(['auth', 'userType:doctor'])->group(function () {
 //doctor  routes
     Route::get('/doctor/{view?}', [ApplicationController::class, 'doctor'])->where('view', '.*')->name('doctor.pages');
+
+    Route::get('/api/appointments/count', [DoctorAppointmentController::class, 'countAppointments']);
+    Route::get('/api/appointments/patient-count/{doctor_id}', [DoctorAppointmentController::class, 'getPatientCount'])->name('doctor.appointments.patient_count');
 
  });
 
