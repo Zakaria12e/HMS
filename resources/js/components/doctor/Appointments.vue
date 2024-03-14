@@ -109,6 +109,25 @@ const modifyStatus = async (appointmentId, newStatus) => {
   }
 };
 
+const deleteAppointment = async (appointment) => {
+    try {
+        const response = await axios.delete(`/api/doctor/appointments/${appointment.id}`);
+
+        if (response.status === 200) {
+
+            getAppointments();
+            toastr.success('Appointment deleted successfully');
+        } else {
+
+            console.error('Unexpected response status:', response.status);
+            toastr.error('Error deleting appointment');
+        }
+    } catch (error) {
+        console.error('Error deleting appointment:', error);
+        toastr.error('Error deleting appointment');
+    }
+};
+
 
 
 onMounted(() => {
@@ -262,7 +281,10 @@ onMounted(() => {
                                               <div>
                                                 <button @click="createInvoice(appointment)" class="btn btn-purple" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
                                               </div>
+
+                                            <a href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
                                             </div>
+
                                           </td>
 
 

@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/api/changeStatusofAppointments/{id}', [DoctorAppointmentController::class, 'updateStatus']);
     Route::post('/api/invoices', [DoctorAppointmentController::class, 'create']);
     Route::get('/api/doctor/getusers', [PatientController::class, 'index']);
+    Route::delete('/api/doctor/appointments/{id}', [AppointmentsController::class, 'destroy']);
 
 
 
