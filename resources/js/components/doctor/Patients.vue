@@ -7,7 +7,7 @@ const users = ref([]);
 
 
 const getUsers = () => {
-    axios.get('/api/users')
+    axios.get('/api/doctor/getusers')
     .then((response) => {
         users.value = response.data;
     })
@@ -59,7 +59,7 @@ onMounted(() => {
                                 <td>{{ index + 1}}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
-                                <td> welcom doctor</td>
+                                <td></td>
 
                             </tr>
                         </tbody>

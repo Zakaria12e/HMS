@@ -84,8 +84,7 @@ class DoctorAppointmentController extends Controller
     public function getPatientCount($doctorId)
     {
         $patientCount = Appointment::where('doctor_id', $doctorId)
-            ->select('patient_id')
-            ->distinct()
+            ->distinct('patient_id')
             ->count();
 
         return response()->json(['count' => $patientCount]);
