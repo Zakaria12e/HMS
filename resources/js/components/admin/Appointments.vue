@@ -17,73 +17,6 @@ const doctors = ref({'data':[]});
 const selectedDoctorId = ref(null);
 const selectedAppointmentId = ref(null);
 
-const form = reactive({
-  date: '',
-  duedate: '',
-  description: '',
-  totalAmount: '',
- appointmentId: '',
-
-});
-
-
-
-
-
-
-const createInvoice = (appointment) => {
-
-form.description = appointment.description;
-form.date = appointment.appointment_date;
-form.appointmentId = appointment.id;
-console.log(appointment.patient.contact_number);
-
-$('#createInvoiceModal').modal('show');
-};
-
-
-
-
-
-
-const saveInvoice = async () => {
-  try {
-    const response = await axios.post('/api/invoices', {
-      date: form.date,
-      dueDate: form.dueDate,
-      description: form.description,
-      totalAmount: form.totalAmount,
-      appointmentId: form.appointmentId
-    });
-
-    if (response.status === 200) {
-      toastr.success('Invoice saved successfully');
-      clearForm();
-    } else {
-      console.error('Unexpected response status:', response.status);
-      toastr.error('Error saving invoice');
-    }
-  } catch (error) {
-    console.error('Error saving invoice:', error);
-    toastr.error('Error saving invoice');
-  }
-
-  $('#createInvoiceModal').modal('hide');
-};
-
-
-
-
-
-const clearForm = () => {
-  form.date = '';
-  form.dueDate = '';
-  form.description = '';
-  form.totalAmount = '';
-  form.appointmentId = '';
-};
-
-
 
 
 const getCountByStatus = (status) => {
@@ -227,47 +160,6 @@ const getDoctors = async () => {
 
 
 
-const assignToDoctor = async (appointmentId) => {
-    selectedAppointmentId.value = appointmentId;
-    await getDoctors();
-$('#assignDoctorModal').modal('show');
-
-};
-
-
-
-
-
-
-
-const assignSelectedDoctor = async () => {
-    try {
-        const appointmentToUpdate = appointments.value.find(appointment => appointment.id === selectedAppointmentId.value);
-
-        if (!appointmentToUpdate) {
-            console.error('Appointment not found');
-            return;
-        }
-
-        const doctorId = Number(selectedDoctorId.value);
-
-        // Update the appointment's doctor_id
-        appointmentToUpdate.doctor_id = doctorId;
-
-        const response = await axios.put('/api/appointments/' + appointmentToUpdate.id, { doctor_id: selectedDoctorId.value });
-        selectedDoctorId.value = null;
-        getAppointments();
-        $('#assignDoctorModal').modal('hide');
-
-        toastr.success('Doctor assigned successfully');
-    } catch (error) {
-        console.error('Error assigning doctor:', error);
-    }
-};
-
-
-
-
 
 
 watchEffect(() => {
@@ -307,80 +199,7 @@ onMounted(() => {
 
             <div class="container-fluid">
 
-                <div class="modal fade" id="createInvoiceModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
 
-                                <h5 class="modal-title" id="staticBackdropLabel">Create Invoice</h5>
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-
-                            </div>
-                                <form>
-                                    <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 20px;">
-
-                                        <div class="mb-3">
-                                            <label for="date">Date:</label>
-                                            <input type="text" id="date" v-model="form.date" class="form-control" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="dueDate">Due Date:</label>
-                                            <input type="text" id="dueDate" v-model="form.dueDate" class="form-control" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="description">Description of Services:</label>
-                                            <textarea id="description" v-model="form.description" class="form-control" required></textarea>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="totalAmount">Total Amount:</label>
-                                            <input type="text" id="totalAmount" v-model="form.totalAmount" class="form-control" required>
-                                          </div>
-                                          <div>
-                                            <input type="hidden" id="appointmentId" v-model="form.appointmentId">
-                                          </div>
-
-                                       </div>
-
-                                </form>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button @click="saveInvoice" type="button" class="btn btn-purple">Save</button>
-                                </div>
-
-                            </div></div></div>
-
-                <div class="modal fade" id="assignDoctorModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-
-                                <h5 class="modal-title" id="staticBackdropLabel">Assign To Doctor</h5>
-
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-
-                              <div class="mt-3 ml-3 mr-3">
-                                <div class="mb-3">
-                                    <label for="doctorSelect">Select Doctor:</label>
-                                    <select v-model="selectedDoctorId" class="form-control" id="doctorSelect" required>
-
-                                        <option v-for="doctor in doctors.data" :key="doctor.doctor_id" :value="doctor.doctor_id">{{ doctor.name }}</option>
-                                    </select>
-                                </div>
-
-                              </div><br>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-purple" @click="assignSelectedDoctor">Confirm</button>
-                              </div>
-                                  </div></div></div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="d-flex justify-content-between mb-2">

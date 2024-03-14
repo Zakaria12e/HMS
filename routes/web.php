@@ -46,6 +46,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/appointments/count', [DoctorAppointmentController::class, 'countAppointments']);
     Route::get('/api/appointments/patient-count/{doctor_id}', [DoctorAppointmentController::class, 'getPatientCount'])->name('doctor.appointments.patient_count');
     Route::get('/api/doctor/working-hours/{doctor}', [DoctorWorkingHoursController::class, 'index']);
+    Route::get('/api/doctor/appointments', [DoctorAppointmentController::class, 'getAppointmentsByDoctor']);
+    Route::get('/api/appointment-counts', [DoctorAppointmentController::class, 'getAppointmentCounts']);
+    Route::put('/api/changeStatusofAppointments/{id}', [DoctorAppointmentController::class, 'updateStatus']);
+    Route::post('/api/invoices', [DoctorAppointmentController::class, 'create']);
+
+
+
 
  });
 
@@ -75,8 +82,7 @@ Route::get('/api/users/{id}', [PatientController::class,'GetName']);
 Route::get('/api/appointments', [AppointmentsController::class, 'index']);
 Route::put('/api/appointments/{id}', [AppointmentsController::class, 'update']);
 Route::delete('/api/appointments/{id}', [AppointmentsController::class, 'destroy']);
-Route::post('/api/invoices', [AppointmentsController::class, 'create']);
-Route::get('/api/invoices', [AppointmentsController::class, 'invoices']);
+Route::get('/api/getinvoices', [AppointmentsController::class, 'index']);
 Route::put('/api/invoices/{id}', [AppointmentsController::class, 'markAsPaid']);
 
 Route::get('/api/dashboard/users-count', [DashboardController::class, 'getUsersCount']);

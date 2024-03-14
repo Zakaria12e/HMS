@@ -130,9 +130,6 @@ onMounted(() => {
                         <div>
                           <span class="fw-bold">{{ hours.day }}</span>: {{ hours.start_time }} - {{ hours.end_time }}
                         </div>
-                        <div>
-                          <!-- Add any additional controls or buttons here -->
-                        </div>
                       </div>
                     </li>
                   </ul>
