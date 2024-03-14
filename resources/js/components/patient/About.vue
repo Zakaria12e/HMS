@@ -12,13 +12,13 @@
           </div>
           <div class="offset-md">
             <div class="row row-30 text-center text-md-start">
-              <div class="col-sm-2"><img src="images/image-01-160x160.jpg" alt="" width="160" height="160"/>
+              <div class="col-sm-2"><img src="storage/img/image-01-160x160.jpg" alt="" width="160" height="160"/>
               </div>
-              <div class="col-sm-4"><img src="images/image-02-360x360.jpg" alt="" width="360" height="360"/>
+              <div class="col-sm-4"><img src="storage/img/image-02-360x360.jpg" alt="" width="360" height="360"/>
               </div>
-              <div class="col-sm-4"><img class="image" src="images/image-03-360x180.jpg" alt="" width="360" height="180"/><img class="image" src="images/image-04-360x270.jpg" alt="" width="360" height="270"/>
+              <div class="col-sm-4"><img class="image" src="storage/img/image-03-360x180.jpg" alt="" width="360" height="180"/><img class="image" src="storage/img/image-04-360x270.jpg" alt="" width="360" height="270"/>
               </div>
-              <div class="col-sm-2"><img src="images/image-05-160x300.jpg" alt="" width="160" height="300"/>
+              <div class="col-sm-2"><img src="storage/img/image-05-160x300.jpg" alt="" width="160" height="300"/>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="btn-group-1 text-center"><a class="btn btn-lg btn-dark" href="book-an-appointment.html"><span class="btn-icon onclinic-book"></span><span>Book an Appointment</span></a></div>
+                <div class="btn-group-1 text-center"><a class="btn btn-lg btn-dark" href=""><span class="btn-icon onclinic-book"></span><span>Book an Appointment</span></a></div>
               </div>
             </div>
           </div>

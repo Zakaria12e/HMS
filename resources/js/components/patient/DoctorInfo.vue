@@ -274,7 +274,7 @@ p {
         </div>
         <div class="col-lg-5 col-md-6">
           <div class="reservation_img">
-            <img :src="'/img/reservation.png'" alt class="reservation_img_iner">
+            <img :src="'storage/img/reservation.png'" alt class="reservation_img_iner">
           </div>
         </div>
       </div>

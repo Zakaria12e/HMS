@@ -48,7 +48,7 @@ onMounted(() => {
 
 <template>
 
-    <section class="banner_part" style="background-image: url('img/banner_bg.png'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
+    <section class="banner_part" style="background-image: url('storage/img/banner_bg.png'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
         <div class="container">
         <div class="row align-items-center">
         <div class="col-lg-5 col-xl-5">
@@ -66,7 +66,7 @@ onMounted(() => {
         </div>
         <div class="col-lg-7">
         <div class="banner_img">
-        <img  src="img/banner_img.png" alt>
+        <img  src="storage/img/banner_img.png" alt>
         </div>
         </div>
         </div>
@@ -79,7 +79,7 @@ onMounted(() => {
         <div class="row justify-content-between align-items-center">
         <div class="col-md-6 col-lg-6">
         <div class="about_us_img">
-        <img src="img/top_service.png" alt>
+        <img src="storage/img/top_service.png" alt>
         </div>
         </div>
         <div class="col-md-6 col-lg-5">
@@ -92,15 +92,15 @@ onMounted(() => {
         <a class="btn_2 " href="#">learn more</a>
         <div class="banner_item">
             <div class="single_item">
-              <img src="img/banner_1.svg" alt style="width: 50px; height: 50px;">
+              <img src="storage/img/banner_1.svg" alt style="width: 50px; height: 50px;">
               <h5>Emergency</h5>
             </div>
             <div class="single_item">
-              <img src="img/banner_2.svg" alt style="width: 50px; height: 50px;">
+              <img src="storage/img/banner_2.svg" alt style="width: 50px; height: 50px;">
               <h5>Appointment</h5>
             </div>
             <div class="single_item">
-              <img src="img/banner_3.svg" alt style="width: 50px; height: 50px;">
+              <img src="storage/img/banner_3.svg" alt style="width: 50px; height: 50px;">
               <h5>Qualified</h5>
             </div>
           </div>
@@ -142,7 +142,7 @@ onMounted(() => {
         </div>
         <div class="col-lg-4 col-sm-12">
         <div class="single_feature_img">
-        <img src="img/service.png" alt>
+        <img src="storage/img/service.png" alt>
         </div>
         </div>
         <div class="col-lg-3 col-sm-12">
@@ -213,8 +213,8 @@ onMounted(() => {
                 <div v-for="doctor in doctors" :key="doctor.doctor_id" class="col-sm-6 col-lg-3">
                   <div class="single_blog_item" style="padding: 20px;">
                     <div class="single_blog_img">
-                        <img :src="doctor.img_path ? `/storage/images/${doctor.img_path}` : 'img/doctor_1.jpg'" alt="doctor" width="300" height="300">
-                        
+                        <img :src="doctor.img_path ? `/storage/images/${doctor.img_path}` : 'storage/img/doctor_1.jpg'" alt="doctor" width="300" height="300">
+
                     </div>
 
                     <div class="single_text">

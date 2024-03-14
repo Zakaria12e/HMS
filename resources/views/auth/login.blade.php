@@ -56,7 +56,7 @@
 
 
                 <div class="sub-01">
-                  <img src="img/shap-02.png">
+                  <img src="storage/img/shap-02.png">
                 </div>
 
               </div>
