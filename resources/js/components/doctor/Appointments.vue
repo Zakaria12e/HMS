@@ -167,49 +167,44 @@ onMounted(() => {
             <div class="container-fluid">
 
                 <div class="modal fade" id="createInvoiceModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-
+                            <div class="modal-header bg-purple text-white">
                                 <h5 class="modal-title" id="staticBackdropLabel">Create Invoice</h5>
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-
                             </div>
-                                <form>
-                                    <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 20px;">
-
-                                        <div class="mb-3">
-                                            <label for="date">Date:</label>
-                                            <input type="text" id="date" v-model="form.date" class="form-control" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="dueDate">Due Date:</label>
-                                            <input type="text" id="dueDate" v-model="form.dueDate" class="form-control" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="description">Description of Services:</label>
-                                            <textarea id="description" v-model="form.description" class="form-control" required></textarea>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="totalAmount">Total Amount:</label>
-                                            <input type="text" id="totalAmount" v-model="form.totalAmount" class="form-control" required>
-                                          </div>
-                                          <div>
-                                            <input type="hidden" id="appointmentId" v-model="form.appointmentId">
-                                          </div>
-
-                                       </div>
-
-                                </form>
+                            <form>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="date" class="form-label">Date:</label>
+                                            <input type="date" id="date" v-model="form.date" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="dueDate" class="form-label">Due Date:</label>
+                                            <input type="date" id="dueDate" v-model="form.dueDate" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description of Services:</label>
+                                        <textarea id="description" v-model="form.description" class="form-control" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="totalAmount" class="form-label">Total Amount:</label>
+                                        <input type="text" id="totalAmount" v-model="form.totalAmount" class="form-control" required>
+                                    </div>
+                                    <input type="hidden" id="appointmentId" v-model="form.appointmentId">
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                     <button @click="saveInvoice" type="button" class="btn btn-purple">Save</button>
                                 </div>
-
-                            </div></div></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-lg-12">
