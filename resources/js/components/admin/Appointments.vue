@@ -255,8 +255,7 @@ onMounted(() => {
                                           <td> {{ appointment.doctor ? appointment.doctor.name : 'Not Assigned' }}</td>
                                           <td>
 
-                                            <button @click.prevent="assignToDoctor(appointment.id)" class="btn btn-purple ml-4">Assign to Doctor</button>
-                                            <button @click="createInvoice(appointment)" class="btn btn-purple ml-4" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Fermé'">Create Invoice</button>
+                        
                                             <a href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
                                           </td>
                                         </tr>

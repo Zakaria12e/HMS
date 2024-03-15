@@ -205,65 +205,59 @@ onMounted(() => {
           </div>
 
 
-          <div class="modal fade" id="createDepartmentModal" data-backdrop="static" tabindex="-1" role="dialog"
-               aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+          <div class="modal fade" id="createDepartmentModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">
-                    <span v-if="updating">Update Department</span>
-                    <span v-else>Add New Department</span>
-                  </h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-
-
-                <form :initial-values="formValues">
-                  <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label for="department_name">Department</label>
-                        <select v-model="form.name" class="form-control" id="department_name">
-                            <option value="" disabled>Select department</option>
-                            <option value="Cardiology">Cardiology</option>
-                            <option value="Dermatology">Dermatology</option>
-                            <option value="Orthopedics">Orthopedics</option>
-                            <option value="Ophthalmology">Ophthalmology</option>
-                            <option value="Pediatrics">Pediatrics</option>
-                            <option value="Neurology">Neurology</option>
-                            <option value="Gastroenterology">Gastroenterology</option>
-                            <option value="Oncology">Oncology</option>
-                            <option value="Urology">Urology</option>
-                            <option value="Endocrinology">Endocrinology</option>
-
-                        </select>
+                <div class="modal-content">
+                    <div class="modal-header bg-purple text-white">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            <span v-if="updating">Update Department</span>
+                            <span v-else>Add New Department</span>
+                        </h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group" style="flex: 1;">
-                      <label for="description">Description</label>
-                      <input v-model="form.description" type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter Description" required>
+                    <form :initial-values="formValues">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="department_name">Department</label>
+                                <select v-model="form.name" class="form-control" id="department_name">
+                                    <option value="" disabled>Select department</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Ophthalmology">Ophthalmology</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Gastroenterology">Gastroenterology</option>
+                                    <option value="Oncology">Oncology</option>
+                                    <option value="Urology">Urology</option>
+                                    <option value="Endocrinology">Endocrinology</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter Description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Head of Department</label>
+                                <select v-model="form.chef_id" class="form-control">
+                                    <option v-for="doctor in form.doctors.data" :key="doctor.id" :value="doctor.doctor_id">{{ doctor.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button @click="saveDepartment" type="button" class="btn btn-purple">Save</button>
                     </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label for="description">Head of Department</label>
-                        <select v-model="form.chef_id" class="form-control">
-                        <option v-for="doctor in form.doctors.data" :key="doctor.id" :value="doctor.doctor_id"> {{ doctor.name }}</option>
-                      </select>
-
                 </div>
-
-
-                  </div>
-                </form>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <button @click="saveDepartment" type="button" class="btn btn-purple">Save</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
 
-          <!-- Department Table -->
+
+
           <div class="card">
             <div class="card-body">
               <table class="table table-bordered">

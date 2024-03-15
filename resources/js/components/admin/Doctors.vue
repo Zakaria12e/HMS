@@ -419,99 +419,84 @@ p{
 
 
 
-              <div class="modal fade" id="createDoctorModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                      <div class="modal-header">
-
-                          <h5 class="modal-title" id="staticBackdropLabel">
-                            <span v-if="updating">Update Doctor</span>
-                            <span v-else>Add New Doctor</span>
-                        </h5>
-
-
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-
-
-                      <form :initial-values="formValues">
-                      <div class="modal-body" style="display: flex; flex-wrap: wrap; gap: 40px;">
-
-                              <div class="form-group">
-                                  <label for="name">Name</label>
-                                  <input v-model="form.name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter name" required>
-
-                              </div>
-                              <div class="form-group">
-                                <label for="email">Email</label>
-                                <input v-model="form.email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                                <span v-if="form.email && !emailValid(form.email)" class="text-danger">Invalid email format</span>
-                            </div>
-                              <div class="form-group">
-                                <label for="email">Password</label>
-                                <input v-model="form.password" type="password" class="form-control " id="password" aria-describedby="nameHelp" placeholder="Enter password" required>
-                                <span v-if="form.password && !passwordValid(form.password)" class="text-danger">Password must be 8 characters long</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="specialization">Specialization</label>
-                                <select v-model="form.specialization" class="form-control" id="specialization" required>
-                                    <option value="" disabled>Select specialization</option>
-                                    <option value="Cardiology">Cardiology</option>
-                                    <option value="Dermatology">Dermatology</option>
-                                    <option value="Endocrinology">Endocrinology</option>
-                                    <option value="Gastroenterology">Gastroenterology</option>
-                                    <option value="Hematology">Hematology</option>
-                                    <option value="Neurology">Neurology</option>
-                                    <option value="Orthopedics">Orthopedics</option>
-                                    <option value="Pediatrics">Pediatrics</option>
-                                    <option value="Psychiatry">Psychiatry</option>
-                                    <option value="Urology">Urology</option>
-                                </select>
-                            </div>
-
-
-                              <div class="form-group">
-                                  <label for="contact_number">Contact Number</label>
-                                  <input v-model="form.contactNumber" type="text" class="form-control" id="contact_number" aria-describedby="contactNumberHelp" placeholder="Enter contact number" required pattern="[0-9]{10}">
-                                  <span v-if="form.contactNumber && !phoneValid(form.contactNumber)" class="text-danger">Phone number must be 10 digits</span>
-                              </div>
-
-                              <div class="form-group">
-                                  <label for="salary">Salary</label>
-                                  <input v-model="form.salary" type="text" class="form-control" id="salary" aria-describedby="salaryHelp" placeholder="Enter salary" required>
-                              </div>
-
-
-                            <div class="form-group" style="flex: 1;">
-                                <label for="description">Description</label>
-                                <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter description"></textarea>
-                            </div>
-
-
-                            <div class="form-group"  style="flex: 1;">
-                                <label for="department_id">Department</label>
-                                <select v-model="form.department_id" class="form-control" id="department_id">
-
-                                  <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
-                                </select>
-                              </div>
-
-
-
+            <div class="modal fade" id="createDoctorModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-purple text-white">
+                            <h5 class="modal-title" id="staticBackdropLabel">
+                                <span v-if="updating">Update Doctor</span>
+                                <span v-else>Add New Doctor</span>
+                            </h5>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-
-                          </form>
-
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          <button @click="saveDoctor" type="button" class="btn btn-purple">Save</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
+                        <form :initial-values="formValues">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="name">Name</label>
+                                        <input v-model="form.name" type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email">Email</label>
+                                        <input v-model="form.email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                        <span v-if="form.email && !emailValid(form.email)" class="text-danger">Invalid email format</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="password">Password</label>
+                                        <input v-model="form.password" type="password" class="form-control " id="password" aria-describedby="passwordHelp" placeholder="Enter password" required>
+                                        <span v-if="form.password && !passwordValid(form.password)" class="text-danger">Password must be 8 characters long</span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="specialization">Specialization</label>
+                                        <select v-model="form.specialization" class="form-control" id="specialization" required>
+                                            <option value="" disabled>Select specialization</option>
+                                            <option value="Cardiology">Cardiology</option>
+                                            <option value="Dermatology">Dermatology</option>
+                                            <option value="Endocrinology">Endocrinology</option>
+                                            <option value="Gastroenterology">Gastroenterology</option>
+                                            <option value="Hematology">Hematology</option>
+                                            <option value="Neurology">Neurology</option>
+                                            <option value="Orthopedics">Orthopedics</option>
+                                            <option value="Pediatrics">Pediatrics</option>
+                                            <option value="Psychiatry">Psychiatry</option>
+                                            <option value="Urology">Urology</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact_number">Contact Number</label>
+                                        <input v-model="form.contactNumber" type="text" class="form-control" id="contact_number" aria-describedby="contactNumberHelp" placeholder="Enter contact number" required pattern="[0-9]{10}">
+                                        <span v-if="form.contactNumber && !phoneValid(form.contactNumber)" class="text-danger">Phone number must be 10 digits</span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="salary">Salary</label>
+                                        <input v-model="form.salary" type="text" class="form-control" id="salary" aria-describedby="salaryHelp" placeholder="Enter salary" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description">Description</label>
+                                    <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="department_id">Department</label>
+                                    <select v-model="form.department_id" class="form-control" id="department_id">
+                                        <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button @click="saveDoctor" type="button" class="btn btn-purple">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
 
           <div class="modal fade" id="workingHoursModal" tabindex="-1" role="dialog" aria-labelledby="workingHoursModalLabel"
