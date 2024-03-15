@@ -3,9 +3,12 @@
 import axios from 'axios';
 import { onMounted , ref , watch } from 'vue';
 import { debounce } from 'lodash';
+import $ from 'jquery';
 
 const users = ref([]);
 const doctorId = ref(null);
+const selectedUserId = ref(null);
+const medicalReports = ref([]);
 
 
 const getUsers = () => {
@@ -48,10 +51,42 @@ watch(searchQuery, debounce(() => {
 search();
 }, 300));
 
-const showModal = () => {
-  $('#createMedicalReportModal').modal('show');
+
+const currentReportIndex = ref(0);
+
+const showModal = (userId) => {
+    selectedUserId.value = userId;
+    $('#createMedicalReportModal').modal('show');
+    fetchMedicalReports(doctorId.value, userId);
+};
+const previousReport = () => {
+    if (currentReportIndex.value > 0) {
+        currentReportIndex.value--;
+    }
 };
 
+const nextReport = () => {
+    if (currentReportIndex.value < medicalReports.value.length - 1) {
+        currentReportIndex.value++;
+    }
+};
+
+const fetchMedicalReports = (doctorId, userId) => {
+    axios.get(`/api/medical-reports`, {
+        params: {
+            doctor_id: doctorId,
+            user_id: userId
+        }
+    })
+    .then(response => {
+
+        console.log('Medical reports:', response.data);
+        medicalReports.value = response.data;
+    })
+    .catch(error => {
+        console.error('Failed to fetch medical reports:', error);
+    });
+};
 
 
 onMounted(() => {
@@ -81,17 +116,32 @@ onMounted(() => {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-purple text-white">
-                    <h5 class="modal-title" id="staticBackdropLabel">Medicals Reports</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Medical Reports</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+
                 </div>
-
-                    <div class="modal-body">
-
-
+                <div class="modal-body">
+                    <div v-if="medicalReports.length > 0">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Title: {{ medicalReports[currentReportIndex].title }}</h6>
+                                <p>Diagnosis: {{ medicalReports[currentReportIndex].diagnosis }}</p>
+                                <p>Medications: {{ medicalReports[currentReportIndex].medications }}</p>
+                                <p>Recommendations: {{ medicalReports[currentReportIndex].recommendations }}</p>
+                                <p>Symptoms: {{ medicalReports[currentReportIndex].symptoms }}</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button @click="previousReport" class="btn btn-primary mr-2" :disabled="currentReportIndex === 0">Previous</button>
+                            <button @click="nextReport" class="btn btn-primary" :disabled="currentReportIndex === medicalReports.length - 1">Next</button>
+                        </div>
                     </div>
-
+                    <div v-else>
+                        <p>No medical reports available.</p>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -126,13 +176,13 @@ onMounted(() => {
                         <tbody>
 
                             <tr v-for="( user , index ) in users" :key="user.id">
-                                <td>{{ index + 1}}</td>
+                                <td>{{ user.id}}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.contact_number }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>
 
-                                    <button @click="showModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMedicalReportModal">
+                                    <button @click="showModal(user.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMedicalReportModal">
                                        Medicals Reports
                                       </button>
                                 </td>

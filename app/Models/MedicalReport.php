@@ -17,5 +17,10 @@ class MedicalReport extends Model
         'symptoms',
         'appointment_id',
     ];
-    
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
+
 }
