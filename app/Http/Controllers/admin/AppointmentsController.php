@@ -52,6 +52,16 @@ class AppointmentsController extends Controller
     }
 
 
+
+
+
+
+    public function invoices()
+    {
+        $invoices = Invoice::with('appointment.doctor', 'appointment.patient')->get();
+        return response()->json($invoices);
+    }
+
     public function markAsPaid($id)
     {
 

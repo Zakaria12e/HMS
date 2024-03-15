@@ -1,7 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, watchEffect, reactive } from 'vue';
-import { debounce } from 'lodash';
+import { ref, onMounted, reactive } from 'vue';
 import { useToastr } from '/resources/js/toastr.js';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import $ from 'jquery';
@@ -80,7 +79,10 @@ const appointmentCounts = ref({});
 
 const fetchAppointmentCounts = async () => {
   try {
-    const response = await axios.get('/api/appointment-counts');
+
+    const response = await axios.get('/api/appointment-counts', {
+      params: {doctor_id: doctorId.value }
+    });
     appointmentCounts.value = response.data;
   } catch (error) {
     toastr.error('Failed to fetch appointment counts.');
@@ -133,7 +135,7 @@ const deleteAppointment = async (appointment) => {
 onMounted(() => {
   doctorId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
   getAppointments(selectedStatus.value);
-  fetchAppointmentCounts();
+  fetchAppointmentCounts(doctorId.value);
 
 
 });

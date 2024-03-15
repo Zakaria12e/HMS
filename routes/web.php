@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/api/invoices', [DoctorAppointmentController::class, 'create']);
     Route::get('/api/doctor/getusers', [PatientController::class, 'index']);
     Route::delete('/api/doctor/appointments/{id}', [AppointmentsController::class, 'destroy']);
+    Route::get('/api/getinvoices/doctor/{doctorId}', [DoctorAppointmentController::class, 'getinvoices']);
 
 
 
@@ -84,7 +85,7 @@ Route::get('/api/users/{id}', [PatientController::class,'GetName']);
 Route::get('/api/appointments', [AppointmentsController::class, 'index']);
 Route::put('/api/appointments/{id}', [AppointmentsController::class, 'update']);
 Route::delete('/api/appointments/{id}', [AppointmentsController::class, 'destroy']);
-Route::get('/api/getinvoices', [AppointmentsController::class, 'index']);
+Route::get('/api/getinvoices', [AppointmentsController::class, 'invoices']);
 Route::put('/api/invoices/{id}', [AppointmentsController::class, 'markAsPaid']);
 
 Route::get('/api/dashboard/users-count', [DashboardController::class, 'getUsersCount']);

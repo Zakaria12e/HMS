@@ -65,7 +65,7 @@
 
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 <div class="info">
-<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}  -- {{ Auth::id() }}</a>
+<a href="/admin/profile" class="d-block">{{ Auth::user()->name }}</a>
 </div>
 </div>
 
@@ -98,6 +98,12 @@
             <i class="nav-icon fas fa-user"></i>
             <p>Profile</p>
             </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/doctor/invoices" active-class="active" class="nav-link">
+                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                    <p>Invoices</p>
+                </router-link>
             </li>
             <li class="nav-item">
 

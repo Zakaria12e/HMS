@@ -10,6 +10,7 @@ import Patients_doc from './components/doctor/Patients.vue';
 import Appointments_doc from './components/doctor/Appointments.vue';
 import UpdateDoctorProfile from './components/doctor/UpdateDoctorProfile.vue';
 import DoctorDashboard from './components/doctor/DoctorDashboard.vue';
+import DoctorInvoices from './components/doctor/DoctorInvoices.vue';
 
 import Home from './components/patient/Home.vue';
 import DoctorInfo from './components/patient/DoctorInfo.vue';
@@ -94,6 +95,12 @@ export default [
         path: '/doctor',
         name: 'doctor.dashboard',
         component: DoctorDashboard,
+    },
+    {
+
+        path: '/doctor/invoices',
+        name: 'doctor.invoices',
+        component: DoctorInvoices,
     },
     {
 

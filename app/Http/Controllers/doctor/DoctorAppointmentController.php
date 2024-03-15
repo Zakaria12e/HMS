@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Invoice;
+use App\Models\Doctor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -47,7 +48,15 @@ class DoctorAppointmentController extends Controller
     public function getAppointmentCounts(Request $request)
     {
         try {
-            $counts = Appointment::select('status', DB::raw('count(*) as count'))
+
+            $doctorId = $request->input('doctor_id');
+
+            if (!$doctorId) {
+                return response()->json(['error' => 'doctor_id parameter is required'], 400);
+            }
+
+            $counts = Appointment::where('doctor_id', $doctorId)
+                ->select('status', DB::raw('count(*) as count'))
                 ->groupBy('status')
                 ->get()
                 ->pluck('count', 'status');
@@ -57,6 +66,7 @@ class DoctorAppointmentController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function updateStatus(Request $request, $id)
     {
@@ -103,10 +113,8 @@ class DoctorAppointmentController extends Controller
 
         $appointmentId = $request->input('appointmentId');
 
-        // Retrieve the patient_id associated with the appointment
         $patientId = Appointment::where('id', $appointmentId)->value('patient_id');
 
-        // Retrieve the contact_number using the patient_id
         $receiverPhoneNumber = User::where('id', $patientId)->value('contact_number');
 
         $invoice = Invoice::create([
@@ -123,6 +131,8 @@ class DoctorAppointmentController extends Controller
 
         return response()->json(['message' => 'Invoice created successfully', 'invoice' => $invoice], 200);
     }
+
+    
  private function sendInvoiceSMS($receiverPhoneNumber, $appointment, $totalAmount , $dueDate)
  {
      try {
@@ -163,6 +173,25 @@ class DoctorAppointmentController extends Controller
          Log::error('Error sending SMS: ' . $e->getMessage());
      }
  }
+
+
+ public function getinvoices($doctorId)
+ {
+     try {
+         // Find appointments where the doctor_id matches
+         $doctorAppointments = Appointment::where('doctor_id', $doctorId)->pluck('id');
+
+         // Find invoices where the appointment_id is in the list of appointments found
+         $invoices = Invoice::whereIn('appointment_id', $doctorAppointments)
+             ->with('appointment.patient')
+             ->get();
+
+         return response()->json($invoices);
+     } catch (\Exception $e) {
+         return response()->json(['error' => $e->getMessage()], 500);
+     }
+ }
+
 
 
 }
