@@ -178,15 +178,57 @@ class DoctorAppointmentController extends Controller
  public function getinvoices($doctorId)
  {
      try {
-         // Find appointments where the doctor_id matches
+
          $doctorAppointments = Appointment::where('doctor_id', $doctorId)->pluck('id');
 
-         // Find invoices where the appointment_id is in the list of appointments found
          $invoices = Invoice::whereIn('appointment_id', $doctorAppointments)
              ->with('appointment.patient')
              ->get();
 
          return response()->json($invoices);
+     } catch (\Exception $e) {
+         return response()->json(['error' => $e->getMessage()], 500);
+     }
+ }
+
+
+ public function doctorPatients(Request $request)
+ {
+     try {
+        $doctorId = $request->input('doctor_id');
+
+         $appointments = Appointment::where('doctor_id', $doctorId)->get();
+
+         $patientIds = $appointments->pluck('patient_id')->unique()->toArray();
+
+         $patients = User::whereIn('id', $patientIds)->get();
+
+         return response()->json($patients);
+     } catch (\Exception $e) {
+         return response()->json(['error' => $e->getMessage()], 500);
+     }
+ }
+
+
+ public function search(Request $request)
+ {
+     try {
+         $query = $request->input('query');
+         $doctorId = $request->input('doctor_id');
+
+         $appointments = Appointment::where('doctor_id', $doctorId)->get();
+
+         $patientIds = $appointments->pluck('patient_id')->unique()->toArray();
+
+         $users = User::whereIn('id', $patientIds)
+             ->where(function ($queryBuilder) use ($query) {
+                 $queryBuilder->where('name', 'like', "%$query%")
+                     ->orWhere('contact_number', 'like', "%$query%")
+                     ->orWhere('email', 'like', "%$query%");
+             })
+             ->get();
+
+         return response()->json($users);
      } catch (\Exception $e) {
          return response()->json(['error' => $e->getMessage()], 500);
      }

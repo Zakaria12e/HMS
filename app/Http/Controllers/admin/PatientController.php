@@ -14,9 +14,9 @@ class PatientController extends Controller
     {
         $users = DB::table('users')
             ->leftJoin('appointments', 'users.id', '=', 'appointments.patient_id')
-            ->select( 'users.name', 'users.email','users.password', DB::raw('COUNT(appointments.patient_id) as appointment_count'))
+            ->select( 'users.name', 'users.email','users.contact_number', DB::raw('COUNT(appointments.patient_id) as appointment_count'))
             ->where('users.type', 'patient')
-            ->groupBy('users.name', 'users.email', 'users.password')
+            ->groupBy('users.name', 'users.email', 'users.contact_number')
             ->get();
 
         return response()->json($users);
