@@ -48,6 +48,10 @@ watch(searchQuery, debounce(() => {
 search();
 }, 300));
 
+const showModal = () => {
+  $('#createMedicalReportModal').modal('show');
+};
+
 
 
 onMounted(() => {
@@ -73,10 +77,30 @@ onMounted(() => {
         </div>
     </div>
 
+    <div class="modal fade" id="createMedicalReportModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-purple text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">Medicals Reports</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <div class="modal-body">
+
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+
 
     <div class="content">
         <div class="container-fluid">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-end mb-3">
                 <div>
 
                   <input type="text" v-model="searchQuery" class="form-control" placeholder="Search..."/>
@@ -106,7 +130,12 @@ onMounted(() => {
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.contact_number }}</td>
                                 <td>{{ user.email }}</td>
-                                <td></td>
+                                <td>
+
+                                    <button @click="showModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMedicalReportModal">
+                                       Medicals Reports
+                                      </button>
+                                </td>
 
                             </tr>
                         </tbody>

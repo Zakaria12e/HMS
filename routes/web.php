@@ -13,6 +13,7 @@ use App\Http\Controllers\Patient\DoctorInformationController;
 use App\Http\Controllers\patient\AppointmentController;
 use App\Http\Controllers\doctor\DoctorAppointmentController;
 use App\Http\Controllers\doctor\DoctorWorkingHoursController;
+use App\Http\Controllers\doctor\MedicalReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/api/doctor/appointments/{id}', [AppointmentsController::class, 'destroy']);
     Route::get('/api/getinvoices/doctor/{doctorId}', [DoctorAppointmentController::class, 'getinvoices']);
     Route::get('/api/doctor/patients/search', [DoctorAppointmentController::class, 'search']);
+    Route::post('/api/medical-reports', [MedicalReportController::class, 'store']);
 
 
 

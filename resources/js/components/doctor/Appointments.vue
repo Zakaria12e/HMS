@@ -9,6 +9,7 @@ const appointments = ref([]);
 const toastr = useToastr();
 const doctorId = ref(null);
 const selectedStatus = ref(null);
+const AppointmentId = ref(null);
 
 const form = reactive({
   date: '',
@@ -132,6 +133,53 @@ const deleteAppointment = async (appointment) => {
 
 
 
+const medicalForm = ref({
+  title: '',
+  diagnosis: '',
+  medications: '',
+  recommendations: '',
+  symptoms: ''
+});
+
+const showModal = (appointment) => {
+  AppointmentId.value = appointment.id;
+  $('#createMedicalReportModal').modal('show');
+};
+
+const createMedicalReport = async () => {
+  try {
+    const response = await axios.post('/api/medical-reports', {
+      title: medicalForm.value.title,
+      diagnosis: medicalForm.value.diagnosis,
+      medications: medicalForm.value.medications,
+      recommendations: medicalForm.value.recommendations,
+      symptoms: medicalForm.value.symptoms,
+      appointment_id: AppointmentId.value
+    });
+    if (response.status === 200) {
+      toastr.success('Medical report saved successfully');
+      clearMedicalForm();
+      $('#createMedicalReportModal').modal('hide');
+    } else {
+      console.error('Unexpected response status:', response.status);
+      toastr.error('Error saving medical report');
+    }
+  } catch (error) {
+    console.error('Error saving medical report:', error);
+    toastr.error('Error saving medical report');
+  }
+};
+
+const clearMedicalForm = () => {
+  medicalForm.value.title = '';
+  medicalForm.value.diagnosis = '';
+  medicalForm.value.medications = '';
+  medicalForm.value.recommendations = '';
+  medicalForm.value.symptoms = '';
+};
+
+
+
 onMounted(() => {
   doctorId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
   getAppointments(selectedStatus.value);
@@ -165,6 +213,47 @@ onMounted(() => {
         <div class="content">
 
             <div class="container-fluid">
+                <div class="modal fade" id="createMedicalReportModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-purple text-white">
+                                <h5 class="modal-title" id="staticBackdropLabel">Create Medical Report</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form @submit.prevent="createMedicalReport">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input v-model="medicalForm.title" type="text" class="form-control" id="title" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="diagnosis">Diagnosis</label>
+                                        <textarea v-model="medicalForm.diagnosis" class="form-control" id="diagnosis" rows="2" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="medications">Medications</label>
+                                        <textarea v-model="medicalForm.medications" class="form-control" id="medications" rows="2" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recommendations">Recommendations</label>
+                                        <textarea v-model="medicalForm.recommendations" class="form-control" id="recommendations" rows="2" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="symptoms">Symptoms</label>
+                                        <textarea v-model="medicalForm.symptoms" class="form-control" id="symptoms" rows="2" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-purple">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="modal fade" id="createInvoiceModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -244,6 +333,7 @@ onMounted(() => {
                                         <th scope="col">Date</th>
                                         <th scope="col">Time</th>
                                         <th scope="col">Title</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Options</th>
                                       </tr>
@@ -255,6 +345,7 @@ onMounted(() => {
                                           <td>{{ appointment.appointment_date }}</td>
                                           <td>{{ appointment.start_time }}</td>
                                           <td>{{ appointment.title }}</td>
+                                          <td>{{ appointment.description }}</td>
                                           <td>
                                             <span v-if="appointment.status === 'Confirmé'" class="badge badge-success">{{ appointment.status }}</span>
                                             <span v-else-if="appointment.status === 'Annulé'" class="badge badge-warning">{{ appointment.status }}</span>
@@ -276,8 +367,11 @@ onMounted(() => {
                                                 <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btn-primary mr-2">Modify Status</button>
                                               </div>
                                               <div>
-                                                <button @click="createInvoice(appointment)" class="btn btn-purple" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
+                                                <button @click="createInvoice(appointment)" class="btn btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
                                               </div>
+                                              <button @click="showModal(appointment)" type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal">
+                                                Medical Report
+                                               </button>
 
                                             <a href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
                                             </div>
