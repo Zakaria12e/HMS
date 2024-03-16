@@ -27,11 +27,18 @@ export default [
         component: Dashboard,
     },
     {
+        path: '/admin/patients',
+        name: 'admin.patients',
+        component: Patients,
+
+    },
+    {
 
         path: '/admin/appointments',
         name: 'admin.appointments',
         component: Appointments,
     },
+
     {
 
         path: '/admin/profile',
@@ -50,7 +57,7 @@ export default [
         name: 'admin.doctors',
         component: Doctors,
     },
-   
+
     {
 
         path: '/admin/departments',
