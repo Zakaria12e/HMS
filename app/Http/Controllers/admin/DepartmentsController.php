@@ -11,7 +11,10 @@ class DepartmentsController extends Controller
 
     public function index()
     {
-        $departments = Department::with('doctors')->get();
+        $departments = Department::with(['doctors', 'doctors.user'])->get();
+        // Here 'doctors' is the relationship name between Department and Doctor models,
+        // 'user' is the relationship name between Doctor and User models.
+
         return response()->json($departments);
     }
 
@@ -32,25 +35,6 @@ class DepartmentsController extends Controller
         return response()->json($department, 201);
     }
 
-
-
-    public function createDepartment(Request $request)
-    {
-
-        $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'chef_id' => 'nullable|exists:users,id',
-        ]);
-
-        $newDepartment = Department::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'chef_id' => $request->input('chef_id'),
-        ]);
-
-        return response()->json($newDepartment);
-    }
 
     public function update(Request $request, $id)
 {
@@ -81,7 +65,7 @@ public function destroy($id)
 {
     try {
         $department = Department::findOrFail($id);
-        
+
         $department->doctors()->update(['department_id' => null]);
 
         $department->delete();

@@ -12,26 +12,13 @@ class PatientController extends Controller
 
     public function index()
     {
-        $users = DB::table('users')
-            ->leftJoin('appointments', 'users.id', '=', 'appointments.patient_id')
-            ->select( 'users.name', 'users.email','users.contact_number', DB::raw('COUNT(appointments.patient_id) as appointment_count'))
-            ->where('users.type', 'patient')
-            ->groupBy('users.name', 'users.email', 'users.contact_number')
-            ->get();
+        $patients = User::withCount('appointments')
+            ->where('type', 'patient')
+            ->get(['id', 'name', 'email', 'contact_number']);
 
-        return response()->json($users);
+        return response()->json($patients);
     }
 
-    public function batchFetch(Request $request)
-    {
-        $userIds = $request->input('userIds', []);
-
-        $users = User::whereIn('id', $userIds)->get();
-
-        $userNames = $users->pluck('name', 'id');
-
-        return response()->json($userNames);
-    }
 
 
 

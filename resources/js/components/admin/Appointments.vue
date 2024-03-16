@@ -93,21 +93,9 @@ const getAppointments = debounce(async (page = 1) => {
       });
     }
 
-    const appointmentsData = response.data.data;
+    appointments.value = response.data.data;
 
-    const userIds = appointmentsData.reduce((ids, appointment) => {
-      ids.push(appointment.patient_id, appointment.doctor_id);
-      return ids;
-    }, []);
 
-    await fetchUserNames(userIds);
-
-    for (const appointment of appointmentsData) {
-      appointment.userName = cachedUserNames[appointment.patient_id];
-      appointment.doctorName = cachedUserNames[appointment.doctor_id];
-    }
-
-    appointments.value = appointmentsData;
   } catch (error) {
     console.error('Error fetching appointments:', error);
   }
@@ -245,7 +233,7 @@ onMounted(() => {
                                             <span v-else-if="appointment.status === 'Planifié'" class="badge badge-purple">{{ appointment.status }}</span>
                                             <span v-else class="badge badge-secondary">{{ appointment.status }}</span>
                                           </td>
-                                          <td> {{ appointment.doctor ? appointment.doctor.name : 'Not Assigned' }}</td>
+                                          <td> {{appointment.doctor.name}}</td>
                                           <td>
 
 

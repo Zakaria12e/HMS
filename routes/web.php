@@ -82,7 +82,6 @@ Route::get('/api/working-hours-read/{doctorId}', [WorkingHoursController::class,
 Route::delete('/api/working-hours/{dayId}', [WorkingHoursController::class, 'destroy']);
 
 
-Route::post('/api/users/batch', [PatientController::class, 'batchFetch']);
 Route::get('/api/users', [PatientController::class, 'index']);
 Route::get('/api/users/{id}', [PatientController::class,'GetName']);
 
@@ -102,7 +101,6 @@ Route::get('/api/dashboard/total-paid-amount', [DashboardController::class, 'tot
 
 
 Route::post('/api/departments', [DepartmentsController::class, 'store']);
-Route::post('/api/departments', [DepartmentsController::class, 'createDepartment']);
 Route::put('/api/departments/{id}', [DepartmentsController::class, 'update']);
 Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']);
 

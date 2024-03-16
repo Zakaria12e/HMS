@@ -13,9 +13,11 @@ class AppointmentsController extends Controller
 
     public function index()
     {
-        return Appointment::with(['patient', 'doctor'])
+        return Appointment::with(['patient:id,name', 'doctor:id,name'])
+            ->select('patient_id','status', 'doctor_id', 'title', 'service', 'description', 'appointment_date')
             ->paginate();
     }
+
 
 
 

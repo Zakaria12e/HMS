@@ -47,6 +47,7 @@ onMounted(() => {
                                 <th style="width: 10px">id</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Contact Number</th>
                                 <th>Appointments</th>
                                 <th>Options</th>
 
@@ -59,8 +60,9 @@ onMounted(() => {
                                 <td>{{ index + 1}}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
+                                <td>{{ user.contact_number }}</td>
                                 <td class="centered-cell">
-                                    <span class="appointment-count">{{ user.appointment_count }}</span>
+                                    <span class="appointment-count">{{ user.appointments_count }}</span>
                                    </td>
                                 <td>
 
