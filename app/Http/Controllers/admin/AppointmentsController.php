@@ -14,7 +14,7 @@ class AppointmentsController extends Controller
     public function index()
     {
         return Appointment::with(['patient:id,name', 'doctor:id,name'])
-            ->select('patient_id','status', 'doctor_id', 'title', 'service', 'description', 'appointment_date')
+            ->select('id','patient_id','status', 'doctor_id', 'title', 'service', 'description', 'appointment_date')
             ->paginate();
     }
 
@@ -44,6 +44,8 @@ class AppointmentsController extends Controller
             return response()->json(['error' => 'Error updating appointment', 'message' => $e->getMessage()], 500);
         }
     }
+
+
 
     public function destroy($id)
     {

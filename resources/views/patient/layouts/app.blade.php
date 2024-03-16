@@ -9,12 +9,39 @@
     @vite(['resources/js/app.js'])
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 </head>
 
 <body>
     <style>
+      
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.badge-purple {
+    background-color: #6f42c1;
+    color: #fff;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
         section {
             padding-top: 70px;
         }

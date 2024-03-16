@@ -151,7 +151,7 @@ onMounted(() => {
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped table-bordered">
+                <table  class="table table-striped table-bordered">
                   <thead class="thead-dark">
                     <tr>
                       <th>ID</th>
@@ -161,7 +161,7 @@ onMounted(() => {
                       <th>Options</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody v-if="users.length > 0">
                     <tr v-for="(user, index) in users" :key="user.id">
                       <td>{{ user.id }}</td>
                       <td>{{ user.name }}</td>
@@ -172,7 +172,11 @@ onMounted(() => {
                       </td>
                     </tr>
                   </tbody>
+                  <tbody v-else>
+                    <td colspan="8" class="text-center">No result found</td>
+                </tbody>
                 </table>
+
               </div>
             </div>
           </div>

@@ -235,5 +235,14 @@ class DoctorAppointmentController extends Controller
  }
 
 
+ public function destroy($id)
+ {
+
+     Appointment::where('id', $id)->delete();
+
+     return response()->json(['message' => 'Appointment deleted successfully']);
+ }
+
+
 
 }

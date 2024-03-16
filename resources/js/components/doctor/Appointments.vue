@@ -167,6 +167,24 @@ const showDescriptionModal = (description) => {
 };
 
 
+const deleteAppointment = async (appointment) => {
+    try {
+        const response = await axios.delete(`/api/doctorAppointments/${appointment.id}`);
+
+        if (response.status === 200) {
+
+            getAppointments();
+            toastr.success('Appointment deleted successfully');
+        } else {
+
+            console.error('Unexpected response status:', response.status);
+            toastr.error('Error deleting appointment');
+        }
+    } catch (error) {
+        console.error('Error deleting appointment:', error);
+        toastr.error('Error deleting appointment');
+    }
+};
 
 
 onMounted(() => {
@@ -326,77 +344,67 @@ onMounted(() => {
                             </div>
                         </div>
 
-
                         <div class="card">
                             <div class="card-body">
-                              <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">id</th>
-                                        <th scope="col">patient</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Options</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody v-if="appointments.length > 0">
-                                        <tr v-for="(appointment, index) in appointments" :key="appointment.id">
-                                          <td>{{ index + 1 }}</td>
-                                          <td>{{ appointment.patient_name }}</td>
-                                          <td>{{ appointment.appointment_date }}</td>
-                                          <td>{{ appointment.start_time }}</td>
-                                          <td>{{ appointment.title }}</td>
-                                          <td>
-
-                                            <button @click="showDescriptionModal(appointment.description)" class="btn btn-sm ml-2">
-                                                <i class="fas fa-info-circle"></i>
-                                            </button></td>
-                                          <td>
-                                            <span v-if="appointment.status === 'Confirmé'" class="badge badge-success">{{ appointment.status }}</span>
-                                            <span v-else-if="appointment.status === 'Annulé'" class="badge badge-warning">{{ appointment.status }}</span>
-                                            <span v-else-if="appointment.status === 'Fermé'" class="badge badge-danger">{{ appointment.status }}</span>
-                                            <span v-else-if="appointment.status === 'Planifié'" class="badge badge-purple">{{ appointment.status }}</span>
-                                            <span v-else class="badge badge-secondary">{{ appointment.status }}</span>
-                                          </td>
-                                          <td class="text-center">
-                                            <div class="d-flex align-items-center">
-                                              <div class="col-sm-3 mr-2">
-                                                <select v-model="appointment.newStatus" class="form-control form-control-sm mr-2">
-                                                  <option value="" disabled>Select status</option>
-                                                  <option value="Planifié" :selected="appointment.status === 'Planifié'">Planifié</option>
-                                                  <option value="Confirmé" :selected="appointment.status === 'Confirmé'">Confirmé</option>
-                                                  <option value="Fermé" :selected="appointment.status === 'Fermé'">Fermé</option>
-                                                </select>
-                                              </div>
-                                              <div class="btn-group">
-
-                                                <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btns btn-success mr-2">Modify Status</button>
-                                                <button @click="createInvoice(appointment)" class="btn btns btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
-                                                <button @click="showModal(appointment)" type="button" class="btn btns btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal">
-                                                Medical Report
-                                               </button>
-                                              </div>
-
-
-                                            </div>
-
-                                          </td>
-
-
-
-
-                                        </tr>
-                                      </tbody>
-
-                                      <tbody v-else>
-                                        <td colspan="8" class="text-center">No result found</td>
-                                    </tbody>
-                                  </table>
-                              </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">id</th>
+                                                <th scope="col">patient</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody v-if="appointments.length > 0">
+                                            <tr v-for="(appointment, index) in appointments" :key="appointment.id">
+                                                <td>{{ index + 1 }}</td>
+                                                <td>{{ appointment.patient_name }}</td>
+                                                <td>{{ appointment.appointment_date }}</td>
+                                                <td>{{ appointment.start_time }}</td>
+                                                <td>{{ appointment.title }}</td>
+                                                <td>
+                                                    <button @click="showDescriptionModal(appointment.description)" class="btn btn-sm ml-2">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <span v-if="appointment.status === 'Confirmé'" class="badge badge-success">{{ appointment.status }}</span>
+                                                    <span v-else-if="appointment.status === 'Annulé'" class="badge badge-warning">{{ appointment.status }}</span>
+                                                    <span v-else-if="appointment.status === 'Fermé'" class="badge badge-danger">{{ appointment.status }}</span>
+                                                    <span v-else-if="appointment.status === 'Planifié'" class="badge badge-purple">{{ appointment.status }}</span>
+                                                    <span v-else class="badge badge-secondary">{{ appointment.status }}</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="col-sm-3 mr-2">
+                                                            <select v-model="appointment.newStatus" class="form-control form-control-sm mr-2">
+                                                                <option value="" disabled>Select status</option>
+                                                                <option value="Planifié" :selected="appointment.status === 'Planifié'">Planifié</option>
+                                                                <option value="Confirmé" :selected="appointment.status === 'Confirmé'">Confirmé</option>
+                                                                <option value="Fermé" :selected="appointment.status === 'Fermé'">Fermé</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btns btn-success mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Fermé' || appointment.status === 'Confirmé'">Modify Status</button>
+                                                            <button @click="createInvoice(appointment)" class="btn btns btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
+                                                            <button @click="showModal(appointment)" type="button" class="btn btns btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal" :disabled="appointment.status === 'Annulé'">Medical Report</button>
+                                                            <a v-if="appointment.status == 'Annulé'" href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
+                                                          
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody v-else>
+                                            <td colspan="8" class="text-center">No result found</td>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
