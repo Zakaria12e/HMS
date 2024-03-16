@@ -70,4 +70,19 @@ class AppointmentController extends Controller
     return response()->json(['available' => !$existingAppointments]);
 }
 
+public function cancelAppointment($id)
+{
+    try {
+
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = 'Annulé';
+        $appointment->save();
+
+        return response()->json($appointment, 200);
+    } catch (\Exception $e) {
+      
+        return response()->json(['error' => 'Internal server error'], 500);
+    }
+}
+
 }
