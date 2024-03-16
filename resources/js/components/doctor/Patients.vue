@@ -119,7 +119,7 @@ onMounted(() => {
                                 <p>Symptoms: {{ medicalReports[currentReportIndex].symptoms }}</p>
                             </div>
                         </div>
-                        <div class="text-center mt-3">
+                        <div class="text-center mt-3"  v-if="medicalReports.length > 1">
                             <button @click="previousReport" class="btn btn-primary mr-2" :disabled="currentReportIndex === 0">Previous</button>
                             <button @click="nextReport" class="btn btn-primary" :disabled="currentReportIndex === medicalReports.length - 1">Next</button>
                         </div>
