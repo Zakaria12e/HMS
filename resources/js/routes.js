@@ -14,7 +14,7 @@ import DoctorInvoices from './components/doctor/DoctorInvoices.vue';
 import Home from './components/patient/Home.vue';
 import DoctorInfo from './components/patient/DoctorInfo.vue';
 import About from './components/patient/About.vue';
-import Contact from './components/patient/Contact.vue';
+import MedicalReports from './components/patient/MedicalReports.vue';
 import MyAppointments from './components/patient/MyAppointments.vue';
 import Departments from './components/admin/Departments.vue';
 
@@ -123,9 +123,9 @@ export default [
     },
     {
 
-        path: '/contact',
-        name: 'patient.contact',
-        component: Contact,
+        path: '/Medical-Reports',
+        name: 'patient.MedicalReports',
+        component: MedicalReports,
     },
 
 ]

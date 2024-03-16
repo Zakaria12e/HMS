@@ -567,14 +567,14 @@ p{
                         <tbody v-if="doctors.data.length > 0">
                             <tr v-for="(doctor, index) in doctors.data" :key="index">
                                 <td>{{ doctor.doctor_id }}</td>
-                                <td>{{ doctor.name }}</td>
-                                <td>{{ doctor.email }}</td>
+                                <td>{{ doctor.user.name }}</td>
+                                <td>{{ doctor.user.email }}</td>
                                 <td>{{ doctor.specialization }}</td>
-                                <td>{{ doctor.contact_number }}</td>
+                                <td>{{ doctor.user.contact_number }}</td>
                                 <td>{{ doctor.salary }}</td>
                                 <td>{{ doctor.department_name }}</td>
                                 <td class="centered-cell">
-                                 <span class="appointment-count">{{ doctor.appointment_count }}</span>
+                                 <span class="appointment-count">{{ doctor.appointments_count }}</span>
                                 </td>
                                 <td>
                                     <a href="#" @click.prevent="updateDoctor(doctor)">  <i class="fa fa-edit" style="color: #9528b8;"></i> </a>

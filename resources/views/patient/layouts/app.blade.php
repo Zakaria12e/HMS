@@ -200,8 +200,8 @@ h1, h2, h3, h4, h5, h6 {
                                     <li class="nav-item" :class="{ 'active': $route.name === 'appointments' }">
                                         <router-link to="/appointments" class="nav-link">Appointments</router-link>
                                     </li>
-                                    <li class="nav-item" :class="{ 'active': $route.name === 'contact' }">
-                                        <router-link to="/contact" class="nav-link">Contact</router-link>
+                                    <li class="nav-item" :class="{ 'active': $route.name === 'MedicalReports' }">
+                                        <router-link to="/Medical-Reports" class="nav-link">Medical Reports</router-link>
                                     </li>
                                 </ul>
                             </div>

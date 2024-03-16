@@ -81,7 +81,7 @@ onMounted(() => {
                         </div>
 
                         <div class="box-content">
-                            <span class="big">44.51</span>
+                            <span class="big">no</span>
                             Current price ($)
                         </div>
                     </div>
