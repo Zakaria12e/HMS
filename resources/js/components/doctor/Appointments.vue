@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { ref, onMounted, reactive } from 'vue';
 import { useToastr } from '/resources/js/toastr.js';
-import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import $ from 'jquery';
 
 const appointments = ref([]);
@@ -112,25 +111,6 @@ const modifyStatus = async (appointmentId, newStatus) => {
   }
 };
 
-const deleteAppointment = async (appointment) => {
-    try {
-        const response = await axios.delete(`/api/doctor/appointments/${appointment.id}`);
-
-        if (response.status === 200) {
-
-            getAppointments();
-            toastr.success('Appointment deleted successfully');
-        } else {
-
-            console.error('Unexpected response status:', response.status);
-            toastr.error('Error deleting appointment');
-        }
-    } catch (error) {
-        console.error('Error deleting appointment:', error);
-        toastr.error('Error deleting appointment');
-    }
-};
-
 
 
 const medicalForm = ref({
@@ -179,6 +159,15 @@ const clearMedicalForm = () => {
 };
 
 
+const showDescriptionModal = (description) => {
+
+    form.description = description;
+
+    $('#descriptionModal').modal('show');
+};
+
+
+
 
 onMounted(() => {
   doctorId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
@@ -196,23 +185,15 @@ onMounted(() => {
 
 <template>
 
-    <div class="content-header">
-        <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Appointments</h1>
-        </div>
-        <div class="col-sm-6">
+    <main class="content-wrap">
+        <header class="content-head">
+            <h1>Appointments</h1>
 
-        </div>
-        </div>
-        </div>
-        </div>
+        </header>
 
 
         <div class="content">
 
-            <div class="container-fluid">
                 <div class="modal fade" id="createMedicalReportModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -295,6 +276,29 @@ onMounted(() => {
                     </div>
                 </div>
 
+
+                <!-- Description Modal -->
+<div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                {{ form.description }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="d-flex justify-content-between mb-2">
@@ -325,6 +329,7 @@ onMounted(() => {
 
                         <div class="card">
                             <div class="card-body">
+                              <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                       <tr>
@@ -345,7 +350,11 @@ onMounted(() => {
                                           <td>{{ appointment.appointment_date }}</td>
                                           <td>{{ appointment.start_time }}</td>
                                           <td>{{ appointment.title }}</td>
-                                          <td>{{ appointment.description }}</td>
+                                          <td>
+
+                                            <button @click="showDescriptionModal(appointment.description)" class="btn btn-sm ml-2">
+                                                <i class="fas fa-info-circle"></i>
+                                            </button></td>
                                           <td>
                                             <span v-if="appointment.status === 'Confirmé'" class="badge badge-success">{{ appointment.status }}</span>
                                             <span v-else-if="appointment.status === 'Annulé'" class="badge badge-warning">{{ appointment.status }}</span>
@@ -363,17 +372,16 @@ onMounted(() => {
                                                   <option value="Fermé" :selected="appointment.status === 'Fermé'">Fermé</option>
                                                 </select>
                                               </div>
-                                              <div>
-                                                <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btn-primary mr-2">Modify Status</button>
-                                              </div>
-                                              <div>
-                                                <button @click="createInvoice(appointment)" class="btn btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
-                                              </div>
-                                              <button @click="showModal(appointment)" type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal">
+                                              <div class="btn-group">
+
+                                                <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btns btn-success mr-2">Modify Status</button>
+                                                <button @click="createInvoice(appointment)" class="btn btns btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
+                                                <button @click="showModal(appointment)" type="button" class="btn btns btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal">
                                                 Medical Report
                                                </button>
+                                              </div>
 
-                                            <a href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
+
                                             </div>
 
                                           </td>
@@ -385,17 +393,51 @@ onMounted(() => {
                                       </tbody>
 
                                       <tbody v-else>
-                                        <td colspan="7" class="text-center">No result found</td>
+                                        <td colspan="8" class="text-center">No result found</td>
                                     </tbody>
                                   </table>
+                              </div>
                             </div>
                         </div>
 
-                        <Bootstrap4Pagination :data="appointments" @pagination-change-page="getAppointments" />
 
                     </div>
 
                 </div>
-            </div>
+
         </div>
+
+        </main>
 </template>
+<style scoped>
+  /* Custom styles for the table */
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table th {
+    background-color: #cecece;
+    color: #ffffff;
+    border: 1px solid #dee2e6;
+  }
+
+  .btns {
+    padding: 4px 2px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+
+</style>

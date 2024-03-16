@@ -132,7 +132,7 @@ class DoctorAppointmentController extends Controller
         return response()->json(['message' => 'Invoice created successfully', 'invoice' => $invoice], 200);
     }
 
-    
+
  private function sendInvoiceSMS($receiverPhoneNumber, $appointment, $totalAmount , $dueDate)
  {
      try {

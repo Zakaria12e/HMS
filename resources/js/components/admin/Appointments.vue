@@ -181,23 +181,16 @@ onMounted(() => {
 
 <template>
 
-    <div class="content-header">
-        <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Appointments</h1>
-        </div>
-        <div class="col-sm-6">
 
-        </div>
-        </div>
-        </div>
-        </div>
+        <main class="content-wrap">
+            <header class="content-head">
+                <h1>Appointments</h1>
+
+            </header>
 
 
         <div class="content">
 
-            <div class="container-fluid">
 
 
                 <div class="row">
@@ -255,7 +248,7 @@ onMounted(() => {
                                           <td> {{ appointment.doctor ? appointment.doctor.name : 'Not Assigned' }}</td>
                                           <td>
 
-                        
+
                                             <a href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
                                           </td>
                                         </tr>
@@ -272,6 +265,7 @@ onMounted(() => {
                     </div>
 
                 </div>
-            </div>
+
         </div>
+    </main>
 </template>

@@ -5,21 +5,14 @@
 
 <template>
 
-    <div class="content-header">
-        <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Profile</h1>
-        </div>
-        <div class="col-sm-6">
+    <main class="content-wrap">
+        <header class="content-head">
+            <h1>Profile</h1>
 
-        </div>
-        </div>
-        </div>
-        </div>
+        </header>
 
         <div class="content">
-            <div class="container-fluid">
+
 
  <div class="row">
         <div class="col-md-3">
@@ -103,6 +96,9 @@
         </div>
     </div>
 
-</div></div>
+
+        </div>
+
+        </main>
 
 </template>

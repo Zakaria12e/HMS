@@ -362,24 +362,15 @@ p{
 
 
 <template>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Doctors</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Doctors</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
+    <main class="content-wrap">
+        <header class="content-head">
+            <h1>Doctors</h1>
+
+        </header>
     <div class="content">
-        <div class="container-fluid">
+
 
 
             <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel"
@@ -606,7 +597,7 @@ p{
             </div>
  <Bootstrap4Pagination :data="doctors" @pagination-change-page="getDoctors" />
 
-        </div>
+
     </div>
 
     <div class="modal fade" id="userFormModal" data-backdrop="static" tabindex="-1" role="dialog"
@@ -649,4 +640,6 @@ p{
             </div>
         </div>
     </div>
+
+    </main>
 </template>

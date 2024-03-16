@@ -96,21 +96,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="content-header">
-        <div class="container-fluid">
 
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Patients</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Patients</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="modal fade" id="createMedicalReportModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -147,56 +133,87 @@ onMounted(() => {
         </div>
     </div>
 
+    <main class="content-wrap">
+        <header class="content-head">
+            <h1>Patients</h1>
+
+        </header>
+
 
     <div class="content">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-end mb-3">
-                <div>
 
-                  <input type="text" v-model="searchQuery" class="form-control" placeholder="Search..."/>
-
-                </div>
-              </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-
-                                <th style="width: 10px">id</th>
-                                <th>Name</th>
-                                <th>Contact Number</th>
-                                <th>Email</th>
-                                <th>Options</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            <tr v-for="( user , index ) in users" :key="user.id">
-                                <td>{{ user.id}}</td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.contact_number }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>
-
-                                    <button @click="showModal(user.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMedicalReportModal">
-                                       Medicals Reports
-                                      </button>
-                                </td>
-
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                </div>
+          <div class="d-flex justify-content-end mb-3">
+            <div>
+              <input type="text" v-model="searchQuery" class="form-control" placeholder="Search..." />
             </div>
+          </div>
 
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Contact Number</th>
+                      <th>Email</th>
+                      <th>Options</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(user, index) in users" :key="user.id">
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.contact_number }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>
+                        <button @click="showModal(user.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createMedicalReportModal">Medicals Reports</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
-        </div>
-    </div>
+      </div>
+
+    </main>
 
 </template>
+<style scoped>
+  /* Custom styles for the table */
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px ;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table th {
+    background-color: #343a40;
+    color: #ffffff;
+    border: 1px solid #dee2e6;
+  }
+
+  .table td {
+    border: 1px solid #dee2e6;
+    background: white;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+</style>
