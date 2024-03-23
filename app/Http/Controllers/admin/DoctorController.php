@@ -13,7 +13,7 @@ class DoctorController extends Controller
     public function index()
     {
         $doctors = Doctor::with(['user' => function ($query) {
-                $query->select('id', 'name', 'email', 'contact_number', 'type');
+                $query->select('id', 'name', 'email', 'contact_number','img_path');
             }])
             ->withCount('appointments')
             ->paginate(5);
@@ -33,7 +33,12 @@ class DoctorController extends Controller
             'description' => 'required|string',
             'salary' => 'required|numeric',
             'department_id' => 'nullable|exists:departments,id',
+
         ]);
+
+
+
+
 
         $user = User::create([
             'name' => $validatedData['name'],

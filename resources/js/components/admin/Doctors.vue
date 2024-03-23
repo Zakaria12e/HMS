@@ -178,10 +178,10 @@ const updateDoctor = (doctor) => {
 
     formValues.value = {
         id: doctor.doctor_id,
-        name: doctor.name,
-        email: doctor.email,
+        name: doctor.user.name,
+        email: doctor.user.email,
         specialization: doctor.specialization,
-        contactNumber: doctor.contact_number,
+        contactNumber: doctor.user.contact_number,
         salary: doctor.salary,
         description: doctor.description,
 
@@ -473,6 +473,7 @@ p{
                                     <label for="description">Description</label>
                                     <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter description"></textarea>
                                 </div>
+                               
                                 <div class="mb-3">
                                     <label for="department_id">Department</label>
                                     <select v-model="form.department_id" class="form-control" id="department_id">
@@ -553,7 +554,7 @@ p{
                         <thead>
                             <tr>
 
-                                <th style="width: 10px">id</th>
+                                <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>specialization</th>
@@ -566,7 +567,7 @@ p{
                         </thead>
                         <tbody v-if="doctors.data.length > 0">
                             <tr v-for="(doctor, index) in doctors.data" :key="index">
-                                <td>{{ doctor.doctor_id }}</td>
+                                <td>{{doctor.id}}</td>
                                 <td>{{ doctor.user.name }}</td>
                                 <td>{{ doctor.user.email }}</td>
                                 <td>{{ doctor.specialization }}</td>

@@ -34,8 +34,10 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="container mt-4">
-        <div v-if="medicalReports.length === 0">
+    <div class="container mt-5 mb-5">
+        <h2 class="mb-4">My Medical Reports</h2>
+        <div class="row">
+        <div v-if="medicalReports.length === 0"  class="text-center" style="margin: 150px 0;">
             No medical reports available.
         </div>
         <div v-else>
@@ -68,4 +70,6 @@ onMounted(async () => {
 
         </div>
     </div>
+    </div>
+    
 </template>

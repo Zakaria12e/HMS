@@ -15,6 +15,7 @@ use App\Http\Controllers\doctor\DoctorAppointmentController;
 use App\Http\Controllers\doctor\DoctorWorkingHoursController;
 use App\Http\Controllers\doctor\MedicalReportController;
 use App\Http\Controllers\patient\PatientMedicalReportController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,7 +95,7 @@ Route::delete('/api/appointments/{id}', [AppointmentsController::class, 'destroy
 Route::get('/api/getinvoices', [AppointmentsController::class, 'invoices']);
 Route::put('/api/invoices/{id}', [AppointmentsController::class, 'markAsPaid']);
 
-Route::get('/api/dashboard/users-count', [DashboardController::class, 'getUsersCount']);
+Route::get('/api/dashboard/users-count', [DashboardController::class, 'getPatientsCount']);
 Route::get('/api/dashboard/appointment-count', [DashboardController::class, 'getAppointmentCount']);
 Route::get('/api/dashboard/doctors-count', [DashboardController::class, 'getDoctorsCount']);
 Route::get('/api/dashboard/invoices-count', [DashboardController::class, 'getInvoicesCount']);
@@ -124,6 +125,7 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::get('/api/check-availability/{doctorId}', [AppointmentController::class, 'checkAvailability']);
     Route::put('/api/Myappointments/{id}', [AppointmentController::class, 'cancelAppointment']);
     Route::get('/api/patient/medical-reports', [PatientMedicalReportController::class, 'getReports']);
+
 
 
 

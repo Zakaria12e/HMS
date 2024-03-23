@@ -104,7 +104,6 @@ const getDoctors = async () => {
   try {
     const response = await axios.get('/api/doctors/getDoctorsForDepartments');
     form.doctors = response.data;
-    console.log(form.doctors);
   } catch (error) {
     console.error('Error fetching doctors:', error);
   }
@@ -234,7 +233,7 @@ onMounted(() => {
                             <div class="form-group">
                                 <label for="description">Head of Department</label>
                                 <select v-model="form.chef_id" class="form-control">
-                                    <option v-for="doctor in form.doctors.data" :key="doctor.id" :value="doctor.doctor_id">{{ doctor.name }}</option>
+                                    <option v-for="doctor in form.doctors.data" :key="doctor.id" :value="doctor.doctor_id">{{ doctor.user.name }}</option>
                                 </select>
                             </div>
                         </div>
@@ -267,6 +266,7 @@ onMounted(() => {
                     <td>{{ department.name }}</td>
                     <td>{{ department.description }}</td>
                     <td>{{ department.chef_id ? department.chef_name : 'No Head of Department' }}</td>
+
                     <td>
                         <a href="#" @click="updateDepartment(department)"> <i class="fa fa-edit" style="color: #9528b8;"></i> </a>
                         <a href="#" @click="deleteDepartment(department)"> <i class="fa fa-trash text-danger ml-3"></i> </a>
@@ -283,7 +283,7 @@ onMounted(() => {
 
 
       </div>
-    
+
 
     </main>
   </template>

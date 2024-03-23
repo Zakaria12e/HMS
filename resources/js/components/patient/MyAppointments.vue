@@ -8,7 +8,7 @@ const appointments = ref([]);
 
 const getAppointments = async () => {
     try {
-     
+
         const response = await axios.get(`/api/Myappointments?userId=${userId.value}`);
         appointments.value = response.data;
     } catch (error) {
