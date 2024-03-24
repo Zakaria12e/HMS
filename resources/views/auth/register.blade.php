@@ -17,7 +17,7 @@
               <div class="_form-08-main">
                 <div class="_form-08-head">
                   <h2>REGISTER</h2><br>
-                  
+
                 </div>
 
                 @if(session('error'))
@@ -48,8 +48,8 @@
 
                   <div class="form-group">
                     <label>Contact Number</label>
-                    <input type="text" name="contact_number" class="form-control" placeholder="Contact Number" required>
-                  </div>
+                    <input type="text" name="contact_number" class="form-control" placeholder="212xxxxxxxx" pattern="212[0-9]{9}" title="Phone number must start with 212 and have 9 additional digits" required>
+                </div>
 
 
 
@@ -65,7 +65,7 @@
 
 
                 <div class="sub-01">
-                  <img src="img/shap-02.png">
+                  <img src="storage/img/shap-02.png">
                 </div>
 
               </div>
