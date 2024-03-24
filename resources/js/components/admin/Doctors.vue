@@ -49,6 +49,14 @@ const openWorkingHoursModal = async (doc_id) => {
 
 const addWorkingHours = async () => {
     try {
+        // Check if start time is before end time
+        const startTime = new Date(`01/01/2000 ${workingHoursForm.start_time}`);
+        const endTime = new Date(`01/01/2000 ${workingHoursForm.end_time}`);
+        if (startTime >= endTime) {
+            toastr.error('Start time must be before end time');
+            return;
+        }
+
         if (!workingHoursForm.id) {
             console.error('Invalid doctor ID');
             return;
@@ -69,8 +77,7 @@ const addWorkingHours = async () => {
         });
 
         if (existingWorkingHours.data.exists) {
-
-           toastr.error('Working hours already exist for this day');
+            toastr.error('Working hours already exist for this day');
             return;
         }
 
@@ -516,13 +523,13 @@ onMounted(() => {
 
                     <div class="form-group">
                         <label for="start_time">Start Time</label>
-                        <input v-model="workingHoursForm.start_time" type="time" class="form-control" id="start_time"
-                            required>
+                        <input v-model="workingHoursForm.start_time" type="text" class="form-control" id="start_time" placeholder="HH:mm" required pattern="[0-2][0-9]:[0-5][0-9]">
                     </div>
                     <div class="form-group">
                         <label for="end_time">End Time</label>
-                        <input v-model="workingHoursForm.end_time" type="time" class="form-control" id="end_time" required>
+                        <input v-model="workingHoursForm.end_time" type="text" class="form-control" id="end_time" placeholder="HH:mm" required pattern="[0-2][0-9]:[0-5][0-9]">
                     </div>
+
                 </div>
 
                 <div style="padding-left: 10px;" v-if="existingWorkingHours.length > 0">
