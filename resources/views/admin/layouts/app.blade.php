@@ -29,9 +29,15 @@
         <header class="menu-wrap">
 
             <figure class="user">
+
                 <div class="user-avatar">
-                    <img src="{{ auth()->user()->img_path}}" alt="Amanda King">
+                    @if(auth()->user()->img_path)
+                        <img src="{{ auth()->user()->img_path }}" alt="Amanda King">
+                    @else
+                        <img src="/storage/photos/No_Image_Available.jpg" alt="Default Image">
+                    @endif
                 </div>
+
                 <figcaption>
                     {{ Auth::user()->name }}
                 </figcaption>
