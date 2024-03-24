@@ -178,18 +178,26 @@ class DoctorAppointmentController extends Controller
  public function getinvoices($doctorId)
  {
      try {
-
+         // Fetch appointments associated with the doctor
          $doctorAppointments = Appointment::where('doctor_id', $doctorId)->pluck('id');
 
+         // Fetch invoices associated with the doctor's appointments
          $invoices = Invoice::whereIn('appointment_id', $doctorAppointments)
              ->with('appointment.patient')
              ->get();
 
-         return response()->json($invoices);
+         // Calculate total amount
+         $totalAmount = $invoices->sum('TotalAmount');
+
+         return response()->json([
+             'invoices' => $invoices,
+             'totalAmount' => $totalAmount,
+         ]);
      } catch (\Exception $e) {
          return response()->json(['error' => $e->getMessage()], 500);
      }
  }
+
 
 
  public function doctorPatients(Request $request)

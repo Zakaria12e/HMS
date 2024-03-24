@@ -8,6 +8,7 @@ import axios from 'axios';
 const userId = ref(null);
 const appointmentCount = ref(0);
 const workingHours = ref([]);
+const totalAmount = ref(0);
 
 
 const fetchAppointmentCount = async () => {
@@ -42,6 +43,15 @@ const fetchWorkingHours = async () => {
     }
 };
 
+const fetchTotalAmount = async () => {
+  try {
+    const response = await axios.get(`/api/getinvoices/doctor/${userId.value}`);
+    totalAmount.value = response.data.totalAmount;
+  } catch (error) {
+    console.error('Error fetching total amount:', error);
+  }
+};
+
 
 
 
@@ -51,6 +61,7 @@ onMounted(() => {
     fetchAppointmentCount();
     fetchPatientCount();
     fetchWorkingHours();
+    fetchTotalAmount();
 
 });
 
@@ -81,8 +92,8 @@ onMounted(() => {
                         </div>
 
                         <div class="box-content">
-                            <span class="big">no</span>
-                            Current price ($)
+                            <span class="big">{{ totalAmount  }}</span>
+                            Total Amount (DH)
                         </div>
                     </div>
 
@@ -115,22 +126,36 @@ onMounted(() => {
             </div>
             <div class="content">
                 <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <h3>Working Hours</h3>
-                      <ul class="list-group">
-                        <li class="list-group-item" v-for="(hours, index) in workingHours" :key="index">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <span class="fw-bold">{{ hours.day }}</span>: {{ hours.start_time }} - {{ hours.end_time }}
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <h3 class="text-center mb-4">Working Hours</h3>
+                        </div>
                     </div>
-                  </div>
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="py-3">Day</th>
+                                            <th class="py-3">Start Time</th>
+                                            <th class="py-3">End Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(hours, index) in workingHours" :key="index">
+                                            <td class="py-2">{{ hours.day }}</td>
+                                            <td class="py-2">{{ hours.start_time }}</td>
+                                            <td class="py-2">{{ hours.end_time }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
+
         </main>
 
 
