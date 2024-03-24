@@ -125,7 +125,7 @@ class DoctorController extends Controller
     $searchQuery = $request->input('query');
 
     $doctors = Doctor::with(['user' => function ($query) use ($searchQuery) {
-            $query->select('id', 'name', 'email', 'contact_number', 'type');
+            $query->select('id', 'name', 'email', 'contact_number', 'type' , 'img_path');
         }])
         ->whereHas('user', function ($userQuery) use ($searchQuery) {
             $userQuery->where('name', 'like', '%' . $searchQuery . '%')
