@@ -16,7 +16,7 @@
 
 <body>
     <style>
-      
+
 .badge-success {
     background-color: #28a745;
     color: #fff;
@@ -251,7 +251,9 @@ h1, h2, h3, h4, h5, h6 {
                                             {{ Auth::user()->name }}
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
                                             <a class="dropdown-item" href="{{ route('logout') }}">logout</a>
+
                                         </div>
                                     </li>
                                 @endguest

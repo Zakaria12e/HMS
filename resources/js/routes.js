@@ -4,6 +4,7 @@ import Patients from './components/admin/Patients.vue';
 import AdminProfile from './components/admin/AdminProfile.vue';
 import Doctors from './components/admin/Doctors.vue';
 import Invoices from './components/admin/Invoices.vue';
+import Departments from './components/admin/Departments.vue';
 
 import Patients_doc from './components/doctor/Patients.vue';
 import Appointments_doc from './components/doctor/Appointments.vue';
@@ -16,7 +17,7 @@ import DoctorInfo from './components/patient/DoctorInfo.vue';
 import About from './components/patient/About.vue';
 import MedicalReports from './components/patient/MedicalReports.vue';
 import MyAppointments from './components/patient/MyAppointments.vue';
-import Departments from './components/admin/Departments.vue';
+
 
 export default [
 

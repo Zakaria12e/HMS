@@ -350,15 +350,12 @@ onMounted(() => {
     getDepartments();
     getDoctors();
 
-});
-</script>
-<style scoped>
 
-p{
-    color:black !important;
-    font-size: 20px;
-}
-</style>
+
+});
+ const defaultImageUrl = '/storage/photos/No_Image_Available.jpg';
+</script>
+
 
 
 <template>
@@ -473,7 +470,7 @@ p{
                                     <label for="description">Description</label>
                                     <textarea v-model="form.description" class="form-control" id="description" rows="4" placeholder="Enter description"></textarea>
                                 </div>
-                               
+
                                 <div class="mb-3">
                                     <label for="department_id">Department</label>
                                     <select v-model="form.department_id" class="form-control" id="department_id">
@@ -554,7 +551,7 @@ p{
                         <thead>
                             <tr>
 
-                                <th>#</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>specialization</th>
@@ -567,7 +564,7 @@ p{
                         </thead>
                         <tbody v-if="doctors.data.length > 0">
                             <tr v-for="(doctor, index) in doctors.data" :key="index">
-                                <td>{{doctor.id}}</td>
+                                <td><img class="doctor-profile-img" :src="doctor.user.img_path ? doctor.user.img_path : defaultImageUrl" alt="Doctor profile picture"></td>
                                 <td>{{ doctor.user.name }}</td>
                                 <td>{{ doctor.user.email }}</td>
                                 <td>{{ doctor.specialization }}</td>
@@ -644,3 +641,17 @@ p{
 
     </main>
 </template>
+<style scoped>
+.doctor-profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+p{
+    color:black !important;
+    font-size: 20px;
+}
+</style>
+
