@@ -333,8 +333,9 @@ const emailValid = (email) => {
 };
 
 const phoneValid = (phone) => {
-    return phone.length === 10;
+    return /^212\d{9}$/.test(phone);
 };
+
 const passwordValid = (password) => {
     return password.length >= 8;
 };
@@ -465,8 +466,8 @@ onMounted(() => {
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="contact_number">Contact Number</label>
-                                        <input v-model="form.contactNumber" type="text" class="form-control" id="contact_number" aria-describedby="contactNumberHelp" placeholder="Enter contact number" required pattern="[0-9]{10}">
-                                        <span v-if="form.contactNumber && !phoneValid(form.contactNumber)" class="text-danger">Phone number must be 10 digits</span>
+                                        <input v-model="form.contactNumber" type="text" class="form-control" id="contact_number" aria-describedby="contactNumberHelp" placeholder="212xxxxxxxx" required pattern="[0-9]{12}">
+                                        <span v-if="form.contactNumber && !phoneValid(form.contactNumber)" class="text-danger">Invalid phone number format</span>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="salary">Salary</label>
@@ -494,7 +495,6 @@ onMounted(() => {
                 </div>
             </div>
 
-
           <div class="modal fade" id="workingHoursModal" tabindex="-1" role="dialog" aria-labelledby="workingHoursModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -506,7 +506,7 @@ onMounted(() => {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Add your form elements for working hours here -->
+
                     <div class="form-group">
                         <label for="day">Day</label>
                         <select v-model="workingHoursForm.day" class="form-control" id="day" required>
