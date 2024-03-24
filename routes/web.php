@@ -125,6 +125,9 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::get('/api/check-availability/{doctorId}', [AppointmentController::class, 'checkAvailability']);
     Route::put('/api/Myappointments/{id}', [AppointmentController::class, 'cancelAppointment']);
     Route::get('/api/patient/medical-reports', [PatientMedicalReportController::class, 'getReports']);
+    Route::get('/api/profile', [ProfileController::class, 'index']);
+    Route::put('/api/profile', [ProfileController::class, 'update']);
+    Route::post('/api/upload-profile-image', [ProfileController::class, 'uploadImage']);
 
 
 

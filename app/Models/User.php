@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -54,4 +56,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Appointment::class, 'patient_id');
     }
+
+    public function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $imageUrl = $value ? asset(Storage::url($value)) : asset('storage/photos/No_Image_Available.jpg');
+                return $imageUrl;
+            }
+        );
+    }
+
 }
