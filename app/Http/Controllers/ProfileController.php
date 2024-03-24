@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Actions\Fortify\UpdateUserPassword;
 
 class ProfileController extends Controller
 {
@@ -32,18 +33,31 @@ class ProfileController extends Controller
         if ($request->hasFile('profile_picture')) {
             $previousPath = $request->user()->getRawOriginal('img_path');
 
-            // Store the image in the storage directory
             $link = Storage::put('/photos', $request->file('profile_picture'));
-
-            // Update the user's img_path with the complete URL
             $imageUrl = asset('storage/' . $link);
             $request->user()->update(['img_path' => $imageUrl]);
 
-            // Delete the previous image
             Storage::delete($previousPath);
 
             return response()->json(['message' => 'Profile picture uploaded successfully!']);
         }
+    }
+
+
+
+
+    public function changePassword(Request $request, UpdateUserPassword $updater)
+    {
+        $updater->update(
+            auth()->user(),
+            [
+                'current_password' => $request->currentPassword,
+                'password' => $request->password,
+                'password_confirmation' => $request->passwordConfirmation,
+            ]
+        );
+
+        return response()->json(['message' => 'Password changed successfully!']);
     }
 
 }

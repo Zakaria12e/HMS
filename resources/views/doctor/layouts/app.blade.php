@@ -30,7 +30,7 @@
 
             <figure class="user">
                 <div class="user-avatar">
-                    <img src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80" alt="Amanda King">
+                    <img src="{{ auth()->user()->img_path}}" alt="Amanda King">
                 </div>
                 <figcaption>
                     {{ Auth::user()->name }}
