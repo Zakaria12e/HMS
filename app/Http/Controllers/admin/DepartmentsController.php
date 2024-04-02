@@ -21,7 +21,7 @@ class DepartmentsController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'chef_id' => 'required|exists:doctors,doctor_id',
         ]);
 
@@ -39,7 +39,7 @@ class DepartmentsController extends Controller
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'description' => 'required|string|max:255',
+        'description' => 'required|string|max:1000',
         'chef_id' => 'nullable|exists:doctors,doctor_id',
     ]);
 

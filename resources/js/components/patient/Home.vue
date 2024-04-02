@@ -1,17 +1,19 @@
 <script setup>
 
 import { ref, onMounted} from 'vue';
+import Preloader from '../../components/Preloader.vue';
 
 const doctors = ref({'data':[]});
-
+const loading = ref(false);
 
 
 
 const getDoctors = async () => {
   try {
+    loading.value = true;
     const response = await axios.get('/api/patient/doctors');
     doctors.value = response.data.data;
-
+    loading.value = false;
   } catch (error) {
     console.error('Error fetching doctors:', error);
   }
@@ -231,7 +233,7 @@ const defaultImageUrl = '/storage/photos/No_Image_Available.jpg';
           </section>
 
 
-
+          <Preloader :loading="loading" />
 
 
 

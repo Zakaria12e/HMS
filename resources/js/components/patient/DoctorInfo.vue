@@ -3,6 +3,7 @@ import { ref, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToastr } from '/resources/js/toastr.js';
+import Preloader from '../../components/Preloader.vue';
 
 const toastr = useToastr();
 const route = useRoute();
@@ -13,12 +14,15 @@ const departments = ref([]);
 const timeSlots = ref([]);
 const selectedDate = ref('');
 const isLoading = ref(false);
+const loading = ref(false);
 
 const getDoctor = async () => {
   try {
+    loading.value = true;
     const response = await axios.get(`/patient/doctorinformation/${route.params.id}`);
     window.scrollTo({ top: 0 });
     doctor.value = response.data;
+    loading.value = false;
   } catch (error) {
     console.error('Error fetching doctor informations:', error);
   }
@@ -245,18 +249,16 @@ p {
                       <input v-model="selectedDate" type="date" class="form-control" id="SelectDate">
                     </div>
                     <div class="col-md-6">
-                      <label for="Select2" class="form-label">Select Time</label>
-
+                        <label for="Select2" class="form-label">Select Time</label>
                         <select v-model="selectedTimeSlot" class="form-select" id="Select2" :disabled="isLoading">
                           <option value="" selected disabled>Select time</option>
                           <option v-for="(slot, index) in timeSlots" :key="index" :value="slot.value" :disabled="!slot.available">
                             {{ slot.time }}
                           </option>
                         </select>
+                        <div v-if="isLoading" class="loading-spinner"></div>
+                      </div>
 
-
-                    <div v-if="isLoading" class="loading-spinner"></div>
-                    </div>
 
                   </div>
 
@@ -275,10 +277,12 @@ p {
         </div>
         <div class="col-lg-5 col-md-6">
           <div class="reservation_img">
-            <img :src="'storage/img/reservation.png'" alt class="reservation_img_iner">
+            <img :src="'/storage/photos/reservation.png'" alt class="reservation_img_iner">
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <Preloader :loading="loading" />
 </template>

@@ -8,7 +8,7 @@ const toastr = useToastr();
 const departments = ref({ 'data': [] });
 const updating = ref(false);
 const formValues = ref();
-
+const descriptionContent = ref('');
 const form = reactive({
   name: '',
   description: '',
@@ -169,6 +169,15 @@ const clearForm = () => {
 };
 
 
+const openDescription = (department) => {
+
+descriptionContent.value = department.description;
+
+$('#descriptionModal').modal('show');
+
+};
+
+
 onMounted(() => {
   getDepartments();
 });
@@ -183,6 +192,25 @@ onMounted(() => {
         </header>
 
       <div class="content">
+
+
+<div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="descriptionModalLabel"><b>Description</b></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>{{ descriptionContent }}</p>
+        </div>
+    </div>
+</div>
+</div>
+
 
 
           <div class="d-flex justify-content-between">
@@ -264,7 +292,7 @@ onMounted(() => {
                   <tr v-for="department in departments" :key="department.id">
                     <td>{{ department.id }}</td>
                     <td>{{ department.name }}</td>
-                    <td>{{ department.description }}</td>
+                    <td class="text-center"><a href="#" @click.prevent="openDescription(department)">  <i style="color: black;" class="fas fa-info-circle ml-2"></i> </a></td>
                     <td>{{ department.chef_id ? department.chef_name : 'No Head of Department' }}</td>
 
                     <td>
