@@ -199,6 +199,17 @@ class DoctorAppointmentController extends Controller
      }
  }
 
+ public function markAsPaid($id)
+ {
+
+     $invoice = Invoice::findOrFail($id);
+
+      $invoice->update(['status' => 'Payé']);
+
+         return response()->json(['message' => 'Invoice marked as paid successfully', 'invoice' => $invoice]);
+
+ }
+
 
 
  public function doctorPatients(Request $request)

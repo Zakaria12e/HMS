@@ -1,28 +1,31 @@
 <script setup>
 
-import axios from 'axios';
 import { onMounted , ref} from 'vue';
-
 
 const invoices = ref([]);
 const doctorId = ref(null);
 
+const getInvoices = async (doctorId) => {
+    try {
+        const response = await fetch(`/api/getinvoices/doctor/${doctorId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch invoices');
+        }
+        const data = await response.json();
+        invoices.value = data.invoices;
+    } catch (error) {
+        console.error('Error fetching invoices:', error);
+    }
+}
+
 onMounted(async () => {
-
     doctorId.value = parseInt(document.getElementById('app').getAttribute('data-user-id'));
-
-  try {
-    const response = await axios.get(`/api/getinvoices/doctor/${doctorId.value}`);
-    invoices.value = response.data;
-    console.log(invoices.length);
-  } catch (error) {
-    console.error('Error fetching invoices:', error);
-  }
+    await getInvoices(doctorId.value);
 });
 
 const markAsPaid = async (invoice) => {
     try {
-        const response = await axios.put(`/api/invoices/${invoice.id}`);
+        const response = await axios.put(`/api/markAsPaid/doctor/${invoice.id}`);
         if (response.status === 200) {
             invoice.status = 'Payé';
         } else {
@@ -33,10 +36,8 @@ const markAsPaid = async (invoice) => {
     }
 };
 
-
-
-
 </script>
+
 
 <template>
 
@@ -78,11 +79,15 @@ const markAsPaid = async (invoice) => {
                             <td>
                                 <span v-if="invoice.status === 'Payé'" class="badge badge-success">{{ invoice.status }}</span>
                                 <span v-else-if="invoice.status === 'En attente'" class="badge badge-warning">{{ invoice.status }}</span>
+                            </td>
+                            <td>
+                                <button @click="markAsPaid(invoice)" class="btn btn-success" :disabled="invoice.status === 'Payé'">Mark as Paid</button>
+
 
                             </td>
-                            <td><button v-if="invoice.status !== 'Payé'" @click="markAsPaid(invoice)" class="btn btn-success" :disabled="invoice.status === 'Payé'">Mark as Paid</button></td>
                         </tr>
                     </tbody>
+
                     <tbody v-else>
                         <td colspan="9" class="text-center">No result found</td>
                     </tbody>

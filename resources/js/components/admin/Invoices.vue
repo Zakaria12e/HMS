@@ -61,7 +61,6 @@ const markAsPaid = async (invoice) => {
                             <th>Description</th>
                             <th>TotalAmount</th>
                             <th>Status</th>
-                            <th>Options</th>
 
                         </tr>
                     </thead>
@@ -80,11 +79,10 @@ const markAsPaid = async (invoice) => {
                                 <span v-else-if="invoice.status === 'En attente'" class="badge badge-warning">{{ invoice.status }}</span>
 
                             </td>
-                            <td><button v-if="invoice.status !== 'Payé'" @click="markAsPaid(invoice)" class="btn btn-success" :disabled="invoice.status === 'Payé'">Mark as Paid</button></td>
                         </tr>
                     </tbody>
                     <tbody v-else>
-                        <td colspan="9" class="text-center">No result found</td>
+                        <td colspan="8" class="text-center">No result found</td>
                     </tbody>
 
 

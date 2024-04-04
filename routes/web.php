@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/api/invoices', [DoctorAppointmentController::class, 'create']);
     Route::get('/api/doctor/getusers', [DoctorAppointmentController::class, 'doctorPatients']);
     Route::get('/api/getinvoices/doctor/{doctorId}', [DoctorAppointmentController::class, 'getinvoices']);
+    Route::put('/api/markAsPaid/doctor/{doctorId}', [DoctorAppointmentController::class, 'markAsPaid']);
     Route::get('/api/doctor/patients/search', [DoctorAppointmentController::class, 'search']);
     Route::post('/api/medical-reports', [MedicalReportController::class, 'store']);
     Route::get('/api/medical-reports', [MedicalReportController::class, 'getMedicalReports']);

@@ -66,16 +66,5 @@ class AppointmentsController extends Controller
         return response()->json($invoices);
     }
 
-    public function markAsPaid($id)
-    {
-
-        $invoice = Invoice::findOrFail($id);
-
-         $invoice->update(['status' => 'Payé']);
-
-            return response()->json(['message' => 'Invoice marked as paid successfully', 'invoice' => $invoice]);
-
-    }
-
 
 }
