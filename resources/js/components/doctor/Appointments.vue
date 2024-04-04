@@ -390,7 +390,7 @@ onMounted(() => {
                                                             </select>
                                                         </div>
                                                         <div class="btn-group">
-                                                            <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btns btn-success mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Fermé' || appointment.status === 'Confirmé'">Modify Status</button>
+                                                            <button @click="modifyStatus(appointment.id, appointment.newStatus)" type="button" class="btn btns btn-success mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Fermé'">Modify Status</button>
                                                             <button @click="createInvoice(appointment)" class="btn btns btn-purple mr-2" :disabled="appointment.status === 'Annulé' || appointment.status === 'Planifié' || appointment.status === 'Confirmé'">Create Invoice</button>
                                                             <button @click="showModal(appointment)" type="button" class="btn btns btn-primary mr-2" data-toggle="modal" data-target="#createMedicalReportModal" :disabled="appointment.status === 'Annulé'">Medical Report</button>
                                                             <a v-if="appointment.status == 'Annulé'" href="#" @click.prevent="deleteAppointment(appointment)"><i class="fa fa-trash text-danger ml-3"></i></a>
@@ -418,7 +418,7 @@ onMounted(() => {
         </main>
 </template>
 <style scoped>
- 
+
   .table-responsive {
     overflow-x: auto;
   }

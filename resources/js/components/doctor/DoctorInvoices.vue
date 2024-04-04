@@ -14,6 +14,7 @@ onMounted(async () => {
   try {
     const response = await axios.get(`/api/getinvoices/doctor/${doctorId.value}`);
     invoices.value = response.data;
+    console.log(invoices.length);
   } catch (error) {
     console.error('Error fetching invoices:', error);
   }

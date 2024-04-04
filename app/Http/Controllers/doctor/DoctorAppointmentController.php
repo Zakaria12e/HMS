@@ -142,7 +142,7 @@ class DoctorAppointmentController extends Controller
          $client = new \Vonage\Client($basic);
 
          $messageContent = "Dear {$appointment->patient->name},\n\n"
-         . "We hope this message finds you well. You have a new invoice for the appointment on {$appointment->appointment_date}.\n\n"
+         . "We hope this message finds you well. You have a new invoice for the appointment {$appointment->title} on {$appointment->appointment_date}.\n\n"
          . "Appointment Details:\n"
          . "- Description: {$appointment->description}\n"
          . "- Due Date: {$dueDate}\n"
@@ -178,16 +178,17 @@ class DoctorAppointmentController extends Controller
  public function getinvoices($doctorId)
  {
      try {
-         // Fetch appointments associated with the doctor
+
          $doctorAppointments = Appointment::where('doctor_id', $doctorId)->pluck('id');
 
-         // Fetch invoices associated with the doctor's appointments
+
          $invoices = Invoice::whereIn('appointment_id', $doctorAppointments)
              ->with('appointment.patient')
              ->get();
 
-         // Calculate total amount
-         $totalAmount = $invoices->sum('TotalAmount');
+
+         $totalAmount = $invoices->where('status', 'Payé')->sum('TotalAmount');
+
 
          return response()->json([
              'invoices' => $invoices,
