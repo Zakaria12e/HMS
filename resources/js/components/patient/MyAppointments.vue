@@ -66,8 +66,9 @@ onMounted(() => {
                         <p class="card-text"><strong>Service</strong> {{ appointment.service }}</p>
 
                         <div class="text-right">
-                            <button v-if="appointment.status !== 'Annulé'" @click="cancelAppointment(appointment.id)" class="btn btn-danger">Cancel</button>
+                            <button v-if="appointment.status !== 'Annulé' && appointment.status !== 'Fermé'" @click="cancelAppointment(appointment.id)" class="btn btn-danger">Cancel</button>
                         </div>
+
 
 
 
