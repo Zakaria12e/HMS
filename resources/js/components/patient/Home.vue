@@ -1,19 +1,15 @@
 <script setup>
 
 import { ref, onMounted} from 'vue';
-import Preloader from '../../components/Preloader.vue';
 
 const doctors = ref({'data':[]});
-const loading = ref(false);
-
 
 
 const getDoctors = async () => {
   try {
-    loading.value = true;
+
     const response = await axios.get('/api/patient/doctors');
     doctors.value = response.data.data;
-    loading.value = false;
   } catch (error) {
     console.error('Error fetching doctors:', error);
   }
@@ -56,12 +52,10 @@ const defaultImageUrl = '/storage/photos/No_Image_Available.jpg';
         <div class="col-lg-5 col-xl-5">
         <div class="banner_text">
         <div class="banner_text_iner">
-        <h5>We are here for your care</h5>
-        <h1>Best Care &
-        Better Doctor</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Quis ipsum suspendisse ultrices gravida.Risus cmodo viverra </p>
+            <h5>We are here for your care</h5>
+<h1>Best Care & Better Doctors</h1>
+<p>Welcome to HMS We pride ourselves on delivering compassionate and high-quality healthcare services to our patients. Our state-of-the-art facilities and dedicated medical professionals ensure that you receive the best possible care.</p>
+
         <a href="#doctors" class="mb-3 btn btn-primary">Make an appointment</a>
         </div>
         </div>
@@ -86,12 +80,11 @@ const defaultImageUrl = '/storage/photos/No_Image_Available.jpg';
         </div>
         <div class="col-md-6 col-lg-5">
         <div class="about_us_text">
-        <h2>About us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed
-        do eiusmod tempor incididunt ut labore et dolore magna aliqua
-        Quis ipsum suspendisse ultrices gravida. Risus cmodo viverra
-        maecenas accumsan lacus vel</p>
-        <a class="btn_2 " href="#">learn more</a>
+            <h2>About Us</h2>
+            <p>Welcome to HMS We are a leading healthcare provider committed to delivering exceptional medical services to our community. Our team of highly skilled professionals is dedicated to ensuring the health and well-being of our patients.</p>
+
+            <router-link to="/about" class="btn_2">Learn More</router-link>
+
         <div class="banner_item">
             <div class="single_item">
               <img src="storage/img/banner_1.svg" alt style="width: 50px; height: 50px;">
@@ -232,8 +225,6 @@ const defaultImageUrl = '/storage/photos/No_Image_Available.jpg';
             </div>
           </section>
 
-
-          <Preloader :loading="loading" />
 
 
 

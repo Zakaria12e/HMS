@@ -3,7 +3,6 @@ import { ref, onMounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToastr } from '/resources/js/toastr.js';
-import Preloader from '../../components/Preloader.vue';
 
 const toastr = useToastr();
 const route = useRoute();
@@ -13,16 +12,14 @@ const existingWorkingHours = ref([]);
 const departments = ref([]);
 const timeSlots = ref([]);
 const selectedDate = ref('');
-const isLoading = ref(false);
-const loading = ref(false);
+const isLoading = ref(false); 
 
 const getDoctor = async () => {
   try {
-    loading.value = true;
     const response = await axios.get(`/patient/doctorinformation/${route.params.id}`);
     window.scrollTo({ top: 0 });
     doctor.value = response.data;
-    loading.value = false;
+
   } catch (error) {
     console.error('Error fetching doctor informations:', error);
   }
@@ -284,5 +281,4 @@ p {
     </div>
   </section>
 
-  <Preloader :loading="loading" />
 </template>

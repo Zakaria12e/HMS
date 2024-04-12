@@ -128,5 +128,6 @@ export default [
         name: 'patient.MedicalReports',
         component: MedicalReports,
     },
+    
 
 ]
