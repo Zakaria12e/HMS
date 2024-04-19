@@ -87,7 +87,7 @@ Route::get('/api/working-hours/check', [WorkingHoursController::class, 'check'])
 Route::get('/api/working-hours-read/{doctorId}', [WorkingHoursController::class, 'read']);
 Route::delete('/api/working-hours/{dayId}', [WorkingHoursController::class, 'destroy']);
 
-
+Route::get('/api/patients/search', [PatientController::class, 'search']);
 Route::get('/api/users', [PatientController::class, 'index']);
 Route::get('/api/users/{id}', [PatientController::class,'GetName']);
 

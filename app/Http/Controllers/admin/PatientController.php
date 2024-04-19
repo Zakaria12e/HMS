@@ -30,4 +30,20 @@ class PatientController extends Controller
         return response()->json($user);
     }
 
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        $patient = User::where('type', 'patient')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('name', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('email', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('contact_number', 'like', '%' . $searchQuery . '%');
+            })
+            ->withCount('appointments')
+            ->get();
+
+        return response()->json($patient);
+    }
+
 }

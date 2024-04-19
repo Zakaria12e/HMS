@@ -1,7 +1,8 @@
 <script setup>
 
 import axios from 'axios';
-import { onMounted , ref} from 'vue';
+import { onMounted , ref , watch} from 'vue';
+import { debounce } from 'lodash';
 
 const users = ref([]);
 
@@ -14,8 +15,32 @@ const getUsers = () => {
     })
 };
 
+const searchQuery = ref(null);
+
+const search = () => {
+
+    axios.get('/api/patients/search',{
+
+        params: {
+            query: searchQuery.value
+        }
+    })
+    .then(response => {
+
+        users.value = response.data;
+    })
+    .catch(error => {
+
+        console.log(error);
+    })
+
+};
 
 
+watch(searchQuery, debounce(() => {
+
+search();
+}, 300));
 
 onMounted(() => {
    getUsers();
@@ -31,10 +56,15 @@ onMounted(() => {
 
         </header>
 
+
     <div class="content">
 
 
-
+        <div class="d-flex justify-content-end mb-3">
+            <div>
+                <input type="text" v-model="searchQuery" class="form-control" placeholder="Search...">
+            </div>
+        </div>
 
 
 

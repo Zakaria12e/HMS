@@ -112,7 +112,7 @@ onMounted(() => {
                     <div v-if="medicalReports.length > 0">
                         <div class="card">
                             <div class="card-body">
-                                <h6>Title: {{ medicalReports[currentReportIndex].title }}</h6>
+                                <h4>{{ medicalReports[currentReportIndex].title }}</h4>
                                 <p>Diagnosis: {{ medicalReports[currentReportIndex].diagnosis }}</p>
                                 <p>Medications: {{ medicalReports[currentReportIndex].medications }}</p>
                                 <p>Recommendations: {{ medicalReports[currentReportIndex].recommendations }}</p>
