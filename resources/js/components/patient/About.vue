@@ -7,13 +7,15 @@
         </div>
         <div class="offset-md">
           <div class="row row-30 text-center text-md-start">
-            <div class="col-sm-2"><img src="storage/img/hospital_1_160x160.jpg" alt="" width="160" height="160"/></div>
-            <div class="col-sm-4"><img src="storage/img/hospital_2_360x360.jpg" alt="" width="360" height="360"/></div>
+            <div class="col-sm-2"><img src="/storage/img/hospital_1_160x160.jpg" alt="" width="160" height="160"/></div>
+            <div class="col-sm-4"><img src="/storage/img/hospital_2_360x360.jpg" alt="" width="360" height="360"/></div>
             <div class="col-sm-4">
-              <img class="image" src="storage/img/hospital-3_360x180.jpg" alt="" width="360" height="180"/>
-              <img class="image" src="storage/img/hospital_4_360x270.jpg" alt="" width="360" height="270"/>
+              <img class="image" src="/storage/img/hospital-3_360x180.jpg" alt="" width="360" height="180"/>
+              <img class="image" src="/storage/img/hospital_4_360x270.jpg" alt="" width="360" height="270"/>
             </div>
-            <div class="col-sm-2"><img src="storage/img/hospital-5-160x300.png" alt="" width="160" height="300"/></div>
+            <div class="col-sm-2">
+                <img src="/storage/img/hospital-5-160x300.png" alt="" width="160" height="300"/>
+            </div>
           </div>
         </div>
         <div class="offset-md">
