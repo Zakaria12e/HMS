@@ -63,23 +63,23 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg navbar-light">
-                            <a class="navbar-brand" href="{{ route('patient.home') }}">HMS</a>
+                            <a class="navbar-brand" href="#">HMS</a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse main-menu-item justify-content-center" id="navbarSupportedContent">
                                 <ul class="navbar-nav align-items-center">
                                     <li class="nav-item" :class="{ 'active': $route.name === 'home' }">
-                                        <router-link to="/home" class="nav-link">Home</router-link>
+                                        <router-link to="/patient" class="nav-link">Home</router-link>
                                     </li>
                                     <li class="nav-item" :class="{ 'active': $route.name === 'about' }">
-                                        <router-link to="/about" class="nav-link">About</router-link>
+                                        <router-link to="/patient/about" class="nav-link">About</router-link>
                                     </li>
                                     <li class="nav-item" :class="{ 'active': $route.name === 'appointments' }">
-                                        <router-link to="/appointments" class="nav-link">Appointments</router-link>
+                                        <router-link to="/patient/appointments" class="nav-link">Appointments</router-link>
                                     </li>
                                     <li class="nav-item" :class="{ 'active': $route.name === 'MedicalReports' }">
-                                        <router-link to="/Medical-Reports" class="nav-link">Medical Reports</router-link>
+                                        <router-link to="/patient/Medical-Reports" class="nav-link">Medical Reports</router-link>
                                     </li>
                                 </ul>
                             </div>

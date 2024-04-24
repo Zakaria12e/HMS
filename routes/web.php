@@ -116,8 +116,8 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
 
 
     //patient routes
-    Route::get('/home', [ApplicationController::class, 'home'])->name('patient.home');
-    Route::get('/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);
+    Route::get('/patient/{view?}', [ApplicationController::class, 'home'])->where('view', '.*')->name('patient.pages');
+    Route::get('/api/patient/doctorinformation/{doctorId}', [DoctorInformationController::class, 'getdoctor']);
     Route::get('/api/patient/doctors', [DoctorInformationController::class, 'index']);
     Route::get('/api/working-days-hours/{doctorId}', [WorkingHoursController::class, 'read']);
     Route::get('/api/working-hours/{doctorId}', [WorkingHoursController::class, 'getWorkingHours']);
@@ -132,9 +132,6 @@ Route::delete('/api/departments/{id}', [DepartmentsController::class, 'destroy']
     Route::put('/api/profile', [ProfileController::class, 'update']);
     Route::post('/api/upload-profile-image', [ProfileController::class, 'uploadImage']);
     Route::post('/api/change-user-password', [ProfileController::class, 'changePassword']);
-
-
-
 
 
 });

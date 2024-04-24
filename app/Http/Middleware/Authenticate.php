@@ -20,7 +20,7 @@ class Authenticate extends Middleware
             } elseif ($user && $user->type === 'doctor') {
                 return route('doctor.pages');
             } else {
-                return route('patient.home');
+                return route('patient.pages');
             }
         }
 

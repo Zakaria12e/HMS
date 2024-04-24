@@ -12,11 +12,11 @@ const existingWorkingHours = ref([]);
 const departments = ref([]);
 const timeSlots = ref([]);
 const selectedDate = ref('');
-const isLoading = ref(false); 
+const isLoading = ref(false);
 
 const getDoctor = async () => {
   try {
-    const response = await axios.get(`/patient/doctorinformation/${route.params.id}`);
+    const response = await axios.get(`/api/patient/doctorinformation/${route.params.id}`);
     window.scrollTo({ top: 0 });
     doctor.value = response.data;
 

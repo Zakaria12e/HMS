@@ -33,7 +33,7 @@ class AuthController extends Controller
                 return redirect()->route('doctor.pages');
             } else {
 
-                return redirect()->route('patient.home');
+                return redirect()->route('patient.pages');
             }
         }
 

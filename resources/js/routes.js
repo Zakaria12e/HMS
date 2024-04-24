@@ -100,34 +100,34 @@ export default [
     },
     {
 
-        path: '/home',
+        path: '/patient',
         name: 'patient.home',
         component: Home,
     },
     {
 
-        path: '/home/doctor-info/:id',
+        path: '/patient/home/doctor-info/:id',
         name: 'patient.DoctorInfo',
         component: DoctorInfo,
     },
     {
 
-        path: '/about',
+        path: '/patient/about',
         name: 'patient.about',
         component: About,
     },
     {
 
-        path: '/appointments',
+        path: '/patient/appointments',
         name: 'patient.appointments',
         component: MyAppointments,
     },
     {
 
-        path: '/Medical-Reports',
+        path: '/patient/Medical-Reports',
         name: 'patient.MedicalReports',
         component: MedicalReports,
     },
-    
+
 
 ]
